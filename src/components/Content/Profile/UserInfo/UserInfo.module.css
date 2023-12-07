@@ -1,0 +1,39 @@
+.info {
+    display: flex;
+}
+
+.image {
+    max-width: 200px;
+    max-height: 200px;
+    border: 3px solid cornflowerblue;
+    border-radius: 100px;
+    margin-right: 50px;
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    margin: 0;
+}
+
+.lastname {
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.infoBlock {
+    flex-direction: row;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.default {
+    color: cornflowerblue;
+}
+
+.item {
+    display: inline-block;
+}

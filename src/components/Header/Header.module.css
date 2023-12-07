@@ -1,0 +1,21 @@
+.container {
+    grid-area: app-header;
+    display: flex;
+    background-color: cornflowerblue;
+    border-radius: 20px;
+    padding: 20px;
+    padding-left: 50px;
+    align-items: center;
+}
+
+.img {
+    max-width: 60px;
+    margin: 0;
+    border-radius: 50%;
+}
+
+.welcome {
+    font-size: 24px;
+    margin: auto;
+    color: #fff;
+}

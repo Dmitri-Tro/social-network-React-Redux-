@@ -1,0 +1,53 @@
+.container {
+    grid-area: app-sidebar;
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    background-color: cornflowerblue;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.navigation {
+    margin-bottom: 100px;
+}
+
+.item {
+    padding: 10px;
+}
+
+.item:last-child {
+    padding-top: 40px;
+}
+
+.item_link {
+    cursor: pointer;
+}
+
+.item_link:hover {
+    outline: 1px solid #fff;
+    outline-offset: 5px;
+    transition-property: outline;
+    transition: linear;
+    transition-duration: 0.1s;
+}
+
+.item_link:focus {
+    outline: 1px solid #fff;
+    outline-offset: 5px;
+    transition-property: all;
+    transition: ease-in-out;
+    transition-duration: 0.1s;
+}
+
+.item_link:active {
+    color: blue;
+    transition-property: color;
+    transition: linear;
+    transition-duration: 0.1s;
+}
+
+.activeLink {
+    color: gold;
+
+}

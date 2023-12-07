@@ -1,0 +1,9 @@
+.title {
+    font-size: 36px;
+    color: cornflowerblue;
+    margin: 0;
+}
+
+.main {
+    display: flex;
+}

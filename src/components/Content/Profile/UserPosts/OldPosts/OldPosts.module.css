@@ -1,0 +1,54 @@
+.container {
+    margin-bottom: 30px;
+}
+
+.post {
+    display: flex;
+    max-width: 100%;
+}
+
+.userAvatar {
+    width: 8%;
+    height: 8%;
+    border-radius: 50%;
+    border: 3px solid cornflowerblue;
+    margin-right: 50px;
+}
+
+.post {
+    font-size: 16px;
+    color: grey;
+    border: 1px solid cornflowerblue;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 0;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.likes {
+    display: flex;
+    align-items: center;
+}
+
+.like {
+    background-color: white;
+    border-style: solid;
+    border-color: cornflowerblue;
+    border-radius: 10px;
+}
+
+.like:active {
+    color: white;
+    background-color: cornflowerblue;
+    transition-property: all;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+}
+
+.likeAmount {
+    font-size: 10px;
+    color: grey;
+    margin-left: auto;
+    margin-right: 20px;
+}

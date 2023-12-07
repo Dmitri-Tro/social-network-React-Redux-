@@ -1,0 +1,9 @@
+.container {
+    width: 30%;
+    border-right: 2px solid cornflowerblue;
+}
+
+.list {
+    font-size: 18px;
+    color: cornflowerblue;
+}
