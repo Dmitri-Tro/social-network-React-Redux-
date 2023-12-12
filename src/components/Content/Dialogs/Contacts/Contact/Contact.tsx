@@ -1,11 +1,23 @@
 import React, {FC} from 'react';
 import styles from './Contact.module.css';
+import {UserItemType} from "../../../../../interfaces/types";
+import {NavLink} from "react-router-dom";
 
-export const Contact = () => {
+
+type ContactPropsType = {
+    userData: UserItemType
+}
+
+export const Contact: FC<ContactPropsType> = ({userData}) => {
+
+    const path = '/dialogs/' + userData.userId;
+
     return (
         <li className={styles.container}>
-                {/*<img alt='userAvatar' src='#' className={styles.userAvatar}/>*/}
-                {/*contactName*/}
+            <NavLink to={path}>
+                <img alt='userAvatar' src={userData.userAvatar} className={styles.userAvatar}/>
+                <span>{userData.userName}</span>
+            </NavLink>
         </li>
     );
 };

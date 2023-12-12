@@ -1,7 +1,11 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styles from './UserInfo.module.css';
 
-export const UserInfo = () => {
+type UserInfoPropsType = {
+
+}
+
+export const UserInfo:FC<UserInfoPropsType> = () => {
     return (
         <div className={styles.info}>
             <img className={styles.image} alt='user_image'

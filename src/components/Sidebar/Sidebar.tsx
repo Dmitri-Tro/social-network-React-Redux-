@@ -1,21 +1,23 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styles from './Sidebar.module.css';
-import {Profile} from "../Content/Profile/Profile";
-import {Dialogs} from "../Content/Dialogs/Dialogs";
 import {Friends} from "./Friends/Friends";
+import {Link, NavLink} from "react-router-dom";
+import {FriendsDataType} from "../../interfaces/types";
 
-export const Sidebar = () => {
+type SidebarPropsType = {
+    friendsData: FriendsDataType,
+}
+
+export const Sidebar:FC<SidebarPropsType> = ({friendsData}) => {
     return (
         <div className={styles.container}>
             <nav className={styles.navigation}>
                 <ul>
-                    <li className={styles.item}>
-                        Profile
-                        {/*<Profile />*/}
+                    <li className={styles.item} >
+                        <NavLink to={'/profile'} className={({isActive}) => [isActive ? styles.item_link_active : styles.item_link].join(' ')}>Profile</NavLink>
                     </li>
                     <li className={styles.item}>
-                        Dialogs
-                        {/*<Dialogs />*/}
+                        <NavLink to={'/dialogs'} className={({isActive}) => [isActive ? styles.item_link_active : styles.item_link].join(' ')}>Dialogs</NavLink>
                     </li>
                     <li className={styles.item}>
                         News
@@ -28,7 +30,7 @@ export const Sidebar = () => {
                     </li>
                 </ul>
             </nav>
-            <Friends />
+            <Friends friendsData={friendsData} />
         </div>
     );
 };

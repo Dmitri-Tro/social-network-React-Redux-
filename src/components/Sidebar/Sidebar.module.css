@@ -20,8 +20,8 @@
     padding-top: 40px;
 }
 
-.item_link {
-    cursor: pointer;
+.item_link_active {
+    color: gold;
 }
 
 .item_link:hover {
@@ -32,22 +32,9 @@
     transition-duration: 0.1s;
 }
 
-.item_link:focus {
-    outline: 1px solid #fff;
-    outline-offset: 5px;
-    transition-property: all;
-    transition: ease-in-out;
-    transition-duration: 0.1s;
-}
-
 .item_link:active {
     color: blue;
     transition-property: color;
     transition: linear;
     transition-duration: 0.1s;
-}
-
-.activeLink {
-    color: gold;
-
 }

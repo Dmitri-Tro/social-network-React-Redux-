@@ -36,6 +36,7 @@
     border-style: solid;
     border-color: cornflowerblue;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .like:active {
