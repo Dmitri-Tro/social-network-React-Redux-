@@ -14,6 +14,7 @@ import {
     PostsDataType,
     UsersDataType
 } from "./interfaces/types";
+import {ErrorPage} from "./components/ErrorPage/ErrorPage";
 
 function App() {
 
@@ -36,7 +37,13 @@ function App() {
                 <Sidebar friendsData={friendsData}/>
                 <div className='content'>
                     <Routes>
-                        <Route path={'/profile/*'}
+                        <Route path={'/'}
+                               element={<img className={'main-page'} alt={'network presentation logo'} src='https://uploads.turbologo.com/uploads/design/hq_preview_image/1503315/draw_svg20210630-4871-1vsl6q8.svg.png' />}
+                        />
+                        <Route path={'/*'}
+                               element={<div>404 ErrorPageComponent</div>}
+                        />
+                        <Route path={'/profile/'}
                                element={<Profile
                                    postsData={postsData}
                                    setPostsData={setNewPostsData}
