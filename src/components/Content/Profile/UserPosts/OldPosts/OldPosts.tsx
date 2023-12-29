@@ -4,15 +4,16 @@ import {PostItemType} from "../../../../../interfaces/types";
 
 
 type OldPostsPropsType = {
+    userAvatar: string
     postData: PostItemType
 }
 
-export const OldPosts: FC<OldPostsPropsType> = ({postData}) => {
+export const OldPosts: FC<OldPostsPropsType> = ({userAvatar, postData}) => {
     return (
         <div className={styles.container}>
             <div className={styles.post}>
                 <img className={styles.userAvatar}
-                     src='https://assets.nick.com/uri/mgid:arc:imageassetref:shared.nick.us:a625d441-bbbf-42c8-9927-6a0157aac911?quality=0.7&gen=ntrn&legacyStatusCode=true'
+                     src={userAvatar}
                      alt='user_avatar'/>
                 <p>{postData.postTitle}</p>
             </div>

@@ -1,16 +1,16 @@
 import React, {FC} from 'react';
 import styles from './Friend.module.css';
-import {FriendItemType} from "../../../../interfaces/types";
+import {UserFriend} from "../../../../interfaces/types";
 
 
 type FriendPropsType= {
-    friendData: FriendItemType
+    friend: UserFriend
 }
-export const Friend: FC<FriendPropsType> = ({friendData}) => {
+export const Friend: FC<FriendPropsType> = ({friend}) => {
     return (
         <li className={styles.container}>
-                <img alt='userAvatar' src={friendData.friendAvatar} className={styles.userAvatar}/>
-                <span>{friendData.friendName}</span>
+                <img alt='userAvatar' src={friend.friendAvatar} className={styles.userAvatar}/>
+                <span>{friend.friendName}</span>
         </li>
     );
 };

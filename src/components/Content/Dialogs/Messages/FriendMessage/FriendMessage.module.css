@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    color: cornflowerblue;
+    margin-bottom: 30px;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    margin-right: 30px;
+}
+
+.userAvatar {
+    width: 60%;
+    border-radius: 50%;
+    border: 3px solid cornflowerblue;
+}
+
+.message {
+    color: grey;
+    width: 80%;
+    border: 2px solid cornflowerblue;
+    border-radius: 16px;
+    padding: 10px;
+}

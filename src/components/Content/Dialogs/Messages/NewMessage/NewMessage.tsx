@@ -4,10 +4,10 @@ import {MessageItemType} from "../../../../../interfaces/types";
 import {v4 as uuidv4} from 'uuid';
 
 type NewMessagePropsType = {
-    setMessagesData: (newMessage: MessageItemType) => void
+    createNewMessage: (title: string) => void
 }
 
-export const NewMessage:FC<NewMessagePropsType> = ({setMessagesData}) => {
+export const NewMessage:FC<NewMessagePropsType> = ({createNewMessage}) => {
     const [title, setTitle] = useState('');
 
     const onTitleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -15,13 +15,7 @@ export const NewMessage:FC<NewMessagePropsType> = ({setMessagesData}) => {
     }
 
     const onSentBtnClick = () => {
-        const newMessage: MessageItemType = {
-            messageId: uuidv4(),
-            userName: 'Spongebob',
-            userAvatar: 'https://assets.nick.com/uri/mgid:arc:imageassetref:shared.nick.us:a625d441-bbbf-42c8-9927-6a0157aac911?quality=0.7&gen=ntrn&legacyStatusCode=true',
-            message: title
-        }
-        setMessagesData(newMessage);
+        createNewMessage(title);
         setTitle('');
     };
 

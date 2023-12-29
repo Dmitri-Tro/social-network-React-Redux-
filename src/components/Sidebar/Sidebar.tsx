@@ -1,14 +1,15 @@
 import React, {FC} from 'react';
 import styles from './Sidebar.module.css';
 import {Friends} from "./Friends/Friends";
-import {Link, NavLink} from "react-router-dom";
-import {FriendsDataType} from "../../interfaces/types";
+import {NavLink} from "react-router-dom";
+import {UserFriend} from "../../interfaces/types";
 
 type SidebarPropsType = {
-    friendsData: FriendsDataType,
+    friendsData?: Array<UserFriend>
 }
 
 export const Sidebar:FC<SidebarPropsType> = ({friendsData}) => {
+
     return (
         <div className={styles.container}>
             <nav className={styles.navigation}>
@@ -20,17 +21,17 @@ export const Sidebar:FC<SidebarPropsType> = ({friendsData}) => {
                         <NavLink to={'/dialogs'} className={({isActive}) => [isActive ? styles.item_link_active : styles.item_link].join(' ')}>Dialogs</NavLink>
                     </li>
                     <li className={styles.item}>
-                        News
+                        Newsfeed
                     </li>
                     <li className={styles.item}>
-                        Music
+                        Friends
                     </li>
                     <li className={styles.item}>
                         Settings
                     </li>
                 </ul>
             </nav>
-            <Friends friendsData={friendsData} />
+            {<Friends friendsData={friendsData} />}
         </div>
     );
 };

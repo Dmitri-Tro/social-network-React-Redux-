@@ -3,8 +3,8 @@
 }
 
 .image {
-    max-width: 200px;
-    max-height: 200px;
+    width: 200px;
+    height: 200px;
     border: 3px solid cornflowerblue;
     border-radius: 100px;
     margin-right: 50px;

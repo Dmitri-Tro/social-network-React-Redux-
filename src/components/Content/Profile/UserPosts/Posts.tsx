@@ -1,21 +1,22 @@
 import React, {FC} from 'react';
 import styles from './Posts.module.css';
 import {NewPost} from "./NewPost/NewPost";
-import {PostItemType, PostsDataType} from "../../../../interfaces/types";
+import {PostItemType, PostsDataType, UserItemType} from "../../../../interfaces/types";
 import {OldPosts} from "./OldPosts/OldPosts";
 
 
 type PostsPropsType = {
-    postsData: PostsDataType
+    user: UserItemType
+    postsData: Array<PostItemType>
     setPostsData: (newPost: PostItemType) => void
 }
 
-export const Posts: FC<PostsPropsType> = ({postsData, setPostsData}) => {
+export const Posts: FC<PostsPropsType> = ({user,postsData, setPostsData}) => {
     return (
         <div className={styles.container}>
             <h2 className={styles.title}>My posts</h2>
             <NewPost setPostsData={setPostsData} />
-            {postsData.map((post) => <OldPosts key={post.postId} postData={post} />)}
+            {postsData.map((post) => <OldPosts key={post.postId} userAvatar={user.userAvatar} postData={post} />)}
         </div>
     );
 };

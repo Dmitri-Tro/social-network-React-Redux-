@@ -1,19 +1,18 @@
 import React, {FC} from 'react';
 import styles from './Contacts.module.css';
-import {UsersDataType} from "../../../../interfaces/types";
+import {UserFriend} from "../../../../interfaces/types";
 import {Contact} from "./Contact/Contact";
-import {NavLink} from "react-router-dom";
 
 
 type ContactsPropsType = {
-    usersData: UsersDataType
+    userFriendsList: Array<UserFriend>
 }
 
-export const Contacts:FC<ContactsPropsType> = ({usersData}) => {
+export const Contacts:FC<ContactsPropsType> = ({userFriendsList}) => {
     return (
         <div className={styles.container}>
             <ul className={styles.list}>
-                {usersData.map(user => <Contact key={user.userId} userData={user} />)}
+                {userFriendsList.map(friend => <Contact key={friend.friendId} friend={friend} />)}
             </ul>
         </div>
     );
