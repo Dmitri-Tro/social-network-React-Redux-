@@ -8,13 +8,13 @@ import {PostItemType, PostsDataType, UserItemType} from "../../../interfaces/typ
 type ProfilePropsType = {
     user: UserItemType
     postsData: Array<PostItemType>
-    setPostsData: (userId: string, newPost: PostItemType) => void
+    addPost: (userId: string, title: string) => void
 }
 
-export const Profile: FC<ProfilePropsType> = ({user, postsData, setPostsData}) => {
+export const Profile: FC<ProfilePropsType> = ({user, postsData, addPost}) => {
 
-    const addNewPost = (newPost: PostItemType) => {
-        setPostsData(user.userId, newPost)
+    const addNewPost = (title: string) => {
+        addPost(user.userId, title)
     }
 
     return (
@@ -23,7 +23,7 @@ export const Profile: FC<ProfilePropsType> = ({user, postsData, setPostsData}) =
                  src='https://gamerwall.pro/uploads/posts/2022-06/1655506212_3-gamerwall-pro-p-more-panorama-priroda-krasivo-foto-4.jpg'/>
             <div className={styles.user}>
                 <UserInfo user={user} />
-                <Posts user={user} postsData={postsData} setPostsData={addNewPost} />
+                <Posts user={user} postsData={postsData} addPost={addNewPost} />
             </div>
         </div>
     );

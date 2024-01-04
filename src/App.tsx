@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useReducer, useState} from 'react';
 import './App.css';
 import {Header} from "./components/Header/Header";
 import {Sidebar} from "./components/Sidebar/Sidebar";
@@ -15,6 +15,9 @@ import {
     PostsDataType, UserFriend, UserItemType,
     UsersDataType
 } from "./interfaces/types";
+import {v1} from "uuid";
+import {addMessageReducerAC, messagesReducer} from "./store/reducers/messages-reducer/messagesReducer";
+import {addPostReducerAC, postsReducer} from "./store/reducers/posts-reducer/postsReducer";
 
 const defaultUsersData = usersData;
 const defaultFriendsData = friendsData;
@@ -22,11 +25,17 @@ const defaultMessagesData = messagesData;
 const defaultPostsData = postsData;
 
 function App() {
+
     const [usersData, setContactsData] = useState<UsersDataType>(defaultUsersData);
     const [friendsData, setFriendsData] = useState<FriendsDataType>(defaultFriendsData);
-    const [messagesData, setMessagesData] = useState<MessagesDataType>(defaultMessagesData);
-    const [postsData, setPostsData] = useState<PostsDataType>(defaultPostsData);
-    const [verifiedUser, setVerifiedUser] = useState<UserItemType | null>(null)
+    const [verifiedUser, setVerifiedUser] = useState<UserItemType | null>(null);
+
+
+    const [messagesData, dispatchMessagesData] = useReducer(messagesReducer, defaultMessagesData);
+    // const [messagesData, setMessagesData] = useState<MessagesDataType>(defaultMessagesData);
+    const [postsData, dispatchPostsData] = useReducer(postsReducer, defaultPostsData);
+    // const [postsData, setPostsData] = useState<PostsDataType>(defaultPostsData);
+
 
     const loginUser = (currentUser: UserItemType) => {
         setVerifiedUser(currentUser)
@@ -36,17 +45,9 @@ function App() {
         setVerifiedUser(null);
     }
 
-    const setNewPostsData = (userId: string, newPost: PostItemType) => {
-        setPostsData({...postsData, [userId]: [newPost, ...postsData[userId]]});
-    }
-
-    const setNewMessagesData = (newMessage: MessageItemType) => {
-        setMessagesData([newMessage, ...messagesData]);
-    }
-
     const verifiedUserFriendsList: Array<UserFriend> = verifiedUser ?
         friendsData[verifiedUser.userId].map(friend => {
-            const userFriend= usersData.find(user => user.userId === friend.friendId);
+            const userFriend = usersData.find(user => user.userId === friend.friendId);
             return {
                 friendId: friend.friendId,
                 friendName: userFriend?.userName,
@@ -54,8 +55,18 @@ function App() {
             }
         })
         : [];
-    const messagesDataForVerifiedUser =verifiedUser ?
-        messagesData.filter(message => message.sendFromUserId === verifiedUser.userId || message.sendToUserId === verifiedUser.userId): [];
+    const messagesDataForVerifiedUser = verifiedUser ?
+        messagesData.filter(message => message.sendFromUserId === verifiedUser.userId || message.sendToUserId === verifiedUser.userId) : [];
+
+    const addPost = (userId: string, title: string) => {
+        dispatchPostsData(addPostReducerAC(userId, title));
+    }
+
+    const addNewMessage = (messageTitle: string) => {
+        verifiedUser && dispatchMessagesData(addMessageReducerAC(messageTitle, verifiedUser, verifiedUserFriendsList));
+
+    }
+
 
     return (
         <div className='wrapper'>
@@ -81,7 +92,7 @@ function App() {
                                    <Profile
                                        user={verifiedUser}
                                        postsData={postsData[verifiedUser.userId]}
-                                       setPostsData={setNewPostsData}
+                                       addPost={addPost}
                                    />
                                ) : <Navigate to={'/'}/>}
                         />
@@ -91,7 +102,7 @@ function App() {
                                        verifiedUser={verifiedUser}
                                        userFriendsList={verifiedUserFriendsList}
                                        messagesData={messagesDataForVerifiedUser}
-                                       setMessagesData={setNewMessagesData}
+                                       addNewMessage={addNewMessage}
                                    />
                                ) : <Navigate to={'/'}/>}
                         />

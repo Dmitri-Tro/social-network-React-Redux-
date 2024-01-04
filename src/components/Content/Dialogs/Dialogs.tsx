@@ -15,26 +15,17 @@ type DialogsPropsType = {
     verifiedUser: UserItemType
     userFriendsList: Array<UserFriend>
     messagesData: MessagesDataType
-    setMessagesData: (newMessage: MessageItemType) => void
+    addNewMessage: (title: string) => void
 }
 
-export const Dialogs: FC<DialogsPropsType> = ({verifiedUser, userFriendsList, messagesData, setMessagesData}) => {
-    const createNewMessage = (messageTitle: string) => {
-        const newMessage = {
-            messageId: v1(),
-            message: messageTitle,
-            sendFromUserId: verifiedUser.userId,
-            sendToUserId: userFriendsList[0].friendId,
-        }
-        setMessagesData(newMessage);
-    }
+export const Dialogs: FC<DialogsPropsType> = ({verifiedUser, userFriendsList, messagesData, addNewMessage}) => {
 
     return (
         <div className={styles.container}>
             <h2 className={styles.title}>DIALOGS</h2>
             <div className={styles.main}>
                 <Contacts userFriendsList={userFriendsList}/>
-                <Messages verifiedUser={verifiedUser} userFriendsList={userFriendsList} messagesData={messagesData} createNewMessage={createNewMessage}/>
+                <Messages verifiedUser={verifiedUser} userFriendsList={userFriendsList} messagesData={messagesData} addNewMessage={addNewMessage}/>
             </div>
         </div>
     );

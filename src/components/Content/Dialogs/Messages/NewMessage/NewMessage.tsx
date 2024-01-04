@@ -4,10 +4,10 @@ import {MessageItemType} from "../../../../../interfaces/types";
 import {v4 as uuidv4} from 'uuid';
 
 type NewMessagePropsType = {
-    createNewMessage: (title: string) => void
+    addNewMessage: (title: string) => void
 }
 
-export const NewMessage:FC<NewMessagePropsType> = ({createNewMessage}) => {
+export const NewMessage:FC<NewMessagePropsType> = ({addNewMessage}) => {
     const [title, setTitle] = useState('');
 
     const onTitleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -15,7 +15,7 @@ export const NewMessage:FC<NewMessagePropsType> = ({createNewMessage}) => {
     }
 
     const onSentBtnClick = () => {
-        createNewMessage(title);
+        addNewMessage(title);
         setTitle('');
     };
 

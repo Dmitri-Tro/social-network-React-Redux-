@@ -8,14 +8,14 @@ import {OldPosts} from "./OldPosts/OldPosts";
 type PostsPropsType = {
     user: UserItemType
     postsData: Array<PostItemType>
-    setPostsData: (newPost: PostItemType) => void
+    addPost: (title: string) => void
 }
 
-export const Posts: FC<PostsPropsType> = ({user,postsData, setPostsData}) => {
+export const Posts: FC<PostsPropsType> = ({user,postsData, addPost}) => {
     return (
         <div className={styles.container}>
             <h2 className={styles.title}>My posts</h2>
-            <NewPost setPostsData={setPostsData} />
+            <NewPost addPost={addPost} />
             {postsData.map((post) => <OldPosts key={post.postId} userAvatar={user.userAvatar} postData={post} />)}
         </div>
     );

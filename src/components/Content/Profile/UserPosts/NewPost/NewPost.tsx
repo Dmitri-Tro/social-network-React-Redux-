@@ -1,12 +1,10 @@
 import React, {ChangeEvent, FC, useState} from 'react';
 import styles from './NewPost.module.css';
-import {PostItemType} from "../../../../../interfaces/types";
-import {v4 as uuidv4} from 'uuid';
 
 type NewPostPropsType = {
-    setPostsData: (newPost: PostItemType) => void
+    addPost: (title: string) => void
 }
-export const NewPost: FC<NewPostPropsType> = ({setPostsData}) => {
+export const NewPost: FC<NewPostPropsType> = ({addPost}) => {
     const [title, setTitle] = useState('')
 
     const onTitleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -14,12 +12,7 @@ export const NewPost: FC<NewPostPropsType> = ({setPostsData}) => {
     }
 
     const onAddBtnClick = () => {
-        const newPost: PostItemType = {
-            likeAmount: '0',
-            postId: uuidv4(),
-            postTitle: title
-        }
-        setPostsData(newPost)
+        addPost(title)
         setTitle('')
     }
 

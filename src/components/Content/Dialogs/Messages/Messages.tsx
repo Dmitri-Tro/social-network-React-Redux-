@@ -11,14 +11,14 @@ type MessagesPropsType = {
     verifiedUser: UserItemType
     userFriendsList: Array<UserFriend>
     messagesData: MessagesDataType
-    createNewMessage: (messageTitle: string) => void
+    addNewMessage: (messageTitle: string) => void
 }
 
-export const Messages: FC<MessagesPropsType> = ({verifiedUser, userFriendsList, messagesData, createNewMessage}) => {
+export const Messages: FC<MessagesPropsType> = ({verifiedUser, userFriendsList, messagesData, addNewMessage}) => {
 
     return (
         <div className={styles.container}>
-            <NewMessage createNewMessage={createNewMessage} />
+            <NewMessage addNewMessage={addNewMessage} />
             {
                 messagesData.map(message => message.sendFromUserId === verifiedUser.userId
                 ? <Message key={message.messageId} creator={verifiedUser} message={message}/>
