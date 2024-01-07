@@ -2,6 +2,21 @@ import {MessagesDataType, UserFriend, UserItemType} from "../../../interfaces/ty
 import {v1} from "uuid";
 
 
+const initialState: MessagesDataType = [
+    {
+        messageId: '01',
+        message: 'Hi! Nice to meet you here!!!',
+        sendFromUserId: '0001',
+        sendToUserId: '0011',
+    },
+    {
+        messageId: '02',
+        message: 'Hey!',
+        sendFromUserId: '0011',
+        sendToUserId: '0001',
+    },
+];
+
 const ADD_NEW_MESSAGE = 'Add-new-message';
 
 type MessagesReducerActionType = AddMessageReducerACType
@@ -19,7 +34,7 @@ export const addMessageReducerAC = (messageTitle: string, verifiedUser: UserItem
 
 }
 
-export const messagesReducer = (state: MessagesDataType, action: MessagesReducerActionType): MessagesDataType => {
+export const messagesReducer = (state: MessagesDataType = initialState, action: MessagesReducerActionType): MessagesDataType => {
     switch (action.type) {
         case ADD_NEW_MESSAGE:
                 const newMessage = {

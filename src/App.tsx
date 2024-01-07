@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {Header} from "./components/Header/Header";
 import {Sidebar} from "./components/Sidebar/Sidebar";
@@ -6,23 +6,20 @@ import {Profile} from "./components/Content/Profile/Profile";
 import {Dialogs} from "./components/Content/Dialogs/Dialogs";
 import {LoginPage} from "./components/Content/LoginPage/LoginPage";
 import {Navigate, Route, Routes} from "react-router-dom";
-import {usersData, friendsData, messagesData, postsData,} from './store/store'
+import {usersData, friendsData} from './store/store'
 import {
-    FriendsDataType,
-    MessageItemType,
-    MessagesDataType,
-    PostItemType,
-    PostsDataType, UserFriend, UserItemType,
+    FriendsDataType, MessagesDataType, PostsDataType,
+    UserFriend,
+    UserItemType,
     UsersDataType
 } from "./interfaces/types";
-import {v1} from "uuid";
-import {addMessageReducerAC, messagesReducer} from "./store/reducers/messages-reducer/messagesReducer";
-import {addPostReducerAC, postsReducer} from "./store/reducers/posts-reducer/postsReducer";
+import {addMessageReducerAC} from "./store/reducers/messages-reducer/messagesReducer";
+import {addPostReducerAC} from "./store/reducers/posts-reducer/postsReducer";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "./store/reduxStore";
 
 const defaultUsersData = usersData;
 const defaultFriendsData = friendsData;
-const defaultMessagesData = messagesData;
-const defaultPostsData = postsData;
 
 function App() {
 
@@ -30,12 +27,9 @@ function App() {
     const [friendsData, setFriendsData] = useState<FriendsDataType>(defaultFriendsData);
     const [verifiedUser, setVerifiedUser] = useState<UserItemType | null>(null);
 
-
-    const [messagesData, dispatchMessagesData] = useReducer(messagesReducer, defaultMessagesData);
-    // const [messagesData, setMessagesData] = useState<MessagesDataType>(defaultMessagesData);
-    const [postsData, dispatchPostsData] = useReducer(postsReducer, defaultPostsData);
-    // const [postsData, setPostsData] = useState<PostsDataType>(defaultPostsData);
-
+    const dispatch = useDispatch();
+    const messagesData = useSelector<RootState, MessagesDataType>( state => state.messagesData );
+    const postsData = useSelector<RootState, PostsDataType>( state => state.postsData );
 
     const loginUser = (currentUser: UserItemType) => {
         setVerifiedUser(currentUser)
@@ -59,11 +53,11 @@ function App() {
         messagesData.filter(message => message.sendFromUserId === verifiedUser.userId || message.sendToUserId === verifiedUser.userId) : [];
 
     const addPost = (userId: string, title: string) => {
-        dispatchPostsData(addPostReducerAC(userId, title));
+        dispatch(addPostReducerAC(userId, title));
     }
 
     const addNewMessage = (messageTitle: string) => {
-        verifiedUser && dispatchMessagesData(addMessageReducerAC(messageTitle, verifiedUser, verifiedUserFriendsList));
+        verifiedUser && dispatch(addMessageReducerAC(messageTitle, verifiedUser, verifiedUserFriendsList));
 
     }
 
