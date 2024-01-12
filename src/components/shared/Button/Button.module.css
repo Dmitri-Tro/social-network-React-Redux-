@@ -1,0 +1,40 @@
+.button {
+    font-weight: 600;
+    font-size: 18px;
+    color: black;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.buttonMain {
+    color: white;
+    background-color: cornflowerblue;
+    border-color: cornflowerblue;
+}
+
+.buttonMain:focus,
+.buttonMain:hover {
+    outline: none;
+    background-color: blue;
+    border-color: blue;
+}
+
+.buttonSecondary {
+    color: cornflowerblue;
+    border-color: cornflowerblue;
+}
+
+.buttonSecondary:focus,
+.buttonSecondary:hover {
+    outline: none;
+    color: blue;
+    border-color: blue;
+}
+
+.button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}

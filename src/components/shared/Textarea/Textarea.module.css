@@ -1,0 +1,23 @@
+.textarea {
+    display: block;
+    position: relative;
+    width: 100%;
+    font-family: Montserrat, sans-serif;
+    font-size: 18px;
+    color: cornflowerblue;
+    border: 1px solid cornflowerblue;
+    border-radius: 5px;
+    outline: none;
+    padding: 5px 10px;
+    margin-bottom: 20px;
+    resize: none;
+}
+
+.textarea::placeholder {
+    font-size: 18px;
+    color: cornflowerblue;
+}
+
+.textarea:focus {
+    outline: 2px solid cornflowerblue;
+}

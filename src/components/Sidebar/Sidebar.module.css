@@ -1,10 +1,10 @@
 .container {
     grid-area: app-sidebar;
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 500;
     color: #fff;
     background-color: cornflowerblue;
-    border-radius: 20px;
+    border-radius: 5px;
     padding: 40px;
 }
 

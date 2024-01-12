@@ -1,0 +1,20 @@
+.input {
+    display: block;
+    position: relative;
+    font-size: 18px;
+    color: cornflowerblue;
+    border: 1px solid cornflowerblue;
+    border-radius: 5px;
+    outline: none;
+    padding: 5px 10px;
+    margin-bottom: 20px;
+}
+
+.input::placeholder {
+    font-size: 18px;
+    color: cornflowerblue;
+}
+
+.input:focus {
+    outline: 2px solid cornflowerblue;
+}

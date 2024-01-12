@@ -1,20 +1,21 @@
-import React, {FC} from 'react';
+import React, {FC, memo} from 'react';
 import styles from './Header.module.css';
+import {Button} from "../shared/Button/Button";
 
 type HeaderProps = {
-    logoutUser: () => void
+    onLogoutBtnClick: () => void
 }
 
-export const Header: FC<HeaderProps> = ({logoutUser}) => {
+export const Header: FC<HeaderProps> = memo(({onLogoutBtnClick}) => {
     const onLogoutBtnClickHandler = () => {
-        logoutUser();
+        onLogoutBtnClick();
     }
     return (
         <header className={styles.container}>
             <img className={styles.img} alt='logo'
                  src='https://uploads.turbologo.com/uploads/design/hq_preview_image/1503315/draw_svg20210630-4871-1vsl6q8.svg.png'/>
             <h1 className={styles.welcome}>Welcome to your new social network!!!</h1>
-            <button onClick={onLogoutBtnClickHandler}>Logout</button>
+            <Button title={'Logout'} callback={onLogoutBtnClickHandler} type={'secondary'} style={styles.btn} />
         </header>
-    );
-};
+    )
+});

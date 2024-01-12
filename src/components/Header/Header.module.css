@@ -2,9 +2,8 @@
     grid-area: app-header;
     display: flex;
     background-color: cornflowerblue;
-    border-radius: 20px;
-    padding: 20px;
-    padding-left: 50px;
+    border-radius: 5px;
+    padding: 20px 50px 20px 50px;
     align-items: center;
 }
 
@@ -15,7 +14,12 @@
 }
 
 .welcome {
-    font-size: 24px;
+    font-weight: 600;
+    font-size: 28px;
     margin: auto;
     color: #fff;
+}
+
+.btn {
+    font-size: 14px;
 }

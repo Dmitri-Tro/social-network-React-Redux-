@@ -1,44 +1,48 @@
-import React, {FC, useState} from "react";
-import {UserItemType, UsersDataType} from "../../../interfaces/types";
-import {useNavigate} from "react-router-dom";
+import React, {FC, memo, useState} from "react";
+import {UserAuthData} from "../../../interfaces/types";
+import {Input} from "../../shared/Input/Input";
+import styles from "./LoginPage.module.css"
+import {useSelector} from "react-redux";
+import {RootState} from "../../../store/reduxStore";
+import {Button} from "../../shared/Button/Button";
 
 type LoginPageProps = {
-    usersData: UsersDataType
-    loginUser: (currentUser: UserItemType) => void
+    isLoginUser: (isLogin: boolean) => void
 }
-export const LoginPage: FC<LoginPageProps> = ({usersData, loginUser}) => {
+export const LoginPage: FC<LoginPageProps> = memo(({isLoginUser}) => {
 
     const [passwordValue, setPasswordValue] = useState('');
     const [nameValue, setNameValue] = useState('');
-    const [isLogin, setIsLogin] = useState<boolean>(true);
-    const navigate = useNavigate();
-    const verifyUser = () => {
-       const currentUser = usersData.find(user => user.userName === nameValue && user.userPassword === passwordValue);
-        if (currentUser) {
-            loginUser(currentUser);
-            setIsLogin(true);
-            navigate('/profile')
-        } else {
-            setIsLogin(false);
-        }
-    }
 
+    const userAuthData = useSelector<RootState, UserAuthData>(state => state.userAuthData);
+
+    let isLogin = true;
+    const onLoginBtnClickHandler = () => {
+        isLogin = userAuthData.name === nameValue && userAuthData.password === passwordValue;
+        isLogin && isLoginUser(isLogin);
+    };
     return (
-        <>
-            <textarea
-                wrap='hard'
-                placeholder='Write your name'
+        <form className={styles.container}>
+            <Input
+                type={'text'}
                 value={nameValue}
-                onChange={(e) => setNameValue(e.currentTarget.value)}
+                callback={(e) => {setNameValue(e.currentTarget.value)}}
+                autoFocus={true}
+                autoComplete={"on"}
+                placeholder='Write your name'
+                style={styles.input}
             />
-            <textarea
-                wrap='hard'
-                placeholder='Write password'
+            <Input
+                type={'password'}
                 value={passwordValue}
-                onChange={(e) => setPasswordValue(e.currentTarget.value)}
+                callback={(e) => setPasswordValue(e.currentTarget.value)}
+                autoFocus={true}
+                autoComplete={"on"}
+                placeholder='Write your password'
+                style={styles.input}
             />
             {!isLogin  && <span>User name or password entered incorrectly</span>}
-            <button onClick={verifyUser}>Login</button>
-        </>
+            <Button title={'Login'} callback={onLoginBtnClickHandler} type={"main"} isDisabled={!passwordValue || !nameValue} />
+        </form>
     )
-}
+});

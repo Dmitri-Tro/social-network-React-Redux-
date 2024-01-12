@@ -1,7 +1,9 @@
 .image {
+    background-image: url("https://gamerwall.pro/uploads/posts/2022-06/1655506212_3-gamerwall-pro-p-more-panorama-priroda-krasivo-foto-4.jpg");
+    background-position: center;
     width: 100%;
-    max-height: 200px;
-    border-radius: 20px;
+    height: 200px;
+    border-radius: 5px;
 }
 
 .user {

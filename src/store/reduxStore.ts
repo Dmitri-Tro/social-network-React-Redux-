@@ -1,16 +1,22 @@
-import {combineReducers, createStore} from "redux";
-import {messagesReducer} from "./reducers/messages-reducer/messagesReducer";
-import {postsReducer} from "./reducers/posts-reducer/postsReducer";
+import {combineReducers, legacy_createStore as createStore} from "redux";
+import {userMessagesReducer} from "./reducers/userMessagesReducer/userMessagesReducer";
+import {postsReducer} from "./reducers/postsReducer/postsReducer";
+import {usersReducer} from "./reducers/usersReducer/usersReducer";
+import {friendsReducer} from "./reducers/FriendsReducer/friendsReducer";
+import {authReducer} from "./reducers/authReducer/authReducer";
+import {friendsMessagesReducer} from "./reducers/friendsMessagesReducer/friendsMessagesReducer";
 
 
 const rootReducer = combineReducers(
     {
-        // usersData: xxxReducer,
-        // friendsData: yyyReducer,
-        messagesData: messagesReducer,
+        usersData: usersReducer,
+        userAuthData: authReducer,
+        friendsData: friendsReducer,
+        userMessagesData: userMessagesReducer,
+        friendsMessagesData: friendsMessagesReducer,
         postsData: postsReducer,
     }
-)
+);
 
 export type RootState = ReturnType<typeof rootReducer>
 

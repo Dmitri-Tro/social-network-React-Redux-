@@ -1,16 +1,18 @@
-import React, {FC} from 'react';
+import React, {FC, memo} from 'react';
 import styles from './Friend.module.css';
-import {UserFriend} from "../../../../interfaces/types";
+import {User} from "../../../../interfaces/types";
 
 
 type FriendPropsType= {
-    friend: UserFriend
+    friend: User
 }
-export const Friend: FC<FriendPropsType> = ({friend}) => {
-    return (
-        <li className={styles.container}>
-                <img alt='userAvatar' src={friend.friendAvatar} className={styles.userAvatar}/>
-                <span>{friend.friendName}</span>
-        </li>
-    );
-};
+export const Friend: FC<FriendPropsType> = memo(
+    ({friend}) => {
+        return (
+            <li className={styles.container}>
+                <img alt='userAvatar' src={friend.userAvatar} className={styles.userAvatar}/>
+                <span>{friend.userName}</span>
+            </li>
+        );
+    }
+);

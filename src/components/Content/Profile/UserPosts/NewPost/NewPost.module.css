@@ -1,17 +1,12 @@
 .container {
-    margin-bottom: 100px;
+    width: 60%;
+    margin: 0 15% 100px 15%;
 }
 
 .textarea {
-    display: block;
-    position: relative;
     width: 100%;
     min-height: 100px;
-    font-family: sans-serif;
-    font-size: 18px;
-    border-radius: 20px;
-    border-color: cornflowerblue;
-    border-width: 3px;
+    border-width: 2px;
     padding: 20px;
     margin-bottom: 20px;
 }
@@ -26,42 +21,10 @@
 
 .buttons {
     display: flex;
+    flex-direction: row-reverse;
+    gap: 10px;
 }
 
 .button {
-    font-size: 18px;
-    border-radius: 20px;
-    border-color: cornflowerblue;
-    border-width: 3px;
-    border-style: solid;
-}
 
-.button_addPost {
-    color: white;
-    background-color: cornflowerblue;
-    padding: 10px 60px;
-    margin-left: auto;
-    margin-right: 30px;
-}
-
-.button_addPost:active {
-    background-color: blue;
-    border-color: blue;
-    transition-property: all;
-    transition-duration: 0.1s;
-    transition-timing-function: ease-in-out;
-}
-
-.button_cancel {
-    padding: 10px 50px;
-    background-color: white;
-}
-
-.button_cancel:active {
-    color: white;
-    background-color: blue;
-    border-color: blue;
-    transition-property: all;
-    transition-duration: 0.1s;
-    transition-timing-function: ease-in-out;
 }

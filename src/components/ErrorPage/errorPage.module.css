@@ -1,4 +1,11 @@
 .errorPage {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    color: cornflowerblue;
+}
+
+.error {
+    margin-bottom: 20px;
 }

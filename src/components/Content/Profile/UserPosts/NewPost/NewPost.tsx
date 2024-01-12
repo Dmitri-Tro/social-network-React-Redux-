@@ -1,36 +1,47 @@
-import React, {ChangeEvent, FC, useState} from 'react';
+import React, {ChangeEvent, FC, memo, useState} from 'react';
 import styles from './NewPost.module.css';
+import {useDispatch} from "react-redux";
+import {addPostAC} from "../../../../../store/reducers/postsReducer/postsReducer";
+import {Button} from "../../../../shared/Button/Button";
+import {Textarea} from "../../../../shared/Textarea/Textarea";
 
-type NewPostPropsType = {
-    addPost: (title: string) => void
-}
-export const NewPost: FC<NewPostPropsType> = ({addPost}) => {
-    const [title, setTitle] = useState('')
+type NewPostProps = {  }
+export const NewPost: FC<NewPostProps> = memo(() => {
+    const [title, setTitle] = useState('');
+    const dispatch = useDispatch();
 
     const onTitleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setTitle(e.currentTarget.value)
-    }
-
+        setTitle(e.currentTarget.value);
+    };
     const onAddBtnClick = () => {
-        addPost(title)
-        setTitle('')
-    }
-
+        dispatch(addPostAC(title));
+        setTitle('');
+    };
     const onCancelBtnClick = () => {
-        setTitle('')
-    }
+        setTitle('');
+    };
 
     return (
         <div className={styles.container}>
-            <textarea className={styles.textarea} wrap='hard'
+            <Textarea value={title}
+                      callback={onTitleChange}
                       placeholder='Write new post'
-                      value={title}
-                      onChange={onTitleChange}
+                      style={styles.textarea}
             />
             <div className={styles.buttons}>
-                <button className={`${styles.button_addPost} ${styles.button}`} onClick={onAddBtnClick} >Add post</button>
-                <button className={`${styles.button_cancel} ${styles.button}`} onClick={onCancelBtnClick}>Cancel</button>
+                <Button title={'Add post'}
+                        callback={onAddBtnClick}
+                        type={"main"}
+                        style={styles.button}
+                        isDisabled={!title.trim()}
+                />
+                <Button title={'Cancel'}
+                        callback={onCancelBtnClick}
+                        type={"secondary"}
+                        style={styles.button}
+                        isDisabled={!title.trim()}
+                />
             </div>
         </div>
-    );
-};
+    )
+});

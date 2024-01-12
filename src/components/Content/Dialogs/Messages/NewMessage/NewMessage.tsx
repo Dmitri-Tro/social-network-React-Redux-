@@ -1,40 +1,41 @@
-import React, {ChangeEvent, FC, useState} from 'react';
+import React, {ChangeEvent, FC, memo, useState} from 'react';
 import styles from './NewMessage.module.css';
-import {MessageItemType} from "../../../../../interfaces/types";
-import {v4 as uuidv4} from 'uuid';
+import {useDispatch, useSelector} from "react-redux";
+import {addUserMessageReducerAC} from "../../../../../store/reducers/userMessagesReducer/userMessagesReducer";
+import {RootState} from "../../../../../store/reduxStore";
+import {User} from "../../../../../interfaces/types";
+import {Textarea} from "../../../../shared/Textarea/Textarea";
+import {Button} from "../../../../shared/Button/Button";
 
-type NewMessagePropsType = {
-    addNewMessage: (title: string) => void
-}
+type NewMessageProps = {  }
 
-export const NewMessage:FC<NewMessagePropsType> = ({addNewMessage}) => {
+export const NewMessage:FC<NewMessageProps> = memo(() => {
+
     const [title, setTitle] = useState('');
-
+    const friend = useSelector<RootState, User>(state => state.friendsData[0]);
+    const dispatch = useDispatch();
     const onTitleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setTitle(e.currentTarget.value)
-    }
-
-    const onSentBtnClick = () => {
-        addNewMessage(title);
+        setTitle(e.currentTarget.value);
+    };
+    const onSendBtnClick = () => {
+        dispatch(addUserMessageReducerAC(title, friend.userId));
         setTitle('');
     };
-
     const onCancelBtnClick = () => {
         setTitle('');
     };
 
     return (
         <div className={styles.container}>
-            <textarea
-                className={styles.textarea}  wrap='hard'
+            <Textarea value={title}
+                      callback={onTitleInputChange}
                       placeholder='Write new message'
-            value={title}
-            onChange={onTitleInputChange}
+                      style={styles.textarea}
             />
             <div className={styles.buttons}>
-                <button className={`${styles.button_send} ${styles.button}`} onClick={onSentBtnClick}>Sent</button>
-                <button className={`${styles.button_cancel} ${styles.button}`} onClick={onCancelBtnClick}>Cancel</button>
+                <Button title={'Send'} callback={onSendBtnClick} type={'main'} isDisabled={!title.trim()} />
+                <Button title={'Cancel'} callback={onCancelBtnClick} type={'secondary'} isDisabled={!title.trim()} />
             </div>
         </div>
-    );
-};
+    )
+});

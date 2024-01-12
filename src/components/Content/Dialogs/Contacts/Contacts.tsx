@@ -1,19 +1,19 @@
-import React, {FC} from 'react';
+import React, {FC, memo} from 'react';
 import styles from './Contacts.module.css';
-import {UserFriend} from "../../../../interfaces/types";
 import {Contact} from "./Contact/Contact";
+import {useSelector} from "react-redux";
+import {RootState} from "../../../../store/reduxStore";
+import {FriendsData} from "../../../../interfaces/types";
 
+type ContactsProps = {  }
 
-type ContactsPropsType = {
-    userFriendsList: Array<UserFriend>
-}
-
-export const Contacts:FC<ContactsPropsType> = ({userFriendsList}) => {
+export const Contacts:FC<ContactsProps> = memo(() => {
+    const userFriends = useSelector<RootState, FriendsData>(state => state.friendsData);
     return (
         <div className={styles.container}>
             <ul className={styles.list}>
-                {userFriendsList.map(friend => <Contact key={friend.friendId} friend={friend} />)}
+                {userFriends.map(friend => <Contact key={friend.userId} friend={friend} />)}
             </ul>
         </div>
-    );
-};
+    )
+});

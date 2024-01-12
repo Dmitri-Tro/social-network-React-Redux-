@@ -1,29 +1,52 @@
 .container {
-    margin-bottom: 30px;
+    width: 60%;
+    margin: 0 15% 30px 15%;
 }
 
 .post {
+    position: relative;
     display: flex;
     max-width: 100%;
+    font-size: 16px;
+    color: cornflowerblue;
+    border: 1px solid cornflowerblue;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 0 0 10px;
+    align-items: center;
 }
 
 .userAvatar {
     width: 8%;
     height: 8%;
     border-radius: 50%;
-    border: 3px solid cornflowerblue;
+    border: 2px solid cornflowerblue;
     margin-right: 50px;
 }
 
-.post {
-    font-size: 16px;
-    color: grey;
+.postText {
+    cursor: pointer;
+}
+
+.postTextarea {
+    width: 100%;
+    height: 100px;
+    font-size: 16px;;
+    color: cornflowerblue;
     border: 1px solid cornflowerblue;
-    border-radius: 20px;
+    border-radius: 5px;
     padding: 10px;
-    margin: 0;
-    margin-bottom: 10px;
-    align-items: center;
+}
+
+.delBtn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 14px;
+    font-weight: 400;
+    border-width: 1px;
+    border-radius: 50%;
+    padding: 0 5px 2px;
 }
 
 .likes {
@@ -31,12 +54,15 @@
     align-items: center;
 }
 
+.likeAmount {
+    font-size: 10px;
+    color: blue;
+    margin-left: auto;
+    margin-right: 20px;
+}
+
 .like {
-    background-color: white;
-    border-style: solid;
-    border-color: cornflowerblue;
-    border-radius: 10px;
-    cursor: pointer;
+    padding: 0 5px;
 }
 
 .like:active {
@@ -47,9 +73,3 @@
     transition-timing-function: ease-in-out;
 }
 
-.likeAmount {
-    font-size: 10px;
-    color: grey;
-    margin-left: auto;
-    margin-right: 20px;
-}

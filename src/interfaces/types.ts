@@ -1,35 +1,47 @@
-export type UsersDataType = Array<UserItemType>
-export type UserItemType = {
-    userName: string;
-    userPassword: string;
-    userId: string;
-    userAvatar: string;
-    userBirthday: string;
-    userCityAddress: string;
-    userOccupation: string;
-    userQuot: string;
+export type UsersData = Array<User>
+export type User = {
+    userName: string
+    userId: string
+    userAvatar: string
+    userBirthday: string
+    userCityAddress: string
+    userOccupation: string
+    userQuot: string
 }
 
-export type FriendsDataType = { [key: string]: Array<FriendItemType> }
-export type FriendItemType = { friendId: string; }
+export type FriendsData = Array<User>
 
-export type MessagesDataType = Array<MessageItemType>
-export type MessageItemType = {
-    messageId: string;
-    message: string;
-    sendFromUserId: string;
-    sendToUserId: string;
+export type UserMessagesData = Array<UserMessage>
+export type UserMessage = {
+    messageId: string
+    message: string
+    sendToFriendId: string
+    time: string
 }
 
-export type PostsDataType = { [key: string]: Array<PostItemType> }
-export type PostItemType = {
-        likeAmount: string;
-        postId: string;
-        postTitle: string;
-    }
+export type FriendsMessagesData = Array<FriendMessage>
+export type FriendMessage = {
+    messageId: string
+    message: string
+    sendFromFriendId: string
+    time: string
+}
 
-export type UserFriend = {
-    friendId: string,
-    friendName: string | undefined,
-    friendAvatar: string | undefined,
-};
+export type PostsData = Array<Post>
+export type Post = {
+    postId: string
+    postTitle: string
+    likeAmount: number
+    isLiked: boolean
+}
+
+export type UserAuthData = {
+    name: string
+    password: string
+    id: string
+    avatar: string
+    birthday: string
+    cityAddress: string
+    occupation: string
+    quot: string
+}

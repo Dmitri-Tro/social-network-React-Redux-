@@ -1,17 +1,18 @@
-import React, {FC} from "react";
+import React, {FC, memo} from "react";
 import styles from './Friends.module.css';
-import {UserFriend} from "../../../interfaces/types";
 import {Friend} from "./Friend/Friend";
+import {FriendsData} from "../../../interfaces/types";
+import {useSelector} from "react-redux";
+import {RootState} from "../../../store/reduxStore";
 
-type FriendsPropsType = {
-    friendsData?: Array<UserFriend>
-}
-export const Friends: FC<FriendsPropsType>= ({friendsData}) => {
+type FriendsPropsType = {  }
+export const Friends: FC<FriendsPropsType>= memo(() => {
+    const userFriends: FriendsData = useSelector<RootState, FriendsData>(state => state.friendsData);
     return (
         <div className={styles.container}>
             <ul className={styles.list}>
-                { friendsData && friendsData.slice(0, 4).map((friend) => <Friend key={friend.friendId} friend={friend} />)}
+                { userFriends && userFriends.slice(0, 4).map((friend) => <Friend key={friend.userId} friend={friend} />)}
             </ul>
         </div>
-    );
-};
+    )
+});

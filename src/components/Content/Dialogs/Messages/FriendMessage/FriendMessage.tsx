@@ -1,21 +1,38 @@
-import React, {FC} from 'react';
+import React, {FC, memo} from 'react';
 import styles from './FriendMessage.module.css';
-import {MessageItemType, UserFriend} from "../../../../../interfaces/types";
+import {FriendMessage, FriendsData} from "../../../../../interfaces/types";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../../../store/reduxStore";
+import {Button} from "../../../../shared/Button/Button";
+import {deleteFriendMessageAC} from "../../../../../store/reducers/friendsMessagesReducer/friendsMessagesReducer";
 
-
-type MessagePropsType = {
-    creator: UserFriend
-    message: MessageItemType
+type FriendMessageProps = {
+    message: FriendMessage
 }
 
-export const FriendMessage:FC<MessagePropsType> = ({creator, message}) => {
+export const FriendsMessage:FC<FriendMessageProps> = memo(({message}) => {
+    const friends = useSelector<RootState, FriendsData>(state => state.friendsData);
+    const creator = friends.find(friend => friend.userId === message.sendFromFriendId)!;
+    const dispatch = useDispatch();
+
+    const deleteFriendMessage = () => {
+        dispatch(deleteFriendMessageAC(message.messageId));
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.userInfo}>
-                <img className={styles.userAvatar} src={creator.friendAvatar} alt='user_avatar'/>
-                <span className={styles.userName}>{creator.friendName}</span>
+                <img className={styles.userAvatar} src={creator.userAvatar} alt='user_avatar'/>
+                <span className={styles.time}>{message.time}</span>
             </div>
-            <p className={styles.message}>{message.message}</p>
+            <div className={styles.messageContent}>
+                <p className={styles.message}>{message.message}</p>
+                <Button title={'x'}
+                        callback={deleteFriendMessage}
+                        type={'secondary'}
+                        style={styles.delBtn}
+                />
+            </div>
         </div>
-    );
-};
+    )
+});
