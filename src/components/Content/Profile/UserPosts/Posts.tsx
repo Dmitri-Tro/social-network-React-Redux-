@@ -1,4 +1,4 @@
-import React, {FC, memo} from 'react';
+import React, {FC} from 'react';
 import styles from './Posts.module.css';
 import {NewPost} from "./NewPost/NewPost";
 import {OldPosts} from "./OldPosts/OldPosts";
@@ -6,9 +6,8 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../../../store/reduxStore";
 import {PostsData} from "../../../../interfaces/types";
 
-type PostsProps = {  }
 
-export const Posts: FC<PostsProps> = memo(() => {
+export const Posts: FC = () => {
     const postsData = useSelector<RootState, PostsData>(state => state.postsData);
     const userAvatar = useSelector<RootState, string>(state => state.userAuthData.avatar)
     return (
@@ -18,4 +17,4 @@ export const Posts: FC<PostsProps> = memo(() => {
             {postsData.map((post) => <OldPosts key={post.postId} userAvatar={userAvatar} post={post} />)}
         </div>
     )
-});
+};

@@ -1,4 +1,4 @@
-import React, {FC, memo, useState} from 'react';
+import React, {FC, memo, useCallback, useState} from 'react';
 import styles from './Message.module.css';
 import {UserAuthData, UserMessage} from "../../../../../interfaces/types";
 import {useDispatch, useSelector} from "react-redux";
@@ -20,13 +20,13 @@ export const Message: FC<MessageProps> = memo(({message}) => {
     const dispatch = useDispatch();
     const user = useSelector<RootState, UserAuthData>(state => state.userAuthData);
 
-    const updateMessageTitle = () => {
+    const updateMessageTitle = useCallback(() => {
         dispatch(updateMessageTitleAC(message.messageId, messageTitle));
         setMessageViewMode('readonly')
-    }
-    const deleteMessage = () => {
+    }, [dispatch, message.messageId, messageTitle]);
+    const deleteMessage = useCallback(() => {
         dispatch(deleteMessageAC(message.messageId));
-    }
+    }, [dispatch, message.messageId]);
 
     return (
         <div className={styles.container}>

@@ -1,13 +1,13 @@
-import React, {memo} from 'react';
+import React, {FC, useCallback} from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './errorPage.module.css';
 import {Button} from "../shared/Button/Button";
 
-const ErrorPage = memo(() => {
+const ErrorPage: FC = () => {
     const navigate = useNavigate();
-    const handleNavigateToHome = () => {
+    const handleNavigateToHome = useCallback(() => {
         navigate('/');
-    };
+    }, [navigate]);
     return (
         <div className={styles.errorPage} id="error-page">
             <h1 className={styles.title}>Oops!</h1>
@@ -15,6 +15,6 @@ const ErrorPage = memo(() => {
             <Button title={'Go Home'} callback={handleNavigateToHome} type={"main"} />
         </div>
     )
-});
+};
 
 export default ErrorPage;

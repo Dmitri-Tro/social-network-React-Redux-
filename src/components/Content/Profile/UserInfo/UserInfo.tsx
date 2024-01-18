@@ -1,12 +1,11 @@
-import React, {FC, memo} from 'react';
+import React, {FC} from 'react';
 import styles from './UserInfo.module.css';
 import {UserAuthData} from "../../../../interfaces/types";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../../store/reduxStore";
 
-type UserInfoPropsType = {  }
 
-export const UserInfo:FC<UserInfoPropsType> = memo(() => {
+export const UserInfo:FC = () => {
 
     const user = useSelector<RootState, UserAuthData>(state => state.userAuthData);
 
@@ -35,4 +34,4 @@ export const UserInfo:FC<UserInfoPropsType> = memo(() => {
             </div>
         </div>
     );
-});
+};

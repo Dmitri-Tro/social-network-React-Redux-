@@ -1,4 +1,4 @@
-import React, {FC, memo, useState} from 'react';
+import React, {FC, memo, useCallback, useState} from 'react';
 import styles from './OldPosts.module.css';
 import {Post} from "../../../../../interfaces/types";
 import {Button} from "../../../../shared/Button/Button";
@@ -19,16 +19,19 @@ export const OldPosts: FC<OldPostsProps> = memo(({userAvatar, post}) => {
     const [postViewMode, setPostViewMode] = useState<'readonly' | 'updating'>('readonly');
     const [postTitle, setPostTitle] = useState(post.postTitle);
     const dispatch = useDispatch();
-    const deletePost = () => {
+
+    const deletePost = useCallback(() => {
         dispatch(deletePostAC(post.postId));
-    };
-    const updatePostTitle = () => {
+    }, [dispatch, post.postId]);
+
+    const updatePostTitle = useCallback(() => {
         dispatch(updatePostTitleAC(post.postId, postTitle));
         setPostViewMode('readonly');
-    };
-    const updateLikesAmount = () => {
+    }, [dispatch, post.postId, postTitle]);
+
+    const updateLikesAmount = useCallback(() => {
         dispatch(updateLikesAmountAC(post.postId));
-    };
+    }, [dispatch, post.postId]);
 
     return (
         <div className={styles.container}>

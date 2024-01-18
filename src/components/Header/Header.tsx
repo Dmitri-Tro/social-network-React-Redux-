@@ -1,4 +1,4 @@
-import React, {FC, memo} from 'react';
+import React, {FC, memo, useCallback} from 'react';
 import styles from './Header.module.css';
 import {Button} from "../shared/Button/Button";
 
@@ -7,9 +7,9 @@ type HeaderProps = {
 }
 
 export const Header: FC<HeaderProps> = memo(({onLogoutBtnClick}) => {
-    const onLogoutBtnClickHandler = () => {
+    const onLogoutBtnClickHandler = useCallback(() => {
         onLogoutBtnClick();
-    }
+    }, [onLogoutBtnClick]);
     return (
         <header className={styles.container}>
             <img className={styles.img} alt='logo'

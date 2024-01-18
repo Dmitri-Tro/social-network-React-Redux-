@@ -1,13 +1,12 @@
-import React, {FC, memo} from 'react';
+import React, {FC} from 'react';
 import styles from './Contacts.module.css';
 import {Contact} from "./Contact/Contact";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../../store/reduxStore";
 import {FriendsData} from "../../../../interfaces/types";
 
-type ContactsProps = {  }
 
-export const Contacts:FC<ContactsProps> = memo(() => {
+export const Contacts:FC = () => {
     const userFriends = useSelector<RootState, FriendsData>(state => state.friendsData);
     return (
         <div className={styles.container}>
@@ -16,4 +15,4 @@ export const Contacts:FC<ContactsProps> = memo(() => {
             </ul>
         </div>
     )
-});
+};

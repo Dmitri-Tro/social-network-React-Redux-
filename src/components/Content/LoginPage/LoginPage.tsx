@@ -1,4 +1,4 @@
-import React, {FC, memo, useState} from "react";
+import React, {FC, memo, useCallback, useMemo, useState} from "react";
 import {UserAuthData} from "../../../interfaces/types";
 import {Input} from "../../shared/Input/Input";
 import styles from "./LoginPage.module.css"
@@ -16,11 +16,13 @@ export const LoginPage: FC<LoginPageProps> = memo(({isLoginUser}) => {
 
     const userAuthData = useSelector<RootState, UserAuthData>(state => state.userAuthData);
 
-    let isLogin = true;
-    const onLoginBtnClickHandler = () => {
-        isLogin = userAuthData.name === nameValue && userAuthData.password === passwordValue;
+    const isLogin = useMemo(() => {
+        return userAuthData.name === nameValue && userAuthData.password === passwordValue;
+    }, [userAuthData.name, nameValue, userAuthData.password, passwordValue])
+
+    const onLoginBtnClickHandler = useCallback(() => {
         isLogin && isLoginUser(isLogin);
-    };
+    }, [isLogin, isLoginUser]);
     return (
         <form className={styles.container}>
             <Input

@@ -1,4 +1,4 @@
-import React, {FC, memo} from "react";
+import React, {FC, memo, useMemo} from "react";
 import styles from "./Button.module.css"
 
 type ButtonProps = {
@@ -12,7 +12,7 @@ export const Button: FC<ButtonProps> = memo(({title, callback, type, style, isDi
     const onClickHandler = () => {
         callback()
     };
-    const buttonTypesStyle = (): string => {
+    const buttonTypesStyle = useMemo((): string => {
         switch (type) {
             case "main":
                 return styles.buttonMain
@@ -21,10 +21,10 @@ export const Button: FC<ButtonProps> = memo(({title, callback, type, style, isDi
             default:
                 return ''
         }
-    }
+    }, [type]);
     return(
         <button onClick={onClickHandler}
-                className={styles.button + ' ' + buttonTypesStyle() + ' ' + style}
+                className={styles.button + ' ' + buttonTypesStyle + ' ' + style}
                 disabled={isDisabled}
         >
             {title}

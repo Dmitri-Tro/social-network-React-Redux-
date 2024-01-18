@@ -1,25 +1,24 @@
-import React, {ChangeEvent, FC, memo, useState} from 'react';
+import React, {ChangeEvent, FC, useCallback, useState} from 'react';
 import styles from './NewPost.module.css';
 import {useDispatch} from "react-redux";
 import {addPostAC} from "../../../../../store/reducers/postsReducer/postsReducer";
 import {Button} from "../../../../shared/Button/Button";
 import {Textarea} from "../../../../shared/Textarea/Textarea";
 
-type NewPostProps = {  }
-export const NewPost: FC<NewPostProps> = memo(() => {
+export const NewPost: FC = () => {
     const [title, setTitle] = useState('');
     const dispatch = useDispatch();
 
-    const onTitleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const onTitleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
         setTitle(e.currentTarget.value);
-    };
-    const onAddBtnClick = () => {
+    }, []);
+    const onAddBtnClick = useCallback(() => {
         dispatch(addPostAC(title));
         setTitle('');
-    };
-    const onCancelBtnClick = () => {
+    }, [dispatch, title]);
+    const onCancelBtnClick = useCallback(() => {
         setTitle('');
-    };
+    }, []);
 
     return (
         <div className={styles.container}>
@@ -44,4 +43,4 @@ export const NewPost: FC<NewPostProps> = memo(() => {
             </div>
         </div>
     )
-});
+};

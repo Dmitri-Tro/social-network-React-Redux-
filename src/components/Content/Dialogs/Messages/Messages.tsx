@@ -7,9 +7,8 @@ import {FriendsMessage} from "./FriendMessage/FriendMessage";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../../store/reduxStore";
 
-type MessagesProps = {  }
 
-export const Messages: FC<MessagesProps> = () => {
+export const Messages: FC = () => {
 
     const userMessageData = useSelector<RootState, UserMessagesData>(state => state.userMessagesData);
     const friendsMessagesData = useSelector<RootState, FriendsMessagesData>(state => state.friendsMessagesData);
