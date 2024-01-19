@@ -11,7 +11,7 @@ import {Button} from "../../../../shared/Button/Button";
 export const NewMessage:FC = () => {
 
     const [title, setTitle] = useState('');
-    const friend = useSelector<RootState, User>(state => state.friendsData[0]);
+    const friend = useSelector<RootState, User>(state => state.usersData.filter(user => user.isFriend)[0]);
     const dispatch = useDispatch();
 
     const onTitleInputChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {

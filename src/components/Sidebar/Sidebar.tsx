@@ -14,11 +14,13 @@ export const Sidebar:FC<SidebarPropsType> = memo(({isLogin}) => {
             {isLogin &&
                 <nav className={styles.navigation}>
                     <ul>
-                        <li className={styles.item} >
-                            <NavLink to={'/profile'} className={({isActive}) => [isActive ? styles.item_link_active : styles.item_link].join(' ')}>Profile</NavLink>
+                        <li className={styles.item}>
+                            <NavLink to={'/profile'}
+                                     className={({isActive}) => [isActive ? styles.item_link_active : styles.item_link].join(' ')}>Profile</NavLink>
                         </li>
                         <li className={styles.item}>
-                            <NavLink to={'/dialogs'} className={({isActive}) => [isActive ? styles.item_link_active : styles.item_link].join(' ')}>Dialogs</NavLink>
+                            <NavLink to={'/dialogs'}
+                                     className={({isActive}) => [isActive ? styles.item_link_active : styles.item_link].join(' ')}>Dialogs</NavLink>
                         </li>
                         <li className={styles.item}>
                             Newsfeed
@@ -27,12 +29,16 @@ export const Sidebar:FC<SidebarPropsType> = memo(({isLogin}) => {
                             Friends
                         </li>
                         <li className={styles.item}>
+                            <NavLink to={'/find'}
+                                     className={({isActive}) => [isActive ? styles.item_link_active : styles.item_link].join(' ')}>Find users</NavLink>
+                        </li>
+                        <li className={styles.item}>
                             Settings
                         </li>
                     </ul>
                 </nav>
             }
-            {isLogin && <Friends />}
+            {isLogin && <Friends/>}
         </div>
     )
 });

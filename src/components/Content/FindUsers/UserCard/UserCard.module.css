@@ -1,0 +1,59 @@
+.container {
+    display: flex;
+    width: 60%;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.avatarAndBtn {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    margin-right: 10px;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid cornflowerblue;
+    margin-right: 10px;
+}
+
+.btnFollow {
+    font-size: 14px;
+    width: max-content;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
+    border: 1px solid cornflowerblue;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.nameAndAddress {
+    display: flex;
+    justify-content: space-between;
+}
+
+.userName {
+    font-weight: 600;
+}
+
+.cityAddress {
+
+}
+
+.quot {
+
+}
+
+.btnViewProfile {
+    width: max-content;
+    margin: 0 auto;
+}

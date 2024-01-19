@@ -7,6 +7,7 @@ import {Dialogs} from "./components/Content/Dialogs/Dialogs";
 import {LoginPage} from "./components/Content/LoginPage/LoginPage";
 import {Navigate, Route, Routes} from "react-router-dom";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
+import {FindUsers} from "./components/Content/FindUsers/FindUsers";
 
 function App() {
     const isLoginFromLocalstorage = localStorage.getItem('user is login');
@@ -40,6 +41,9 @@ function App() {
                         />
                         <Route path={'/dialogs/*'}
                                element={isLogin ? ( <Dialogs /> ) : <Navigate to={'/'}/>}
+                        />
+                        <Route path={'/find/*'}
+                               element={isLogin ? ( <FindUsers /> ) : <Navigate to={'/'}/>}
                         />
                     </Routes>
                 </div>

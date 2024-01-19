@@ -7,9 +7,8 @@ export type User = {
     userCityAddress: string
     userOccupation: string
     userQuot: string
+    isFriend: boolean
 }
-
-export type FriendsData = Array<User>
 
 export type UserMessagesData = Array<UserMessage>
 export type UserMessage = {

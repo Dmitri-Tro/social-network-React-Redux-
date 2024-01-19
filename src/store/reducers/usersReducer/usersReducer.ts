@@ -1,8 +1,10 @@
 import {UsersData} from "../../../interfaces/types";
 
-type UsersReducerAction = {
-    type: string
-}
+type UsersReducerAction = SetUsersAC | FollowAC | UnfollowAC;
+
+const SET_USERS = 'SET-USERS';
+const FOLLOW = 'FOLLOW';
+const UNFOLLOW = 'UNFOLLOW';
 
 const initialState: UsersData = [
     {
@@ -12,7 +14,8 @@ const initialState: UsersData = [
         userBirthday: '01.10.2000',
         userCityAddress: 'Helsinki',
         userOccupation: 'Frontend-developer',
-        userQuot: ''
+        userQuot: 'I like web-development!',
+        isFriend: true
     },
     {
         userName: 'Dmitri',
@@ -21,7 +24,8 @@ const initialState: UsersData = [
         userBirthday: '06.12.1987',
         userCityAddress: 'Joensuu',
         userOccupation: 'Frontend-developer',
-        userQuot: ''
+        userQuot: 'I am looking for a Job right now...',
+        isFriend: true
     },
     {
         userName: 'Sasha',
@@ -30,7 +34,8 @@ const initialState: UsersData = [
         userBirthday: '22.09.1990',
         userCityAddress: 'St.Petersburg',
         userOccupation: 'Translator',
-        userQuot: ''
+        userQuot: 'Hi! I speak English, Russian and Finnish!',
+        isFriend: true
     },
     {
         userName: 'Sveta',
@@ -39,7 +44,8 @@ const initialState: UsersData = [
         userBirthday: '14.01.1987',
         userCityAddress: 'Kiev',
         userOccupation: 'Frontend-developer',
-        userQuot: ''
+        userQuot: 'I like markup so much!',
+        isFriend: true
     },
     {
         userName: 'Valera',
@@ -48,7 +54,8 @@ const initialState: UsersData = [
         userBirthday: '14.07.1993',
         userCityAddress: 'Moscow',
         userOccupation: 'HR',
-        userQuot: ''
+        userQuot: '',
+        isFriend: true
     },
     {
         userName: 'Viktor',
@@ -57,7 +64,8 @@ const initialState: UsersData = [
         userBirthday: '07.08.1986',
         userCityAddress: 'Minsk',
         userOccupation: 'Designer',
-        userQuot: ''
+        userQuot: '',
+        isFriend: true
 
     },
     {
@@ -67,7 +75,8 @@ const initialState: UsersData = [
         userBirthday: '17.07.1986',
         userCityAddress: 'Bikini-Bottom',
         userOccupation: 'Cook',
-        userQuot: ''
+        userQuot: '',
+        isFriend: false
     },
     {
         userName: 'Patrick',
@@ -76,7 +85,8 @@ const initialState: UsersData = [
         userBirthday: '14.07.1986',
         userCityAddress: 'Bikini-Bottom',
         userOccupation: 'Spongebob\'s friend',
-        userQuot: ''
+        userQuot: '',
+        isFriend: false
     },
     {
         userName: 'Mr.Crabs',
@@ -85,7 +95,8 @@ const initialState: UsersData = [
         userBirthday: '16.07.1986',
         userCityAddress: 'Bikini-Bottom',
         userOccupation: 'Businessman',
-        userQuot: ''
+        userQuot: '',
+        isFriend: false
     },
     {
         userName: 'Sandy',
@@ -94,7 +105,8 @@ const initialState: UsersData = [
         userBirthday: '15.07.1986',
         userCityAddress: 'Bikini-Bottom',
         userOccupation: 'Scientist',
-        userQuot: ''
+        userQuot: '',
+        isFriend: false
     },
     {
         userName: 'SpongeBob',
@@ -103,11 +115,46 @@ const initialState: UsersData = [
         userBirthday: '14.07.1986',
         userCityAddress: 'Bikini-Bottom',
         userOccupation: 'Cook',
-        userQuot: 'If you believe in yourself, with a tiny pinch of magic all your dreams can come true!'
+        userQuot: 'If you believe in yourself, with a tiny pinch of magic all your dreams can come true!',
+        isFriend: false
     }
 ];
+
+type SetUsersAC = ReturnType<typeof setUsersAC>
+export const setUsersAC = (users: UsersData) => {
+    return {
+        type: SET_USERS,
+        payload: {
+            users
+        }
+    }as const
+}
+type FollowAC = ReturnType<typeof followAC>
+export const followAC = (userId: string) => {
+    return {
+        type: FOLLOW,
+        payload: {
+            userId
+        }
+    }as const
+}
+type UnfollowAC = ReturnType<typeof unfollowAC>
+export const unfollowAC = (userId: string) => {
+    return {
+        type: UNFOLLOW,
+        payload: {
+            userId
+        }
+    }as const
+}
 export const usersReducer = (state: UsersData = initialState, action: UsersReducerAction) => {
     switch (action.type) {
+        case SET_USERS:
+            return [...state, ...action.payload.users]
+        case FOLLOW:
+            return state.map(user => user.userId === action.payload.userId ? {...user, isFriend: true} : user)
+        case UNFOLLOW:
+            return state.map(user => user.userId === action.payload.userId ? {...user, isFriend: false} : user)
         default:
             return state
     }

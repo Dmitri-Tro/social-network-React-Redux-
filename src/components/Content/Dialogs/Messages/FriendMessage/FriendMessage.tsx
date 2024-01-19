@@ -1,6 +1,6 @@
 import React, {FC, memo} from 'react';
 import styles from './FriendMessage.module.css';
-import {FriendMessage, FriendsData} from "../../../../../interfaces/types";
+import {FriendMessage, UsersData} from "../../../../../interfaces/types";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../../../store/reduxStore";
 import {Button} from "../../../../shared/Button/Button";
@@ -11,7 +11,7 @@ type FriendMessageProps = {
 }
 
 export const FriendsMessage:FC<FriendMessageProps> = memo(({message}) => {
-    const friends = useSelector<RootState, FriendsData>(state => state.friendsData);
+    const friends = useSelector<RootState, UsersData>(state => state.usersData.filter(user => user.isFriend));
     const creator = friends.find(friend => friend.userId === message.sendFromFriendId)!;
     const dispatch = useDispatch();
 

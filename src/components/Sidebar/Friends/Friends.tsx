@@ -1,13 +1,13 @@
 import React, {FC} from "react";
 import styles from './Friends.module.css';
 import {Friend} from "./Friend/Friend";
-import {FriendsData} from "../../../interfaces/types";
+import {UsersData} from "../../../interfaces/types";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../store/reduxStore";
 
 
 export const Friends: FC = () => {
-    const userFriends: FriendsData = useSelector<RootState, FriendsData>(state => state.friendsData);
+    const userFriends: UsersData = useSelector<RootState, UsersData>(state => state.usersData.filter(user => user.isFriend));
     return (
         <div className={styles.container}>
             <ul className={styles.list}>

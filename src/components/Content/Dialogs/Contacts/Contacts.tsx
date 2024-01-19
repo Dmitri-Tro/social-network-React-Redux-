@@ -3,11 +3,11 @@ import styles from './Contacts.module.css';
 import {Contact} from "./Contact/Contact";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../../store/reduxStore";
-import {FriendsData} from "../../../../interfaces/types";
+import {UsersData} from "../../../../interfaces/types";
 
 
 export const Contacts:FC = () => {
-    const userFriends = useSelector<RootState, FriendsData>(state => state.friendsData);
+    const userFriends = useSelector<RootState, UsersData>(state => state.usersData.filter(user => user.isFriend));
     return (
         <div className={styles.container}>
             <ul className={styles.list}>
