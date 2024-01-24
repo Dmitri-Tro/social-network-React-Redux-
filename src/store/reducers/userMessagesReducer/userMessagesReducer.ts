@@ -1,14 +1,7 @@
 import {UserMessage, UserMessagesData} from "../../../interfaces/types";
 import {v1} from "uuid";
 
-const initialState: UserMessagesData = [
-    {
-        messageId: '02',
-        message: 'Hey!',
-        sendToFriendId: '0002',
-        time: '09:01'
-    },
-];
+const initialState: UserMessagesData = [  ];
 
 const ADD_NEW_USER_MESSAGE = 'Add-new-user-message';
 const UPDATE_MESSAGE_TITLE = 'Update-message-title';
@@ -17,12 +10,11 @@ const DELETE_MESSAGE = 'Delete-message';
 type UserMessagesReducerAction = AddUserMessageReducerAC | UpdateMessageTitleAC | DeleteMessageAC;
 
 type AddUserMessageReducerAC = ReturnType<typeof addUserMessageReducerAC>
-export const addUserMessageReducerAC = (messageTitle: string, sendToFriendId: string) => {
+export const addUserMessageReducerAC = (messageTitle: string) => {
     return {
         type: ADD_NEW_USER_MESSAGE,
         payload: {
             messageTitle,
-            sendToFriendId
         }
     } as const
 };
@@ -54,7 +46,6 @@ export const userMessagesReducer = (state: UserMessagesData = initialState, acti
             const newMessage: UserMessage = {
                 messageId: v1(),
                 message: action.payload.messageTitle,
-                sendToFriendId: action.payload.sendToFriendId,
                 time: new Date().toTimeString().slice(0, 5),
             }
             return [newMessage, ...state];

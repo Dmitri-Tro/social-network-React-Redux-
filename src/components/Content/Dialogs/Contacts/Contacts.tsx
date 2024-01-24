@@ -1,17 +1,15 @@
 import React, {FC} from 'react';
 import styles from './Contacts.module.css';
 import {Contact} from "./Contact/Contact";
-import {useSelector} from "react-redux";
-import {RootState} from "../../../../store/reduxStore";
-import {UsersData} from "../../../../interfaces/types";
+import {useFriends} from "../../../Sidebar/Friends/useFriends/useFriends";
 
 
 export const Contacts:FC = () => {
-    const userFriends = useSelector<RootState, UsersData>(state => state.usersData.filter(user => user.isFriend));
+    const userFriends = useFriends();
     return (
         <div className={styles.container}>
             <ul className={styles.list}>
-                {userFriends.map(friend => <Contact key={friend.userId} friend={friend} />)}
+                {userFriends.map(friend => <Contact key={friend.id} friend={friend} />)}
             </ul>
         </div>
     )

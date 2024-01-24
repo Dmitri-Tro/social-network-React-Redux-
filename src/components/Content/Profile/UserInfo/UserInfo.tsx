@@ -3,6 +3,7 @@ import styles from './UserInfo.module.css';
 import {UserAuthData} from "../../../../interfaces/types";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../../store/reduxStore";
+import {defaultAvatar} from "../../../../images/images";
 
 
 export const UserInfo:FC = () => {
@@ -12,7 +13,7 @@ export const UserInfo:FC = () => {
     return (
         <div className={styles.info}>
             <img className={styles.image} alt='user_image'
-                 src={user.avatar}/>
+                 src={user.avatar || defaultAvatar}/>
             <div className={styles.description}>
                 <h2 className={styles.name}>{user.name}</h2>
                 <div className={styles.infoBlock}>

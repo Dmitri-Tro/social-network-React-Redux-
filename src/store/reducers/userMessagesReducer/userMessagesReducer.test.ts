@@ -6,7 +6,6 @@ test("should add new message to messagesData", () => {
         {
             messageId: '02',
             message: 'Hey!',
-            sendToFriendId: '0002',
             time: '09:01'
         },
     ];
@@ -14,7 +13,7 @@ test("should add new message to messagesData", () => {
 
     const friend = {
         userName: 'Andrew',
-        userId: '0001',
+        userId: 1,
         userAvatar: '',
         userBirthday: '01.10.2000',
         userCityAddress: 'Helsinki',
@@ -22,10 +21,9 @@ test("should add new message to messagesData", () => {
         userQuot: ''
     };
 
-    const endState = userMessagesReducer(startState, addUserMessageReducerAC(title, friend.userId));
+    const endState = userMessagesReducer(startState, addUserMessageReducerAC(title));
 
     expect(endState.length).toBe(2);
     expect(endState[0].message).toBe('Hi');
     expect(endState[0].messageId).toBeDefined();
-    expect(endState[0].sendToFriendId).toBe(friend.userId);
 });

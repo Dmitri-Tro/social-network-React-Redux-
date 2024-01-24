@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React from 'react';
 import './App.css';
 import {Header} from "./components/Header/Header";
 import {Sidebar} from "./components/Sidebar/Sidebar";
@@ -8,21 +8,10 @@ import {LoginPage} from "./components/Content/LoginPage/LoginPage";
 import {Navigate, Route, Routes} from "react-router-dom";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 import {FindUsers} from "./components/Content/FindUsers/FindUsers";
+import {useApp} from "./useApp";
 
 function App() {
-    const isLoginFromLocalstorage = localStorage.getItem('user is login');
-    const initialStateForLogin = isLoginFromLocalstorage ? JSON.parse(isLoginFromLocalstorage) : false;
-    const [isLogin, setIsLogin] = useState(initialStateForLogin);
-
-    const isLoginUser = useCallback((isLogin: boolean) => {
-        setIsLogin(isLogin);
-        localStorage.setItem('user is login', JSON.stringify(isLogin))
-    }, []);
-
-    const isLogoutUser = useCallback(() => {
-        setIsLogin(false);
-        localStorage.removeItem('user is login');
-    }, []);
+    const {isLogin, isLoginUser, isLogoutUser} = useApp();
     return (
         <div className='wrapper'>
             <div className='container'>

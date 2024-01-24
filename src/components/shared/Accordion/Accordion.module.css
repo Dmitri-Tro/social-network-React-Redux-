@@ -1,0 +1,71 @@
+h1, h2, h3 {
+    margin: 0;
+}
+
+.accordion {
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-top: 20px;
+}
+
+.accordionMain {
+    color: white;
+    background-color: cornflowerblue;
+    border-color: cornflowerblue;
+}
+
+.accordionSecondary {
+    color: cornflowerblue;
+    background-color: white;
+    border-color: cornflowerblue;
+}
+
+.accordionTitle {
+    font-weight: 600;
+    font-size: 18px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.accordionMainTitle {
+    color: white;
+    background-color: cornflowerblue;
+    border-color: cornflowerblue;
+}
+
+.accordionSecondaryTitle {
+    color: blue;
+    background-color: white;
+    border-color: cornflowerblue;
+}
+
+.accordionList {
+    text-align: center;
+}
+.accordionItem {
+    font-weight: 600;
+    font-size: 18px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.accordionMainTitle:focus,
+.accordionMainTitle:hover,
+.accordionMainItem:focus,
+.accordionMainItem:hover{
+    outline: none;
+    color: blue;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.accordionSecondaryTitle:focus,
+.accordionSecondaryTitle:hover,
+.accordionSecondaryItem:focus,
+.accordionSecondaryItem:hover{
+    outline: none;
+    color: white;
+    background-color: cornflowerblue;
+    border-radius: 5px;
+}

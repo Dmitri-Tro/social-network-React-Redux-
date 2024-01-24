@@ -1,0 +1,32 @@
+.pages {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.hiddenPage {
+    display: none;
+}
+
+.visiblePage {
+    font-weight: 400;
+    font-size: 14px;
+    color: cornflowerblue;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.activePage {
+    font-weight: 600;
+    font-size: 18px;
+    color: cornflowerblue;
+    margin: 0 7px;
+    cursor: pointer;
+}
+
+.pagesCount {
+    font-weight: 600;
+    color: cornflowerblue;
+    margin: 0 20px;
+    cursor: pointer;
+}

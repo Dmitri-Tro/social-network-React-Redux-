@@ -1,13 +1,6 @@
-import {User, FriendsMessagesData} from "../../../interfaces/types";
+import {FriendsMessagesData} from "../../../interfaces/types";
 
-const initialState: FriendsMessagesData = [
-    {
-        messageId: '02',
-        message: 'Hi! How are you?',
-        sendFromFriendId: '0001',
-        time: '09:00',
-    },
-];
+const initialState: FriendsMessagesData = [  ];
 
 const DELETE_FRIEND_MESSAGE = 'Delete-friend-message';
 

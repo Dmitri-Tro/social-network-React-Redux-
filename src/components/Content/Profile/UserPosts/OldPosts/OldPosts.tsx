@@ -1,14 +1,10 @@
-import React, {FC, memo, useCallback, useState} from 'react';
+import React, {FC, memo} from 'react';
 import styles from './OldPosts.module.css';
 import {Post} from "../../../../../interfaces/types";
 import {Button} from "../../../../shared/Button/Button";
-import {useDispatch} from "react-redux";
-import {
-    deletePostAC,
-    updateLikesAmountAC,
-    updatePostTitleAC
-} from "../../../../../store/reducers/postsReducer/postsReducer";
 import {Textarea} from "../../../../shared/Textarea/Textarea";
+import {defaultAvatar} from "../../../../../images/images";
+import {useOldPosts} from "./useOldPosts/useOldPosts";
 
 type OldPostsProps = {
     userAvatar: string
@@ -16,28 +12,22 @@ type OldPostsProps = {
 }
 
 export const OldPosts: FC<OldPostsProps> = memo(({userAvatar, post}) => {
-    const [postViewMode, setPostViewMode] = useState<'readonly' | 'updating'>('readonly');
-    const [postTitle, setPostTitle] = useState(post.postTitle);
-    const dispatch = useDispatch();
 
-    const deletePost = useCallback(() => {
-        dispatch(deletePostAC(post.postId));
-    }, [dispatch, post.postId]);
-
-    const updatePostTitle = useCallback(() => {
-        dispatch(updatePostTitleAC(post.postId, postTitle));
-        setPostViewMode('readonly');
-    }, [dispatch, post.postId, postTitle]);
-
-    const updateLikesAmount = useCallback(() => {
-        dispatch(updateLikesAmountAC(post.postId));
-    }, [dispatch, post.postId]);
+    const {
+        postTitle,
+        postViewMode,
+        setPostTitle,
+        setPostViewMode,
+        updatePostTitle,
+        deletePost,
+        updateLikesAmount
+    } = useOldPosts(post);
 
     return (
         <div className={styles.container}>
             <div className={styles.post}>
                 <img className={styles.userAvatar}
-                     src={userAvatar}
+                     src={userAvatar || defaultAvatar}
                      alt='user_avatar'/>
                 {postViewMode === 'readonly' &&
                     <p onDoubleClick={() => setPostViewMode('updating')}

@@ -1,17 +1,15 @@
 import React, {FC} from "react";
 import styles from './Friends.module.css';
 import {Friend} from "./Friend/Friend";
-import {UsersData} from "../../../interfaces/types";
-import {useSelector} from "react-redux";
-import {RootState} from "../../../store/reduxStore";
+import {useFriends} from "./useFriends/useFriends";
 
 
 export const Friends: FC = () => {
-    const userFriends: UsersData = useSelector<RootState, UsersData>(state => state.usersData.filter(user => user.isFriend));
+    const friends = useFriends();
     return (
         <div className={styles.container}>
             <ul className={styles.list}>
-                { userFriends && userFriends.slice(0, 4).map((friend) => <Friend key={friend.userId} friend={friend} />)}
+                { friends && friends.filter((f, i)=> i < 5).map((friend) => <Friend key={friend.id} friend={friend} />)}
             </ul>
         </div>
     )

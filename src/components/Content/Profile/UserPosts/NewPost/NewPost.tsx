@@ -1,24 +1,17 @@
-import React, {ChangeEvent, FC, useCallback, useState} from 'react';
+import React, {FC} from 'react';
 import styles from './NewPost.module.css';
-import {useDispatch} from "react-redux";
-import {addPostAC} from "../../../../../store/reducers/postsReducer/postsReducer";
 import {Button} from "../../../../shared/Button/Button";
 import {Textarea} from "../../../../shared/Textarea/Textarea";
+import {useNewPost} from "./useNewPost/useNewPost";
 
 export const NewPost: FC = () => {
-    const [title, setTitle] = useState('');
-    const dispatch = useDispatch();
 
-    const onTitleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
-        setTitle(e.currentTarget.value);
-    }, []);
-    const onAddBtnClick = useCallback(() => {
-        dispatch(addPostAC(title));
-        setTitle('');
-    }, [dispatch, title]);
-    const onCancelBtnClick = useCallback(() => {
-        setTitle('');
-    }, []);
+    const {
+        title,
+        onTitleChange,
+        onAddBtnClick,
+        onCancelBtnClick
+    } = useNewPost();
 
     return (
         <div className={styles.container}>

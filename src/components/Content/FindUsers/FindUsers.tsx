@@ -1,19 +1,49 @@
-import React, {FC, useCallback} from "react";
+import React, {FC} from "react";
 import {UserCard} from "./UserCard/UserCard";
-import {useUsersForeCurrentUser} from "./customHooks/useUsersForeCurrentUser";
-import {Button} from "../../shared/Button/Button";
 import styles from './FindUsers.module.css'
+import {Accordion} from "../../shared/Accordion/Accordion";
+import {Pagination} from "../../shared/Pagination/Pagination";
+import {useFindUsers} from "./useFindUsers/useFindUsers";
+import {Input} from "../../shared/Input/Input";
 
 
 export const FindUsers: FC = () => {
-const users = useUsersForeCurrentUser();
-const onShowMoreBtnClick = useCallback(() => {}, []);
+
+    const {users,
+        pagesCount,
+        pagesSize,
+        currentPage,
+        filter,
+        onFilterChange,
+        onPageClick,
+        onFirstPageClick,
+        onLastPageClick,
+        onPageSizeSelect} = useFindUsers();
+
+
+
     return (
         <div className={styles.container}>
+            <Input type={'search'} value={filter} callback={(e) => {onFilterChange(e)}} />
+            <Pagination
+                pagesCount={pagesCount}
+                currentPage={currentPage}
+                onFirstPageClick={onFirstPageClick}
+                onPageClick={onPageClick}
+                onLastPageClick={onLastPageClick}
+            />
             <ul className={styles.list}>
-                {users.map(user => <UserCard key={user.userId} user={user}/>)}
+                {users.map(user => <UserCard key={user.id} user={user}/>)}
             </ul>
-            <Button title={'Show more'} callback={onShowMoreBtnClick} type={'main'} style={styles.showMoreBtn} />
+            <Pagination
+                pagesCount={pagesCount}
+                currentPage={currentPage}
+                onFirstPageClick={onFirstPageClick}
+                onPageClick={onPageClick}
+                onLastPageClick={onLastPageClick}
+            />
+            <span className={styles.usersCountSpan}>Set users count on page</span>
+            <Accordion title={pagesSize.toString()} type={'secondary'} onItemSelect={onPageSizeSelect}/>
         </div>
     )
-}
+};

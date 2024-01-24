@@ -1,34 +1,31 @@
-import React, {FC, memo, useCallback, useMemo, useState} from "react";
-import {UserAuthData} from "../../../interfaces/types";
+import React, {FC, memo} from "react";
 import {Input} from "../../shared/Input/Input";
 import styles from "./LoginPage.module.css"
-import {useSelector} from "react-redux";
-import {RootState} from "../../../store/reduxStore";
 import {Button} from "../../shared/Button/Button";
+import {useLogin} from "./useLogin/useLogin";
 
 type LoginPageProps = {
     isLoginUser: (isLogin: boolean) => void
 }
 export const LoginPage: FC<LoginPageProps> = memo(({isLoginUser}) => {
 
-    const [passwordValue, setPasswordValue] = useState('');
-    const [nameValue, setNameValue] = useState('');
+    const {
+        nameValue,
+        passwordValue,
+        isLogin,
+        setNameValue,
+        setPasswordValue,
+        onLoginBtnClickHandler
+    } = useLogin(isLoginUser);
 
-    const userAuthData = useSelector<RootState, UserAuthData>(state => state.userAuthData);
-
-    const isLogin = useMemo(() => {
-        return userAuthData.name === nameValue && userAuthData.password === passwordValue;
-    }, [userAuthData.name, nameValue, userAuthData.password, passwordValue])
-
-    const onLoginBtnClickHandler = useCallback(() => {
-        isLogin && isLoginUser(isLogin);
-    }, [isLogin, isLoginUser]);
     return (
         <form className={styles.container}>
             <Input
                 type={'text'}
                 value={nameValue}
-                callback={(e) => {setNameValue(e.currentTarget.value)}}
+                callback={(e) => {
+                    setNameValue(e.currentTarget.value)
+                }}
                 autoFocus={true}
                 autoComplete={"on"}
                 placeholder='Write your name'
@@ -43,8 +40,9 @@ export const LoginPage: FC<LoginPageProps> = memo(({isLoginUser}) => {
                 placeholder='Write your password'
                 style={styles.input}
             />
-            {!isLogin  && <span>User name or password entered incorrectly</span>}
-            <Button title={'Login'} callback={onLoginBtnClickHandler} type={"main"} isDisabled={!passwordValue || !nameValue} />
+            {!isLogin && <span>User name or password entered incorrectly</span>}
+            <Button title={'Login'} callback={onLoginBtnClickHandler} type={"main"}
+                    isDisabled={!passwordValue || !nameValue}/>
         </form>
     )
 });

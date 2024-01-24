@@ -50,7 +50,7 @@
 }
 
 .quot {
-
+    word-break: break-all;
 }
 
 .btnViewProfile {
