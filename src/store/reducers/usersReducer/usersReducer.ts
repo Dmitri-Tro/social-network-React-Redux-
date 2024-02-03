@@ -1,19 +1,27 @@
 import {User, UsersData} from "../../../interfaces/types";
 
-type UsersReducerAction = SetUsersAC | FollowAC | UnfollowAC | SetPageSizeAC | SetCurrentPageAC;
+type UsersReducerAction =
+    | SetUsersAC
+    | FollowAC
+    | UnfollowAC
+    | SetPageSizeAC
+    | SetCurrentPageAC
+    | SetIsFetchingAC;
 
 const SET_USERS = 'SET-USERS';
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_PAGE_SIZE = 'SET_PAGE_SIZE';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+export const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 
 const initialState: UsersData = {
     users: [],
     totalCount: 0,
     pageSize: 10,
     page: 1,
-    friend: false
+    friend: false,
+    isFetching: false
 
 };
 
@@ -25,7 +33,7 @@ export const setUsersAC = (users: User[], totalCount: number) => {
             users,
             totalCount
         }
-    }as const
+    } as const
 }
 type FollowAC = ReturnType<typeof followAC>
 export const followAC = (userId: number) => {
@@ -34,7 +42,7 @@ export const followAC = (userId: number) => {
         payload: {
             userId
         }
-    }as const
+    } as const
 }
 type UnfollowAC = ReturnType<typeof unfollowAC>
 export const unfollowAC = (userId: number) => {
@@ -43,8 +51,9 @@ export const unfollowAC = (userId: number) => {
         payload: {
             userId
         }
-    }as const
+    } as const
 }
+
 type SetPageSizeAC = ReturnType<typeof setPageSizeAC>
 export const setPageSizeAC = (pageSize: string) => {
     return {
@@ -52,7 +61,7 @@ export const setPageSizeAC = (pageSize: string) => {
         payload: {
             pageSize
         }
-    }as const
+    } as const
 }
 
 type SetCurrentPageAC = ReturnType<typeof setCurrentPageAC>
@@ -62,20 +71,38 @@ export const setCurrentPageAC = (page: number) => {
         payload: {
             page
         }
-    }as const
+    } as const
+}
+
+export type SetIsFetchingAC = ReturnType<typeof setIsFetchingAC>
+export const setIsFetchingAC = (isFetching: boolean) => {
+    return {
+        type: TOGGLE_IS_FETCHING,
+        payload: {
+            isFetching
+        }
+    } as const
 }
 export const usersReducer = (state: UsersData = initialState, action: UsersReducerAction) => {
     switch (action.type) {
         case SET_USERS:
-            return {...state,  users: action.payload.users, totalCount: action.payload.totalCount}
+            return {...state, users: action.payload.users, totalCount: action.payload.totalCount}
         case FOLLOW:
-            return {...state, users: state.users.map(user => user.id === action.payload.userId ? {...user, followed: true} : user)}
+            return {
+                ...state,
+                users: state.users.map(user => user.id === action.payload.userId ? {...user, followed: true} : user)
+            }
         case UNFOLLOW:
-            return {...state, users: state.users.map(user => user.id === action.payload.userId ? {...user, followed: false} : user)}
+            return {
+                ...state,
+                users: state.users.map(user => user.id === action.payload.userId ? {...user, followed: false} : user)
+            }
         case SET_PAGE_SIZE:
             return {...state, pageSize: Number(action.payload.pageSize), page: 1}
         case SET_CURRENT_PAGE:
             return {...state, page: action.payload.page}
+        case TOGGLE_IS_FETCHING:
+            return {...state, isFetching: action.payload.isFetching}
         default:
             return state
     }

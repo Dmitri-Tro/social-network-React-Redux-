@@ -1,5 +1,8 @@
 .info {
+    position: relative;
     display: flex;
+    min-height: 200px;
+    margin-bottom: 50px;
 }
 
 .image {

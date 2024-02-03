@@ -34,6 +34,7 @@ p {
 }
 
 .content {
+  position: relative;
   width: 100%;
 }
 

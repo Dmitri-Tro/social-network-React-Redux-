@@ -3,7 +3,12 @@ import {RootState} from "../../../../store/reduxStore";
 import {UsersData} from "../../../../interfaces/types";
 import {ChangeEvent, useCallback, useEffect, useState} from "react";
 import {usersApi} from "../../../../api/users-api/usersApi";
-import {setCurrentPageAC, setPageSizeAC, setUsersAC} from "../../../../store/reducers/usersReducer/usersReducer";
+import {
+    setCurrentPageAC,
+    setIsFetchingAC,
+    setPageSizeAC,
+    setUsersAC
+} from "../../../../store/reducers/usersReducer/usersReducer";
 
 
 export const useFindUsers = () => {
@@ -14,13 +19,21 @@ export const useFindUsers = () => {
     const users = usersData.users;
     const pagesSize = usersData.pageSize;
     const currentPage = usersData.page;
-
-    const URIParams = `page=${currentPage}&count=${pagesSize}&term=${filter}&friend=${usersData.friend}`;
+    const isFetching = usersData.isFetching;
 
     useEffect(() => {
-        usersApi.getUsers(URIParams)
-            .then(res => dispatch(setUsersAC(res.data.items, res.data.totalCount)))
-    }, [dispatch, URIParams]);
+        const uriParams = {
+            count: pagesSize,
+            page: currentPage,
+            term: ''
+        };
+        dispatch(setIsFetchingAC(true));
+        usersApi.getUsers(uriParams)
+            .then(res => {
+                dispatch(setIsFetchingAC(false));
+                dispatch(setUsersAC(res.data.items, res.data.totalCount));
+            })
+    }, [dispatch, pagesSize, currentPage]);
 
     const onFilterChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setFilter(e.currentTarget.value)
@@ -44,5 +57,5 @@ export const useFindUsers = () => {
         dispatch(setPageSizeAC(item));
     }, [dispatch]);
 
-    return {users, pagesCount, pagesSize, currentPage, filter, onFilterChange, onPageClick, onFirstPageClick, onLastPageClick, onPageSizeSelect}
+    return {users, pagesCount, pagesSize, currentPage, isFetching, filter, onFilterChange, onPageClick, onFirstPageClick, onLastPageClick, onPageSizeSelect}
 }

@@ -1,9 +1,14 @@
 .container {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-
 }
+
+.preloader {
+    top: 200px;
+}
+
 .list {
     display: flex;
     flex-direction: column;

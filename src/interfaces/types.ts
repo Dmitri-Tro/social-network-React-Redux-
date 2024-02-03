@@ -3,7 +3,14 @@ export type UsersData = {
     totalCount: number,
     pageSize: number,
     page: number,
-    friend: boolean
+    friend: boolean,
+    isFetching: boolean
+}
+
+export type FriendsData = {
+    users: User[],
+    totalCount: number,
+    isFetching: boolean
 }
 
 export type User = {
@@ -41,12 +48,8 @@ export type Post = {
 }
 
 export type UserAuthData = {
-    name: string
-    password: string
-    id: number
-    avatar: string
-    birthday: string
-    cityAddress: string
-    occupation: string
-    quot: string
+    id: number | null
+    email: string | null
+    login: string | null
+    isFetching: boolean
 }

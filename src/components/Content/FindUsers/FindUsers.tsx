@@ -5,6 +5,7 @@ import {Accordion} from "../../shared/Accordion/Accordion";
 import {Pagination} from "../../shared/Pagination/Pagination";
 import {useFindUsers} from "./useFindUsers/useFindUsers";
 import {Input} from "../../shared/Input/Input";
+import {Preloader} from "../../shared/Preloader/Preloader";
 
 
 export const FindUsers: FC = () => {
@@ -13,6 +14,7 @@ export const FindUsers: FC = () => {
         pagesCount,
         pagesSize,
         currentPage,
+        isFetching,
         filter,
         onFilterChange,
         onPageClick,
@@ -23,27 +25,34 @@ export const FindUsers: FC = () => {
 
 
     return (
-        <div className={styles.container}>
-            <Input type={'search'} value={filter} callback={(e) => {onFilterChange(e)}} />
-            <Pagination
-                pagesCount={pagesCount}
-                currentPage={currentPage}
-                onFirstPageClick={onFirstPageClick}
-                onPageClick={onPageClick}
-                onLastPageClick={onLastPageClick}
-            />
-            <ul className={styles.list}>
-                {users.map(user => <UserCard key={user.id} user={user}/>)}
-            </ul>
-            <Pagination
-                pagesCount={pagesCount}
-                currentPage={currentPage}
-                onFirstPageClick={onFirstPageClick}
-                onPageClick={onPageClick}
-                onLastPageClick={onLastPageClick}
-            />
-            <span className={styles.usersCountSpan}>Set users count on page</span>
-            <Accordion title={pagesSize.toString()} type={'secondary'} onItemSelect={onPageSizeSelect}/>
-        </div>
+        <>
+            <div className={styles.container}>
+                { isFetching && <Preloader style={styles.preloader} /> }
+                <Input type={'search'} value={filter} callback={(e) => {
+                    onFilterChange(e)
+                }}/>
+                <Pagination
+                    pagesCount={pagesCount}
+                    currentPage={currentPage}
+                    onFirstPageClick={onFirstPageClick}
+                    onPageClick={onPageClick}
+                    onLastPageClick={onLastPageClick}
+                />
+                <ul className={styles.list}>
+                    {users.map(user => (
+                            <UserCard key={user.id} user={user}/>
+                    ))}
+                </ul>
+                <Pagination
+                    pagesCount={pagesCount}
+                    currentPage={currentPage}
+                    onFirstPageClick={onFirstPageClick}
+                    onPageClick={onPageClick}
+                    onLastPageClick={onLastPageClick}
+                />
+                <span className={styles.usersCountSpan}>Set users count on page</span>
+                <Accordion title={pagesSize.toString()} type={'secondary'} onItemSelect={onPageSizeSelect}/>
+            </div>
+        </>
     )
 };

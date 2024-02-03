@@ -1,35 +1,33 @@
 import {UserAuthData} from "../../../interfaces/types";
+import {SetIsFetchingAC, TOGGLE_IS_FETCHING} from "../usersReducer/usersReducer";
 
-const initialState: UserAuthData = {
-    name: 'Dmitri',
-    password: '0002',
-    id: 2,
-    avatar: '',
-    birthday: '06.12.1987',
-    cityAddress: 'Helsinki',
-    occupation: 'Frontend-developer',
-    quot: ''
+const initialState: UserAuthData | null = {
+    id: null,
+    email: null,
+    login: null,
+    isFetching: false
 };
 
-const UPDATE_USER_AUTH_DATA = 'Update-user-auth-data';
+const SET_AUTH_DATA = 'Set-auth-data';
 
-type AuthReducerAction = UpdateUserAuthDataAC;
+type AuthReducerAction = SetAuthDataAC | SetIsFetchingAC;
 
-type UpdateUserAuthDataAC = ReturnType<typeof updateUserAuthDataAC>;
-const updateUserAuthDataAC = (name: string, password: string) => {
+type SetAuthDataAC = ReturnType<typeof setAuthDataAC>;
+export const setAuthDataAC = (authData: UserAuthData) => {
     return {
-        type: UPDATE_USER_AUTH_DATA,
+        type: SET_AUTH_DATA,
         payload: {
-            name,
-            password
+            authData
         }
     } as const
 };
 
 export const authReducer = (state: UserAuthData = initialState, action: AuthReducerAction): UserAuthData => {
     switch (action.type) {
-        case UPDATE_USER_AUTH_DATA:
-            return state
+        case SET_AUTH_DATA:
+            return {...state, ...action.payload.authData}
+        case TOGGLE_IS_FETCHING:
+            return {...state, isFetching: action.payload.isFetching}
         default:
             return state
     }

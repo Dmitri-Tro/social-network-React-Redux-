@@ -11,7 +11,7 @@ type UserCardProps = {
 
 export const UserCard: FC<UserCardProps> = memo(({user}) => {
 
-const [onFollowBtnClick, onUnfollowBtnClick] = useUserCard(user);
+const {onFollowBtnClick, onUnfollowBtnClick, onViewProfileBtnClick} = useUserCard(user);
 
     return (
         <li className={styles.container}>
@@ -30,7 +30,7 @@ const [onFollowBtnClick, onUnfollowBtnClick] = useUserCard(user);
                     <span className={styles.cityAddress}>{'User City Address will be here'}</span>
                 </div>
                 <span className={styles.quot}>{user.status || 'Status will be here'}</span>
-                <Button title={'View Profile'} callback={() => {}} type={'secondary'}
+                <Button title={'View Profile'} callback={() => onViewProfileBtnClick(user.id)} type={'secondary'}
                         style={styles.btnViewProfile}/>
             </div>
         </li>

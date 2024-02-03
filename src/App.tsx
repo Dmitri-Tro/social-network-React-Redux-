@@ -8,30 +8,37 @@ import {LoginPage} from "./components/Content/LoginPage/LoginPage";
 import {Navigate, Route, Routes} from "react-router-dom";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 import {FindUsers} from "./components/Content/FindUsers/FindUsers";
-import {useApp} from "./useApp";
+import {useSelector} from "react-redux";
+import {RootState} from "./store/reduxStore";
+import {UserAuthData} from "./interfaces/types";
 
 function App() {
-    const {isLogin, isLoginUser, isLogoutUser} = useApp();
+
+    const authData = useSelector<RootState, UserAuthData>(state => state.userAuthData);
+
+    let isLogin = false;
+    authData.id ? isLogin = true : isLogin = false
+
     return (
         <div className='wrapper'>
             <div className='container'>
-                <Header onLogoutBtnClick={isLogoutUser}/>
+                <Header onLogoutBtnClick={() => {}}/>
                 <Sidebar isLogin={isLogin}/>
                 <div className='content'>
                     <Routes>
                         <Route path={'/'}
-                               element={isLogin ? ( <Navigate to={'/profile'} /> ) : <LoginPage isLoginUser={isLoginUser} />}
+                               element={isLogin ? ( <Navigate to={'/profile'} /> ) : <LoginPage isLoginUser={() => {}} />}
                         />
                         <Route path={'/*'}
                                element={ <ErrorPage />}
                         />
-                        <Route path={'/profile/'}
+                        <Route path={'/profile/:userId?'}
                                element={isLogin ? ( <Profile /> ) : <Navigate to={'/'}/>}
                         />
                         <Route path={'/dialogs/*'}
                                element={isLogin ? ( <Dialogs /> ) : <Navigate to={'/'}/>}
                         />
-                        <Route path={'/find/*'}
+                        <Route path={'/find/'}
                                element={isLogin ? ( <FindUsers /> ) : <Navigate to={'/'}/>}
                         />
                     </Routes>

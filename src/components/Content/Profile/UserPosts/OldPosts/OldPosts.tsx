@@ -7,11 +7,14 @@ import {defaultAvatar} from "../../../../../images/images";
 import {useOldPosts} from "./useOldPosts/useOldPosts";
 
 type OldPostsProps = {
-    userAvatar: string
+    userAvatars: {
+        small: string | null
+        large: string | null
+    }
     post: Post
 }
 
-export const OldPosts: FC<OldPostsProps> = memo(({userAvatar, post}) => {
+export const OldPosts: FC<OldPostsProps> = memo(({userAvatars, post}) => {
 
     const {
         postTitle,
@@ -27,7 +30,7 @@ export const OldPosts: FC<OldPostsProps> = memo(({userAvatar, post}) => {
         <div className={styles.container}>
             <div className={styles.post}>
                 <img className={styles.userAvatar}
-                     src={userAvatar || defaultAvatar}
+                     src={userAvatars.large || userAvatars.small || defaultAvatar}
                      alt='user_avatar'/>
                 {postViewMode === 'readonly' &&
                     <p onDoubleClick={() => setPostViewMode('updating')}

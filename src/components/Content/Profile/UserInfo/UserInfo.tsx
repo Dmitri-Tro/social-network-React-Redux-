@@ -1,38 +1,58 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import styles from './UserInfo.module.css';
-import {UserAuthData} from "../../../../interfaces/types";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../../store/reduxStore";
 import {defaultAvatar} from "../../../../images/images";
+import {ApiUser, usersApi} from "../../../../api/users-api/usersApi";
+import {setIsFetchingAC} from "../../../../store/reducers/usersReducer/usersReducer";
+import {setUserProfileAC} from "../../../../store/reducers/profileReducer/profileReducer";
+import {Preloader} from "../../../shared/Preloader/Preloader";
 
+type UserInfoProps = {
+    userId: number
+}
+export const UserInfo: FC<UserInfoProps> = ({userId}) => {
 
-export const UserInfo:FC = () => {
+    const dispatch = useDispatch();
 
-    const user = useSelector<RootState, UserAuthData>(state => state.userAuthData);
+    useEffect(() => {
+        dispatch(setIsFetchingAC(true));
+        usersApi.getUserProfile(userId)
+            .then(res => {
+                dispatch(setIsFetchingAC(false));
+                dispatch(setUserProfileAC(res.data));
+            })
+    }, [dispatch, userId]);
 
-    return (
-        <div className={styles.info}>
-            <img className={styles.image} alt='user_image'
-                 src={user.avatar || defaultAvatar}/>
-            <div className={styles.description}>
-                <h2 className={styles.name}>{user.name}</h2>
-                <div className={styles.infoBlock}>
-                    <span className={`${styles.default} ${styles.item}`}>Birthday:&nbsp;</span>
-                    <span className={styles.item}>{user.birthday}</span>
-                </div>
-                <div className={styles.infoBlock}>
-                    <span className={`${styles.default} ${styles.item}`}>City:&nbsp;</span>
-                    <span className={styles.item}>{user.cityAddress}</span>
-                </div>
-                <div className={styles.infoBlock}>
-                    <span className={`${styles.default} ${styles.item}`}>Occupation:&nbsp;</span>
-                    <span className={styles.item}>{user.occupation}</span>
-                </div>
-                <div className={styles.infoBlock}>
-                    <span className={`${styles.default} ${styles.item}`}>Quot:&nbsp;</span>
-                    <span className={styles.item}>{user.quot}</span>
+    const user = useSelector<RootState, ApiUser | null>(state => state.userProfileData);
+
+    if (!user) {
+        return (
+            <div className={styles.info}>
+                <Preloader/>
+            </div>
+        )
+    } else {
+        return (
+            <div className={styles.info}>
+                <img className={styles.image} alt='user_image'
+                     src={user.photos.large || user.photos.small || defaultAvatar}/>
+                <div className={styles.description}>
+                    <h2 className={styles.name}>{user.fullName}</h2>
+                    <div className={styles.infoBlock}>
+                        <span className={`${styles.default} ${styles.item}`}>Main contact:&nbsp;</span>
+                        <span className={styles.item}>{user.contacts.mainLink}</span>
+                    </div>
+                    <div className={styles.infoBlock}>
+                        <span className={`${styles.default} ${styles.item}`}>GitHub:&nbsp;</span>
+                        <span className={styles.item}>{user.contacts.github}</span>
+                    </div>
+                    <div className={styles.infoBlock}>
+                        <span className={`${styles.default} ${styles.item}`}>Looking for a job:&nbsp;</span>
+                        <span className={styles.item}>{user.lookingForAJobDescription}</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+    }
 };

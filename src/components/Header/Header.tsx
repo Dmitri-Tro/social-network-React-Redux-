@@ -1,12 +1,28 @@
-import React, {FC, memo, useCallback} from 'react';
+import React, {FC, memo, useCallback, useEffect} from 'react';
 import styles from './Header.module.css';
 import {Button} from "../shared/Button/Button";
+import {useDispatch} from "react-redux";
+import {setIsFetchingAC} from "../../store/reducers/usersReducer/usersReducer";
+import {setAuthDataAC} from "../../store/reducers/authReducer/authReducer";
+import {authApi} from "../../api/auth-api/authApi";
 
 type HeaderProps = {
     onLogoutBtnClick: () => void
 }
 
 export const Header: FC<HeaderProps> = memo(({onLogoutBtnClick}) => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(setIsFetchingAC(true));
+        authApi.getAuth()
+            .then(res => {
+                dispatch(setIsFetchingAC(false));
+                if (res.data.resultCode === 0) {
+                    dispatch(setAuthDataAC(res.data.data))
+                }
+            })
+    }, [dispatch]);
+
     const onLogoutBtnClickHandler = useCallback(() => {
         onLogoutBtnClick();
     }, [onLogoutBtnClick]);

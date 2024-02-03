@@ -12,3 +12,7 @@ border-width: 2px;
 .input:focus {
     border-width: 2px;
 }
+
+.preloader {
+    left: 45%;
+}
