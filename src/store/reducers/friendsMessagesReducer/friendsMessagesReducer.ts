@@ -4,7 +4,7 @@ const initialState: FriendsMessagesData = [  ];
 
 const DELETE_FRIEND_MESSAGE = 'Delete-friend-message';
 
-type FriendsMessagesReducerAction = DeleteFriendMessageAC
+export type FriendsMessagesReducerAction = DeleteFriendMessageAC
 
 type DeleteFriendMessageAC = ReturnType<typeof deleteFriendMessageAC>
 export const deleteFriendMessageAC = (messageId: string) => {

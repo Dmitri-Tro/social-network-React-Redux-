@@ -1,12 +1,17 @@
 import {User, UsersData} from "../../../interfaces/types";
+import {Dispatch} from "redux";
+import {usersApi} from "../../../api/users-api/usersApi";
+import {setFriendsAC} from "../friendsReducer/friendsReducer";
+import {profileApi} from "../../../api/profileApi/profileApi";
 
-type UsersReducerAction =
+export type UsersReducerAction =
     | SetUsersAC
     | FollowAC
     | UnfollowAC
     | SetPageSizeAC
     | SetCurrentPageAC
-    | SetIsFetchingAC;
+    | SetIsFetchingAC
+    | FollowingInProgressAC
 
 const SET_USERS = 'SET-USERS';
 const FOLLOW = 'FOLLOW';
@@ -14,14 +19,15 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_PAGE_SIZE = 'SET_PAGE_SIZE';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 export const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
+const FOLLOWING_IN_PROGRESS = 'FOLLOWING_IN_PROGRESS';
 
 const initialState: UsersData = {
-    users: [],
+    users: [] as User[],
     totalCount: 0,
     pageSize: 10,
     page: 1,
     friend: false,
-    isFetching: false
+    isFetching: false,
 
 };
 
@@ -50,6 +56,17 @@ export const unfollowAC = (userId: number) => {
         type: UNFOLLOW,
         payload: {
             userId
+        }
+    } as const
+}
+
+type FollowingInProgressAC = ReturnType<typeof followingInProgressAC>
+export const followingInProgressAC = (userId: number, inProgress: boolean) => {
+    return {
+        type: FOLLOWING_IN_PROGRESS,
+        payload: {
+            userId,
+            inProgress
         }
     } as const
 }
@@ -103,7 +120,63 @@ export const usersReducer = (state: UsersData = initialState, action: UsersReduc
             return {...state, page: action.payload.page}
         case TOGGLE_IS_FETCHING:
             return {...state, isFetching: action.payload.isFetching}
+        case FOLLOWING_IN_PROGRESS:
+            return {...state,
+                users: state.users.map(user => user.id === action.payload.userId ? {...user, inProgress: action.payload.inProgress} : user)
+            }
         default:
             return state
     }
 };
+
+// THUNKS
+
+export const getUsersTC = (pagesSize: number, currentPage: number) => (dispatch: Dispatch) => {
+    const uriParams = {
+        count: pagesSize,
+        page: currentPage,
+        term: ''
+    };
+    dispatch(setIsFetchingAC(true));
+    usersApi.getUsers(uriParams)
+        .then(res => {
+            dispatch(setIsFetchingAC(false));
+            dispatch(setUsersAC(res.data.items, res.data.totalCount));
+        })
+}
+
+export const followingTC = (userId: number) => (dispatch: Dispatch) => {
+    dispatch(followingInProgressAC(userId, true));
+    usersApi.follow(userId)
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(followAC(userId))
+            }
+            dispatch(followingInProgressAC(userId, false));
+        })
+    const uriParams = {
+        friend: true
+    };
+    profileApi.getFriends(uriParams)
+        .then(res => {
+            dispatch(setFriendsAC(res.data.items, res.data.totalCount));
+        })
+}
+
+export const unfollowingTC = (userId: number) => (dispatch: Dispatch) => {
+    dispatch(followingInProgressAC(userId, true));
+    usersApi.unfollow(userId)
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(unfollowAC(userId))
+            }
+            dispatch(followingInProgressAC(userId,false));
+        })
+    const uriParams = {
+        friend: true
+    };
+    profileApi.getFriends(uriParams)
+        .then(res => {
+            dispatch(setFriendsAC(res.data.items, res.data.totalCount));
+        })
+}

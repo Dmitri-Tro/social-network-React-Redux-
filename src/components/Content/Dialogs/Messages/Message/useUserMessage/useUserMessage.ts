@@ -12,7 +12,7 @@ export const useUserMessage = (message: UserMessage) => {
     const [messageViewMode, setMessageViewMode] = useState<'readonly' | 'updating'>('readonly');
     const [messageTitle, setMessageTitle] = useState(message.message);
     const dispatch = useDispatch();
-    const user = useSelector<RootState, ApiUser| null>(state => state.userProfileData);
+    const user = useSelector<RootState, ApiUser| null>(state => state.userProfileData.profile);
 
     const updateMessageTitle = useCallback(() => {
         dispatch(updateMessageTitleAC(message.messageId, messageTitle));

@@ -1,10 +1,10 @@
 import {ChangeEvent, useCallback, useState} from "react";
-import {useDispatch} from "react-redux";
 import {addPostAC} from "../../../../../../store/reducers/postsReducer/postsReducer";
+import {useAppDispatch} from "../../../../../../store/reduxStore";
 
 export const useNewPost = () => {
     const [title, setTitle] = useState('');
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const onTitleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
         setTitle(e.currentTarget.value);

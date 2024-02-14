@@ -2,17 +2,13 @@ import React, {FC} from 'react';
 import styles from './Posts.module.css';
 import {NewPost} from "./NewPost/NewPost";
 import {OldPosts} from "./OldPosts/OldPosts";
-import {useSelector} from "react-redux";
-import {RootState} from "../../../../store/reduxStore";
-import {PostsData} from "../../../../interfaces/types";
-import {ApiUser} from "../../../../api/users-api/usersApi";
+import {useAppSelector} from "../../../../store/reduxStore";
 import {Preloader} from "../../../shared/Preloader/Preloader";
 
 
 export const Posts: FC = () => {
-    const postsData = useSelector<RootState, PostsData>(state => state.postsData);
-    const user = useSelector<RootState, ApiUser | null>(state =>
-        state.userProfileData)
+    const postsData = useAppSelector(state => state.postsData);
+    const user = useAppSelector(state => state.userProfileData.profile)
     if (!user) {
         return <Preloader />
     } else {

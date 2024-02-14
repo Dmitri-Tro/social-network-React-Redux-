@@ -1,13 +1,22 @@
 import React, {FC, useCallback} from 'react';
-import { useNavigate } from 'react-router-dom';
+import {Navigate, useNavigate} from 'react-router-dom';
 import styles from './errorPage.module.css';
 import {Button} from "../shared/Button/Button";
+import {useAppSelector} from "../../store/reduxStore";
 
 const ErrorPage: FC = () => {
+
     const navigate = useNavigate();
+    const isLogin = useAppSelector(state => state.userAuthData.isLogin)
+
     const handleNavigateToHome = useCallback(() => {
         navigate('/');
     }, [navigate]);
+
+    if (!isLogin) {
+        return <Navigate to={'/login'} />
+    }
+
     return (
         <div className={styles.errorPage} id="error-page">
             <h1 className={styles.title}>Oops!</h1>

@@ -7,7 +7,7 @@ const ADD_NEW_USER_MESSAGE = 'Add-new-user-message';
 const UPDATE_MESSAGE_TITLE = 'Update-message-title';
 const DELETE_MESSAGE = 'Delete-message';
 
-type UserMessagesReducerAction = AddUserMessageReducerAC | UpdateMessageTitleAC | DeleteMessageAC;
+export type UserMessagesReducerAction = AddUserMessageReducerAC | UpdateMessageTitleAC | DeleteMessageAC;
 
 type AddUserMessageReducerAC = ReturnType<typeof addUserMessageReducerAC>
 export const addUserMessageReducerAC = (messageTitle: string) => {

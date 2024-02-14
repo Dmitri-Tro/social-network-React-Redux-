@@ -19,9 +19,16 @@ const {onFollowBtnClick, onUnfollowBtnClick, onViewProfileBtnClick} = useUserCar
                 <img src={user.photos.large || user.photos.small || defaultAvatar} alt={'user avatar'}
                      className={styles.avatar}/>
                 {user.followed
-                    ? <Button title={'Unfollow'} callback={onUnfollowBtnClick} type={'secondary'}
-                              style={styles.btnFollow}/>
-                    : <Button title={'Follow'} callback={onFollowBtnClick} type={'main'} style={styles.btnFollow}/>
+                    ? <Button title={'Unfollow'}
+                              callback={onUnfollowBtnClick} type={'secondary'}
+                              style={styles.btnFollow}
+                              isDisabled={user.inProgress}
+                    />
+                    : <Button title={'Follow'}
+                              callback={onFollowBtnClick}
+                              type={'main'} style={styles.btnFollow}
+                              isDisabled={user.inProgress}
+                    />
                 }
             </div>
             <div className={styles.content}>
@@ -29,7 +36,7 @@ const {onFollowBtnClick, onUnfollowBtnClick, onViewProfileBtnClick} = useUserCar
                     <span className={styles.userName}>{user.name}</span>
                     <span className={styles.cityAddress}>{'User City Address will be here'}</span>
                 </div>
-                <span className={styles.quot}>{user.status || 'Status will be here'}</span>
+                <span className={styles.quot}>{'Status: ' + (user.status ? user.status : '')}</span>
                 <Button title={'View Profile'} callback={() => onViewProfileBtnClick(user.id)} type={'secondary'}
                         style={styles.btnViewProfile}/>
             </div>

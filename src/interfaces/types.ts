@@ -4,7 +4,7 @@ export type UsersData = {
     pageSize: number,
     page: number,
     friend: boolean,
-    isFetching: boolean
+    isFetching: boolean,
 }
 
 export type FriendsData = {
@@ -23,6 +23,7 @@ export type User = {
     }
     status?: string;
     followed: boolean;
+    inProgress: boolean
 }
 
 export type UserMessagesData = Array<UserMessage>
@@ -52,4 +53,5 @@ export type UserAuthData = {
     email: string | null
     login: string | null
     isFetching: boolean
+    isLogin: boolean
 }

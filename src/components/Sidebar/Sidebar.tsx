@@ -1,17 +1,16 @@
-import React, {FC, memo} from 'react';
+import React, {FC} from 'react';
 import styles from './Sidebar.module.css';
 import {Friends} from "./Friends/Friends";
 import {NavLink} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store/reduxStore";
+import {UserAuthData} from "../../interfaces/types";
 
-type SidebarPropsType = {
-    isLogin: boolean
-}
 
-export const Sidebar:FC<SidebarPropsType> = memo(({isLogin}) => {
-
+export const Sidebar:FC = () => {
+    const authData = useSelector<RootState, UserAuthData>(state => state.userAuthData);
     return (
         <div className={styles.container}>
-            {isLogin &&
                 <nav className={styles.navigation}>
                     <ul>
                         <li className={styles.item}>
@@ -37,8 +36,7 @@ export const Sidebar:FC<SidebarPropsType> = memo(({isLogin}) => {
                         </li>
                     </ul>
                 </nav>
-            }
-            {isLogin && <Friends/>}
+            {authData.isLogin && <Friends/>}
         </div>
     )
-});
+};

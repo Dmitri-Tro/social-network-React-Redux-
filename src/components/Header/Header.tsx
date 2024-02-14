@@ -1,37 +1,33 @@
-import React, {FC, memo, useCallback, useEffect} from 'react';
+import React, {FC, useCallback} from 'react';
 import styles from './Header.module.css';
 import {Button} from "../shared/Button/Button";
-import {useDispatch} from "react-redux";
-import {setIsFetchingAC} from "../../store/reducers/usersReducer/usersReducer";
-import {setAuthDataAC} from "../../store/reducers/authReducer/authReducer";
-import {authApi} from "../../api/auth-api/authApi";
+import {RootState, useAppDispatch} from "../../store/reduxStore";
+import {useSelector} from "react-redux";
+import {UserAuthData} from "../../interfaces/types";
+import {logoutTC} from "../../store/reducers/authReducer/authReducer";
 
-type HeaderProps = {
-    onLogoutBtnClick: () => void
-}
 
-export const Header: FC<HeaderProps> = memo(({onLogoutBtnClick}) => {
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(setIsFetchingAC(true));
-        authApi.getAuth()
-            .then(res => {
-                dispatch(setIsFetchingAC(false));
-                if (res.data.resultCode === 0) {
-                    dispatch(setAuthDataAC(res.data.data))
-                }
-            })
-    }, [dispatch]);
+export const Header: FC = () => {
+const dispatch = useAppDispatch();
+    const authData = useSelector<RootState, UserAuthData>(state => state.userAuthData);
 
     const onLogoutBtnClickHandler = useCallback(() => {
-        onLogoutBtnClick();
-    }, [onLogoutBtnClick]);
+dispatch(logoutTC());
+    }, [dispatch]);
+
     return (
         <header className={styles.container}>
             <img className={styles.img} alt='logo'
                  src='https://uploads.turbologo.com/uploads/design/hq_preview_image/1503315/draw_svg20210630-4871-1vsl6q8.svg.png'/>
             <h1 className={styles.welcome}>Welcome to your new social network!!!</h1>
-            <Button title={'Logout'} callback={onLogoutBtnClickHandler} type={'secondary'} style={styles.btn} />
+            {
+                authData.isLogin &&
+                <Button title={'Logout'}
+                        callback={onLogoutBtnClickHandler}
+                        type={'secondary'}
+                        style={styles.btn}
+                />
+            }
         </header>
     )
-});
+};

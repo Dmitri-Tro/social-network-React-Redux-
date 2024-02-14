@@ -1,13 +1,11 @@
 import React, {FC} from 'react';
 import styles from './Contacts.module.css';
 import {Contact} from "./Contact/Contact";
-import {useSelector} from "react-redux";
-import {RootState} from "../../../../store/reduxStore";
-import {User} from "../../../../interfaces/types";
+import {useAppSelector} from "../../../../store/reduxStore";
 
 
 export const Contacts:FC = () => {
-    const friends = useSelector<RootState, User[]>(state => state.usersData.users.filter(user => user.followed));
+    const friends = useAppSelector(state => state.usersData.users.filter(user => user.followed));
     return (
         <div className={styles.container}>
             <ul className={styles.list}>

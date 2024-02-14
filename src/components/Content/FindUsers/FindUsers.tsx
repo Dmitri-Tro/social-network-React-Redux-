@@ -6,6 +6,8 @@ import {Pagination} from "../../shared/Pagination/Pagination";
 import {useFindUsers} from "./useFindUsers/useFindUsers";
 import {Input} from "../../shared/Input/Input";
 import {Preloader} from "../../shared/Preloader/Preloader";
+import {useAppSelector} from "../../../store/reduxStore";
+import {Navigate} from "react-router-dom";
 
 
 export const FindUsers: FC = () => {
@@ -22,7 +24,11 @@ export const FindUsers: FC = () => {
         onLastPageClick,
         onPageSizeSelect} = useFindUsers();
 
+    const isLogin = useAppSelector(state => state.userAuthData.isLogin)
 
+    if (!isLogin) {
+        return <Navigate to={'/login'} />
+    }
 
     return (
         <>

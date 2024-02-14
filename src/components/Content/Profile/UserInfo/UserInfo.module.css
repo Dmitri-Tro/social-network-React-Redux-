@@ -29,6 +29,7 @@
 
 .infoBlock {
     flex-direction: row;
+    margin-top: 10px;
     margin-bottom: 10px;
     font-weight: 500;
 }
@@ -39,4 +40,8 @@
 
 .item {
     display: inline-block;
+}
+
+.profileStatus {
+
 }

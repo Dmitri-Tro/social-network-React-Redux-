@@ -22,7 +22,7 @@ export type ApiUser = {
     }
 }
 
-export type UserBaseResponse<T={}> = {
+export type BaseResponse<T={}> = {
     resultCode: number
     messages: string[],
     data: T
@@ -32,10 +32,6 @@ type GetUserURIParams = {
     count: number
     page: number
     term: string
-}
-
-type GetFriendsURIParams = {
-    friend: boolean
 }
 
 export type GetUserResponse = {
@@ -57,18 +53,12 @@ export const usersApi = {
         const paramsString = `page=${uriParams.page}&count=${uriParams.count}&term=${uriParams.term}`
         return instance.get<GetUserResponse>(`/users?${paramsString}`);
     },
-    getUserProfile: ( userId: number) => {
-        return instance.get<ApiUser>(`/profile/${userId}`);
-    },
     follow: (userId: number) => {
-        return instance.post<UserBaseResponse, AxiosResponse<UserBaseResponse>>(`/follow/${userId}`)
+        return instance.post<BaseResponse, AxiosResponse<BaseResponse>>(`/follow/${userId}`)
     },
     unfollow: (userId: number) => {
-        return instance.delete<UserBaseResponse, AxiosResponse<UserBaseResponse>>(`/follow/${userId}`)
+        return instance.delete<BaseResponse, AxiosResponse<BaseResponse>>(`/follow/${userId}`)
     },
-    getFriends: (uriParams: GetFriendsURIParams) => {
-        const paramsString = `friend=${uriParams.friend}`
-        return instance.get<GetUserResponse>(`/users?${paramsString}`);
-    },
+
 
 };

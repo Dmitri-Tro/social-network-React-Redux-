@@ -1,10 +1,17 @@
 import axios from "axios";
 import {UserAuthData} from "../../interfaces/types";
+import {BaseResponse} from "../users-api/usersApi";
 
 export type GetAuthResponse = {
     resultCode: number
     messages: [],
     data: UserAuthData
+}
+
+export type LoginData = {
+    email: string,
+    password: string,
+    rememberMe?: boolean
 }
 
 const instance = axios.create({
@@ -16,7 +23,13 @@ const instance = axios.create({
 });
 
 export const authApi = {
-    getAuth: () => {
+    me: () => {
         return instance.get<GetAuthResponse>(`/auth/me`)
+    },
+    login: (data: LoginData) => {
+        return instance.post<BaseResponse<{userId: number}>>(` /auth/login`, data)
+    },
+    logout: () => {
+        return instance.delete<BaseResponse>(` /auth/login`)
     }
 };

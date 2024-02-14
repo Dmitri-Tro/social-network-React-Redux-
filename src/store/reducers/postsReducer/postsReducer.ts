@@ -27,7 +27,7 @@ const UPDATE_LIKES_AMOUNT = "Update-likes-amount";
 const DELETE_POST = "Delete-post";
 const UPDATE_POST_TITLE = "Update-post-title";
 
-type PostsReducerAction = AddPostAC | UpdateLikesAmountAC | DeletePostAC | UpdatePostTitle;
+export type PostsReducerAction = AddPostAC | UpdateLikesAmountAC | DeletePostAC | UpdatePostTitle;
 
 type AddPostAC = ReturnType<typeof addPostAC>
 export const addPostAC = (title: string) => {
