@@ -1,50 +1,55 @@
-import React, {ChangeEvent, FC, useCallback, useState} from "react";
-import styles from './ProfileStatus.module.css'
+import React, { ChangeEvent, FC, memo, useCallback, useState } from "react";
+import styles from "./ProfileStatus.module.css";
 
 type EditableTitleProps = {
-    oldTitle: string
-    setNewTitle: (title: string) => void
-    disabled?: boolean
-    placeholder?: string
-    stylesClass?: string
-}
+    oldTitle: string;
+    setNewTitle: (title: string) => void;
+    disabled?: boolean;
+    placeholder?: string;
+    stylesClass?: string;
+};
 
-type Mode = 'viewMode' | 'inputMode';
-export const ProfileStatus: FC<EditableTitleProps> = React.memo(({
-                                                                     oldTitle,
-                                                                     setNewTitle,
-                                                                     disabled,
-                                                                     placeholder,
-                                                                     stylesClass
-                                                                 }) => {
+type Mode = "viewMode" | "inputMode";
+export const ProfileStatus: FC<EditableTitleProps> = memo(({
+                                                               oldTitle,
+                                                               setNewTitle,
+                                                               disabled,
+                                                               placeholder,
+                                                               stylesClass
+                                                           }) => {
+        const [updatedTitle, setUpdatedTitle] = useState<string>(oldTitle);
+        const [mode, setMode] = useState<Mode>("viewMode");
 
-    const [updatedTitle, setUpdatedTitle] = useState<string>(oldTitle);
-    const [mode, setMode] = useState<Mode>('viewMode');
-    const onTitleInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setUpdatedTitle(e.currentTarget.value);
-    };
-    const onInputBlurHandler = useCallback(() => {
-        setNewTitle(updatedTitle);
-        setMode('viewMode');
-    }, [setNewTitle, updatedTitle]);
+        const titleInputChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+            setUpdatedTitle(e.currentTarget.value);
+        }, [setUpdatedTitle]);
+        const inputBlurHandler = useCallback(() => {
+            setNewTitle(updatedTitle);
+            setMode("viewMode");
+        }, [setNewTitle, updatedTitle]);
+        const setModeHandler = useCallback(() => setMode("inputMode"), [setMode])
 
-    return (
-        <>
-            {mode === 'viewMode' ?
-                <span className={styles.editableTitle + ' ' + stylesClass}
-                      onDoubleClick={() => setMode('inputMode')}
-                >
-                    {oldTitle}
-                </span> :
-                <input className={styles.editableTitleInput}
-                       value={updatedTitle}
-                       onChange={onTitleInputChangeHandler}
-                       onBlur={onInputBlurHandler}
-                       autoFocus
-                       disabled={disabled}
-                       placeholder={placeholder}
-                />
-            }
-        </>
-    )
-});
+        return (
+            <>
+                {mode === "viewMode" ? (
+                    <span
+                        className={styles.editableTitle + " " + stylesClass}
+                        onDoubleClick={setModeHandler}
+                    >
+                        {oldTitle}
+                    </span>
+                ) : (
+                    <input
+                        className={styles.editableTitleInput}
+                        value={updatedTitle}
+                        onChange={titleInputChangeHandler}
+                        onBlur={inputBlurHandler}
+                        autoFocus
+                        disabled={disabled}
+                        placeholder={placeholder}
+                    />
+                )}
+            </>
+        );
+    }
+);

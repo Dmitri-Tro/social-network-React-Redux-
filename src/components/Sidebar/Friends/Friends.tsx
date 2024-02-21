@@ -1,20 +1,22 @@
-import React, {FC, useEffect} from "react";
-import styles from './Friends.module.css';
-import {Friend} from "./Friend/Friend";
-import {useAppDispatch, useAppSelector} from "../../../store/reduxStore";
-import {getFriendsTC} from "../../../store/reducers/friendsReducer/friendsReducer";
+import React, { FC, useEffect } from "react";
+import styles from "./Friends.module.css";
+import { Friend } from "./Friend/Friend";
+import { useAppDispatch, useAppSelector } from "store/reduxStore";
+import { getFriendsTC } from "store/reducers/friendsReducer/friendsReducer";
+import { selectFriends } from "store/reducers/friendsReducer/friendsSelectors";
 
 export const Friends: FC = () => {
     const dispatch = useAppDispatch();
     useEffect(() => {
-        dispatch(getFriendsTC())
+        dispatch(getFriendsTC());
     }, [dispatch]);
-    const friends = useAppSelector(state => state.friendsData.users);
+    const friends = useAppSelector(selectFriends);
+
     return (
         <div className={styles.container}>
             <ul className={styles.list}>
-                { friends && friends.filter((f, i)=> i < 5).map((friend) => <Friend key={friend.id} friend={friend} />)}
+                {friends && friends.filter((f, i) => i < 5).map((friend) => <Friend key={friend.id} friend={friend} />)}
             </ul>
         </div>
-    )
+    );
 };

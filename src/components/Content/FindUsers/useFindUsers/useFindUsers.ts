@@ -1,15 +1,12 @@
-import {useAppDispatch, useAppSelector} from "../../../../store/reduxStore";
-import {ChangeEvent, useCallback, useEffect, useState} from "react";
-import {
-    getUsersTC,
-    setCurrentPageAC,
-    setPageSizeAC,
-} from "../../../../store/reducers/usersReducer/usersReducer";
+import { useAppDispatch, useAppSelector } from "store/reduxStore";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { getUsersTC, setCurrentPageAC, setPageSizeAC } from "store/reducers/usersReducer/usersReducer";
+import { selectUsersData } from "store/reducers/usersReducer/usersSelectors";
 
 export const useFindUsers = () => {
     const dispatch = useAppDispatch();
-    const usersData = useAppSelector(state => state.usersData);
-    const [filter, setFilter] = useState('');
+    const usersData = useAppSelector(selectUsersData);
+    const [filter, setFilter] = useState("");
 
     const users = usersData.users;
     const pagesSize = usersData.pageSize;
@@ -17,18 +14,21 @@ export const useFindUsers = () => {
     const isFetching = usersData.isFetching;
 
     useEffect(() => {
-        dispatch(getUsersTC(pagesSize, currentPage))
+        dispatch(getUsersTC(pagesSize, currentPage));
     }, [dispatch, pagesSize, currentPage]);
 
     const onFilterChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        setFilter(e.currentTarget.value)
-    }, [])
+        setFilter(e.currentTarget.value);
+    }, []);
 
     const pagesCount = Math.ceil(usersData.totalCount / pagesSize);
 
-    const onPageClick = useCallback((p: number) => {
-        dispatch(setCurrentPageAC(p));
-    }, [dispatch]);
+    const onPageClick = useCallback(
+        (p: number) => {
+            dispatch(setCurrentPageAC(p));
+        },
+        [dispatch],
+    );
 
     const onFirstPageClick = useCallback(() => {
         dispatch(setCurrentPageAC(1));
@@ -38,9 +38,12 @@ export const useFindUsers = () => {
         dispatch(setCurrentPageAC(pagesCount));
     }, [dispatch, pagesCount]);
 
-    const onPageSizeSelect = useCallback((item: string) => {
-        dispatch(setPageSizeAC(item));
-    }, [dispatch]);
+    const onPageSizeSelect = useCallback(
+        (item: string) => {
+            dispatch(setPageSizeAC(item));
+        },
+        [dispatch],
+    );
 
     return {
         users,
@@ -53,6 +56,6 @@ export const useFindUsers = () => {
         onPageClick,
         onFirstPageClick,
         onLastPageClick,
-        onPageSizeSelect
-    }
-}
+        onPageSizeSelect,
+    };
+};

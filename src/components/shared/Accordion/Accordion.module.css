@@ -1,4 +1,6 @@
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     margin: 0;
 }
 
@@ -53,7 +55,7 @@ h1, h2, h3 {
 .accordionMainTitle:focus,
 .accordionMainTitle:hover,
 .accordionMainItem:focus,
-.accordionMainItem:hover{
+.accordionMainItem:hover {
     outline: none;
     color: blue;
     background-color: white;
@@ -63,7 +65,7 @@ h1, h2, h3 {
 .accordionSecondaryTitle:focus,
 .accordionSecondaryTitle:hover,
 .accordionSecondaryItem:focus,
-.accordionSecondaryItem:hover{
+.accordionSecondaryItem:hover {
     outline: none;
     color: white;
     background-color: cornflowerblue;

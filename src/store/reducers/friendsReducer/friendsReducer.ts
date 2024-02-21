@@ -1,46 +1,44 @@
-import {FriendsData, User} from "../../../interfaces/types";
-import {Dispatch} from "redux";
-import {profileApi} from "../../../api/profileApi/profileApi";
+import { FriendsData, User } from "interfaces/types";
+import { Dispatch } from "redux";
+import { profileApi } from "api/profileApi/profileApi";
 
-export type FriendsReducerAction =
-    | SetFriends
-
-const SET_FRIENDS = 'SET_FRIENDS';
+const SET_FRIENDS = "SET_FRIENDS";
 
 const initialState: FriendsData = {
     users: [],
     totalCount: 0,
-    isFetching: false
-}
+    isFetching: false,
+};
 
-type SetFriends = ReturnType<typeof setFriendsAC>
+export const friendsReducer = (state: FriendsData = initialState, action: FriendsReducerAction) => {
+    switch (action.type) {
+        case SET_FRIENDS:
+            return { ...state, users: action.payload.friends, totalCount: action.payload.friendsCount };
+        default:
+            return state;
+    }
+};
+
+// ACTIONS
 export const setFriendsAC = (friends: User[], friendsCount: number) => {
     return {
         type: SET_FRIENDS,
         payload: {
             friends,
             friendsCount,
-        }
-    } as const
-}
-
-export const friendsReducer = (state: FriendsData = initialState, action: FriendsReducerAction) => {
-    switch (action.type) {
-        case SET_FRIENDS:
-            return {...state, users: action.payload.friends, totalCount: action.payload.friendsCount}
-        default:
-            return state
-    }
+        },
+    } as const;
 };
 
 // THUNKS
-
 export const getFriendsTC = () => (dispatch: Dispatch) => {
     const uriParams = {
-        friend: true
+        friend: true,
     };
-    profileApi.getFriends(uriParams)
-        .then(res => {
-            dispatch(setFriendsAC(res.data.items, res.data.totalCount));
-        })
-}
+    profileApi.getFriends(uriParams).then((res) => {
+        dispatch(setFriendsAC(res.data.items, res.data.totalCount));
+    });
+};
+
+// TYPES
+export type FriendsReducerAction = ReturnType<typeof setFriendsAC>;

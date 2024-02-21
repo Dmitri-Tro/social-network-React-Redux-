@@ -1,25 +1,32 @@
-import {useCallback, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../../../../../store/reduxStore";
-import {UserMessage} from "../../../../../../interfaces/types";
+import { useCallback, useState } from "react";
+import { useAppDispatch, useAppSelector } from "store/reduxStore";
+import { UserMessage } from "interfaces/types";
 import {
-    deleteMessageAC,
-    updateMessageTitleAC
-} from "../../../../../../store/reducers/userMessagesReducer/userMessagesReducer";
-import {ApiUser} from "../../../../../../api/users-api/usersApi";
+    deleteMessageTC,
+    updateMessageTitleTC
+} from "store/reducers/userMessagesReducer/userMessagesReducer";
+import { selectUserProfile } from "store/reducers/profileReducer/profileSelectors";
 
 export const useUserMessage = (message: UserMessage) => {
-    const [messageViewMode, setMessageViewMode] = useState<'readonly' | 'updating'>('readonly');
+    const [messageViewMode, setMessageViewMode] = useState<"readonly" | "updating">("readonly");
     const [messageTitle, setMessageTitle] = useState(message.message);
-    const dispatch = useDispatch();
-    const user = useSelector<RootState, ApiUser| null>(state => state.userProfileData.profile);
+    const dispatch = useAppDispatch();
+    const user = useAppSelector(selectUserProfile);
 
     const updateMessageTitle = useCallback(() => {
-        dispatch(updateMessageTitleAC(message.messageId, messageTitle));
-        setMessageViewMode('readonly')
+        dispatch(updateMessageTitleTC(message.messageId, messageTitle));
+        setMessageViewMode("readonly");
     }, [dispatch, message.messageId, messageTitle]);
     const deleteMessage = useCallback(() => {
-        dispatch(deleteMessageAC(message.messageId));
+        dispatch(deleteMessageTC(message.messageId));
     }, [dispatch, message.messageId]);
-    return {user, messageTitle, messageViewMode, setMessageTitle, setMessageViewMode, updateMessageTitle, deleteMessage}
-}
+    return {
+        user,
+        messageTitle,
+        messageViewMode,
+        setMessageTitle,
+        setMessageViewMode,
+        updateMessageTitle,
+        deleteMessage,
+    };
+};

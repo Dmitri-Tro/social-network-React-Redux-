@@ -1,21 +1,26 @@
-import {ChangeEvent, useCallback, useState} from "react";
-import {useDispatch} from "react-redux";
-import {addUserMessageReducerAC} from "../../../../../../store/reducers/userMessagesReducer/userMessagesReducer";
+import { ChangeEvent, useCallback, useState } from "react";
+import { addUserMessageTC } from "store/reducers/userMessagesReducer/userMessagesReducer";
+import { useAppDispatch } from "store/reduxStore";
 
 export const useNewMessage = () => {
-    const [title, setTitle] = useState('');
-    const dispatch = useDispatch();
+    const [title, setTitle] = useState("");
+    const dispatch = useAppDispatch();
 
     const onTitleInputChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
         setTitle(e.currentTarget.value);
     }, []);
     const onSendBtnClick = useCallback(() => {
-        dispatch(addUserMessageReducerAC(title));
-        setTitle('');
+        dispatch(addUserMessageTC(title));
+        setTitle("");
     }, [dispatch, title]);
     const onCancelBtnClick = useCallback(() => {
-        setTitle('');
+        setTitle("");
     }, []);
 
-    return {title, onTitleInputChange, onSendBtnClick, onCancelBtnClick}
+    return {
+        title,
+        onTitleInputChange,
+        onSendBtnClick,
+        onCancelBtnClick
+    };
 };

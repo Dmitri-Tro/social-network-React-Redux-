@@ -1,8 +1,8 @@
 {
-  "short_name": "Social-network",
-  "name": "Social-network",
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff"
+    "short_name": "Social-network",
+    "name": "Social-network",
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff"
 }

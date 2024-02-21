@@ -1,33 +1,40 @@
-import React, {FC, memo, useMemo} from "react";
-import styles from "./Button.module.css"
+import React, { FC, memo, useCallback, useMemo } from "react";
+import styles from "./Button.module.css";
 
 type ButtonProps = {
-    title: string
-    callback: () => void
-    type: 'main' | 'secondary'
-    style?: string
-    isDisabled?: boolean
-}
-export const Button: FC<ButtonProps> = memo(({title, callback, type, style, isDisabled}) => {
-    const onClickHandler = () => {
-        callback()
-    };
+    title: string;
+    callback: () => void;
+    type: "main" | "secondary";
+    style?: string;
+    isDisabled?: boolean;
+};
+export const Button: FC<ButtonProps> = memo(({
+                                                 title,
+                                                 callback,
+                                                 type,
+                                                 style,
+                                                 isDisabled
+                                             }) => {
+    const onClickHandler = useCallback(() => {
+        callback();
+    }, [callback])
     const buttonTypesStyle = useMemo((): string => {
         switch (type) {
             case "main":
-                return styles.buttonMain
+                return styles.buttonMain;
             case "secondary":
-                return styles.buttonSecondary
+                return styles.buttonSecondary;
             default:
-                return ''
+                return "";
         }
     }, [type]);
-    return(
-        <button onClick={onClickHandler}
-                className={styles.button + ' ' + buttonTypesStyle + ' ' + style}
-                disabled={isDisabled}
+    return (
+        <button
+            onClick={onClickHandler}
+            className={styles.button + " " + buttonTypesStyle + " " + style}
+            disabled={isDisabled}
         >
             {title}
         </button>
-    )
+    );
 });

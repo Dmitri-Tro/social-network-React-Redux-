@@ -1,12 +1,13 @@
-import {useDispatch} from "react-redux";
-import {useCallback} from "react";
-import {deleteFriendMessageAC} from "../../../../../../store/reducers/friendsMessagesReducer/friendsMessagesReducer";
-import {FriendMessage} from "../../../../../../interfaces/types";
+import { useCallback } from "react";
+import { deleteFriendMessageTC } from "store/reducers/friendsMessagesReducer/friendsMessagesReducer";
+import { FriendMessage } from "interfaces/types";
+import { useAppDispatch } from "store/reduxStore";
 
 export const useFriendMessage = (message: FriendMessage) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const deleteFriendMessage = useCallback(() => {
-        dispatch(deleteFriendMessageAC(message.messageId));
+        dispatch(deleteFriendMessageTC(message.messageId));
     }, [dispatch, message.messageId]);
-    return {deleteFriendMessage}
-}
+
+    return { deleteFriendMessage };
+};

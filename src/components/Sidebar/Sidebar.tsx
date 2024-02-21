@@ -1,42 +1,41 @@
-import React, {FC} from 'react';
-import styles from './Sidebar.module.css';
-import {Friends} from "./Friends/Friends";
-import {NavLink} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {RootState} from "../../store/reduxStore";
-import {UserAuthData} from "../../interfaces/types";
+import React, { FC } from "react";
+import styles from "./Sidebar.module.css";
+import { Friends } from "./Friends/Friends";
+import { useAppSelector } from "store/reduxStore";
+import { selectUserAuthData } from "store/reducers/authReducer/authSelectors";
+import { SideBarItem } from "components/Sidebar/SideBarItem/SideBarItem";
 
+export const Sidebar: FC = () => {
+    const authData = useAppSelector(selectUserAuthData);
 
-export const Sidebar:FC = () => {
-    const authData = useSelector<RootState, UserAuthData>(state => state.userAuthData);
     return (
         <div className={styles.container}>
-                <nav className={styles.navigation}>
-                    <ul>
-                        <li className={styles.item}>
-                            <NavLink to={'/profile'}
-                                     className={({isActive}) => [isActive ? styles.item_link_active : styles.item_link].join(' ')}>Profile</NavLink>
-                        </li>
-                        <li className={styles.item}>
-                            <NavLink to={'/dialogs'}
-                                     className={({isActive}) => [isActive ? styles.item_link_active : styles.item_link].join(' ')}>Dialogs</NavLink>
-                        </li>
-                        <li className={styles.item}>
-                            Newsfeed
-                        </li>
-                        <li className={styles.item}>
-                            Friends
-                        </li>
-                        <li className={styles.item}>
-                            <NavLink to={'/find'}
-                                     className={({isActive}) => [isActive ? styles.item_link_active : styles.item_link].join(' ')}>Find users</NavLink>
-                        </li>
-                        <li className={styles.item}>
-                            Settings
-                        </li>
-                    </ul>
-                </nav>
-            {authData.isLogin && <Friends/>}
+            <nav className={styles.navigation}>
+                <ul>
+                    <SideBarItem title='Profile'
+                                 navTo='/profile'
+                                 itemStyles={styles.item}
+                                 linkStyles={styles.item_link}
+                                 linkStylesActive={styles.item_link_active}
+                    />
+                    <SideBarItem title='Dialogs'
+                                 navTo='/dialogs'
+                                 itemStyles={styles.item}
+                                 linkStyles={styles.item_link}
+                                 linkStylesActive={styles.item_link_active}
+                    />
+                    <SideBarItem title='Find users'
+                                 navTo='/find'
+                                 itemStyles={styles.item}
+                                 linkStyles={styles.item_link}
+                                 linkStylesActive={styles.item_link_active}
+                    />
+                    <li className={styles.item}>Newsfeed</li>
+                    <li className={styles.item}>Friends</li>
+                    <li className={styles.item}>Settings</li>
+                </ul>
+            </nav>
+            {authData.isLogin && <Friends />}
         </div>
-    )
+    );
 };
