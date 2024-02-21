@@ -1,13 +1,15 @@
-import { FriendsData, User } from "interfaces/types";
+import { FriendsData, ResponseError, User } from "interfaces/types";
 import { Dispatch } from "redux";
 import { profileApi } from "api/profileApi/profileApi";
+import { setErrorAC } from "store/reducers/appReducer/appReducer";
+import { AxiosError } from "axios";
 
 const SET_FRIENDS = "SET_FRIENDS";
 
 const initialState: FriendsData = {
     users: [],
     totalCount: 0,
-    isFetching: false,
+    isFetching: false
 };
 
 export const friendsReducer = (state: FriendsData = initialState, action: FriendsReducerAction) => {
@@ -25,19 +27,25 @@ export const setFriendsAC = (friends: User[], friendsCount: number) => {
         type: SET_FRIENDS,
         payload: {
             friends,
-            friendsCount,
-        },
+            friendsCount
+        }
     } as const;
 };
 
 // THUNKS
 export const getFriendsTC = () => (dispatch: Dispatch) => {
     const uriParams = {
-        friend: true,
+        friend: true
     };
-    profileApi.getFriends(uriParams).then((res) => {
-        dispatch(setFriendsAC(res.data.items, res.data.totalCount));
-    });
+    profileApi.getFriends(uriParams)
+        .then((res) => {
+            if (!res.data.error) {
+                dispatch(setFriendsAC(res.data.items, res.data.totalCount));
+            } else {
+                dispatch(setErrorAC(res.data.error));
+            }
+        })
+        .catch((e: AxiosError<ResponseError>) => dispatch(setErrorAC(e.message)));
 };
 
 // TYPES

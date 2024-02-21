@@ -1,6 +1,6 @@
 import { FriendsMessagesData } from "interfaces/types";
 import { AppThunk } from "store/reduxStore";
-import { setIsFetchingAC } from "store/reducers/usersReducer/usersReducer";
+import { setIsFetchingAC } from "store/reducers/appReducer/appReducer";
 
 const DELETE_FRIEND_MESSAGE = "Delete-friend-message";
 

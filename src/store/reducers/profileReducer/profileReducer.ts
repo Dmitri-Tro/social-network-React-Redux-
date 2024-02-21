@@ -1,14 +1,16 @@
 import { Dispatch } from "redux";
-import { setIsFetchingAC } from "../usersReducer/usersReducer";
 import { profileApi } from "api/profileApi/profileApi";
-import { ApiUser } from "interfaces/types";
+import { ApiUser, ResponseError } from "interfaces/types";
+import { setErrorAC, setIsFetchingAC } from "store/reducers/appReducer/appReducer";
+import { AxiosError } from "axios";
+import { AppThunk } from "store/reduxStore";
 
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_STATUS = "SET_STATUS";
 
 const initialState: ProfileState = {
     profile: null,
-    status: "",
+    status: ""
 };
 
 export const profileReducer = (state: ProfileState = initialState, action: ProfileReducer) => {
@@ -27,38 +29,61 @@ export const setUserProfileAC = (user: ApiUser) => {
     return {
         type: SET_USER_PROFILE,
         payload: {
-            user,
-        },
+            user
+        }
     } as const;
 };
 export const setStatusAC = (status: string) => {
     return {
         type: SET_STATUS,
         payload: {
-            status,
-        },
+            status
+        }
     } as const;
 };
 
 // THUNKS
-export const getUserProfileTC = (userId: number) => (dispatch: Dispatch) => {
+const getStatusTC = (userId: number): AppThunk => (dispatch) => {
+    profileApi.getStatus(userId)
+        .then((res) => {
+            console.log(res.data);
+            if (res.data) {
+                dispatch(setStatusAC(res.data));
+            } else {
+                dispatch(setErrorAC('Can not set user status'));
+            }
+        })
+        .catch((e: AxiosError<ResponseError>) => dispatch(setErrorAC(e.message)));
+};
+export const getUserProfileTC = (userId: number): AppThunk => (dispatch) => {
     dispatch(setIsFetchingAC(true));
-    profileApi.getUserProfile(userId).then((res) => {
-        profileApi.getStatus(userId).then((res) => {
-            dispatch(setStatusAC(res.data));
-        });
-        dispatch(setUserProfileAC(res.data));
-        dispatch(setIsFetchingAC(false));
-    });
+    profileApi.getUserProfile(userId)
+        .then((res) => {
+            if (res.data.userId) {
+                dispatch(getStatusTC(res.data.userId));
+                dispatch(setUserProfileAC(res.data));
+            } else {
+                dispatch(setErrorAC("Can not set user profile"));
+            }
+        })
+        .catch((e: AxiosError<ResponseError>) => dispatch(setErrorAC(e.message)))
+        .finally(() => dispatch(setIsFetchingAC(false)));
 };
 
 export const updateUserStatusTC = (status: string) => async (dispatch: Dispatch) => {
     dispatch(setIsFetchingAC(true));
     const res = await profileApi.updateStatus(status);
-    if (res.data.resultCode === 0) {
-        dispatch(setStatusAC(status));
+    try {
+        if (res.data.resultCode === 0) {
+            dispatch(setStatusAC(status));
+        } else {
+            dispatch(setErrorAC(res.data.messages[0]));
+        }
+    } catch (e) {
+        dispatch(setErrorAC((e as AxiosError<ResponseError>).message));
+    } finally {
+        dispatch(setIsFetchingAC(false));
     }
-    dispatch(setIsFetchingAC(false));
 };
 
 // TYPES

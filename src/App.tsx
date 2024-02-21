@@ -10,6 +10,7 @@ import { ErrorPage } from "components/ErrorPage/ErrorPage";
 import { FindUsers } from "components/Content/FindUsers/FindUsers";
 import { useAppDispatch } from "store/reduxStore";
 import { authMeTC } from "store/reducers/authReducer/authReducer";
+import { ErrorSnackbar } from "components/ErrorSnackbar/ErrorSnackbar";
 
 function App() {
     const dispatch = useAppDispatch();
@@ -33,6 +34,7 @@ function App() {
                         <Route path={"/login/"} element={<LoginPage />} />
                     </Routes>
                 </div>
+                <ErrorSnackbar />
             </div>
         </div>
     );

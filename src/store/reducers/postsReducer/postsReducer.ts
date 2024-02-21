@@ -1,7 +1,7 @@
 import { Post, PostsData } from "interfaces/types";
 import { v1 } from "uuid";
 import { AppThunk } from "store/reduxStore";
-import { setIsFetchingAC } from "store/reducers/usersReducer/usersReducer";
+import { setIsFetchingAC } from "store/reducers/appReducer/appReducer";
 
 const ADD_NEW_POST = "Add-new-post";
 const UPDATE_LIKES_AMOUNT = "Update-likes-amount";

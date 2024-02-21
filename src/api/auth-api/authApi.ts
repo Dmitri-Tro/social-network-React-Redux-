@@ -1,11 +1,11 @@
 import axios from "axios";
-import { UserAuthData } from "interfaces/types";
+import { ApiAuthData } from "interfaces/types";
 import { BaseResponse } from "../users-api/usersApi";
 
 type GetAuthResponse = {
     resultCode: number;
-    messages: [];
-    data: UserAuthData;
+    messages: string[];
+    data: ApiAuthData;
 };
 
 export type LoginData = {

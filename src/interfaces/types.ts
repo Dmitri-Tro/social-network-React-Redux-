@@ -4,7 +4,6 @@ export type UsersData = {
     pageSize: number;
     page: number;
     friend: boolean;
-    isFetching: boolean;
 };
 
 export type User = {
@@ -45,8 +44,13 @@ export type UserAuthData = {
     id: number | null;
     email: string | null;
     login: string | null;
-    isFetching: boolean;
     isLogin: boolean;
+};
+
+export type ApiAuthData = {
+    id: number | null;
+    email: string | null;
+    login: string | null;
 };
 
 export type FriendsData = {
@@ -76,3 +80,9 @@ export type Post = {
     likeAmount: number;
     isLiked: boolean;
 };
+
+export type ResponseError = {
+    resultCode: number
+    messages: string[],
+    data: {}
+}

@@ -11,8 +11,10 @@ import { ProfileReducer, profileReducer } from "./reducers/profileReducer/profil
 import { friendsReducer, FriendsReducerAction } from "./reducers/friendsReducer/friendsReducer";
 import { thunk, ThunkAction, ThunkDispatch } from "redux-thunk";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { appReducer, AppReducerActions } from "store/reducers/appReducer/appReducer";
 
 const rootReducer = combineReducers({
+    appState: appReducer,
     userProfileData: profileReducer,
     usersData: usersReducer,
     friendsData: friendsReducer,
@@ -26,6 +28,7 @@ export type RootState = ReturnType<typeof rootReducer>;
 export const reduxStore = createStore(rootReducer, undefined, applyMiddleware(thunk));
 
 type AppActions =
+    | AppReducerActions
     | AuthReducerAction
     | FriendsMessagesReducerAction
     | FriendsReducerAction

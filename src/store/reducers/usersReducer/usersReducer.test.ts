@@ -1,6 +1,6 @@
 import {
     followAC,
-    followingInProgressAC, setCurrentPageAC, setIsFetchingAC,
+    followingInProgressAC, setCurrentPageAC,
     setPageSizeAC,
     setUsersAC,
     usersReducer
@@ -28,7 +28,6 @@ beforeEach(() => {
        pageSize: 10,
        page: 1,
        friend: false,
-       isFetching: false,
    };
 })
 test("should add users to usersData", () => {
@@ -38,7 +37,6 @@ test("should add users to usersData", () => {
         pageSize: 10,
         page: 1,
         friend: false,
-        isFetching: false,
     }
     const newUsers = [
         {
@@ -92,12 +90,4 @@ test("should set current page", () => {
     expect(endState.users.length).toBe(1);
     expect(endState.users[0].name).toBe('Dima');
     expect(endState.page).toBe(2);
-});
-test("should set fetching status", () => {
-
-    const endState = usersReducer(startState, setIsFetchingAC(true));
-
-    expect(endState.users.length).toBe(1);
-    expect(endState.users[0].name).toBe('Dima');
-    expect(endState.isFetching).toBe(true);
 });

@@ -5,8 +5,8 @@ import { defaultAvatar } from "images/images";
 import { Preloader } from "../../../shared/Preloader/Preloader";
 import { getUserProfileTC, updateUserStatusTC } from "store/reducers/profileReducer/profileReducer";
 import { ProfileStatus } from "../ProfileStatus/ProfileStatus";
-import { selectIsFetching } from "store/reducers/usersReducer/usersSelectors";
 import { selectUserProfile, selectUserStatus } from "store/reducers/profileReducer/profileSelectors";
+import { selectIsFetching } from "store/reducers/appReducer/appSelectors";
 
 type UserInfoProps = {
     userId: number;

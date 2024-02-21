@@ -1,81 +1,78 @@
-import { UserAuthData } from "interfaces/types";
-import { setIsFetchingAC, SetIsFetchingAC, TOGGLE_IS_FETCHING } from "../usersReducer/usersReducer";
+import { ApiAuthData, ResponseError, UserAuthData } from "interfaces/types";
 import { authApi, LoginData } from "api/auth-api/authApi";
 import { AppThunk } from "store/reduxStore";
+import { setErrorAC, setIsFetchingAC } from "store/reducers/appReducer/appReducer";
+import { AxiosError } from "axios";
 
 const SET_AUTH_DATA = "Set-auth-data";
-const LOGIN = "LOGIN";
 
 const initialState: UserAuthData | null = {
     id: null,
     email: null,
     login: null,
-    isFetching: false,
-    isLogin: false,
+    isLogin: false
 };
 export const authReducer = (state: UserAuthData = initialState, action: AuthReducerAction): UserAuthData => {
     switch (action.type) {
         case SET_AUTH_DATA:
-            return { ...state, ...action.payload.authData };
-        case TOGGLE_IS_FETCHING:
-            return { ...state, isFetching: action.payload.isFetching };
-        case LOGIN:
-            return { ...state, isLogin: action.payload.isLogin };
+            return { ...state, ...action.payload.authData, isLogin: action.payload.isLogin };
         default:
             return state;
     }
 };
 
 // Actions
-export const setAuthDataAC = (authData: UserAuthData) => {
+export const setAuthDataAC = (authData: ApiAuthData, isLogin: boolean) => {
     return {
         type: SET_AUTH_DATA,
         payload: {
             authData,
-        },
-    } as const;
-};
-export const loginAC = (isLogin: boolean) => {
-    return {
-        type: LOGIN,
-        payload: {
-            isLogin,
-        },
+            isLogin
+        }
     } as const;
 };
 
 // Thunks
 export const authMeTC = (): AppThunk => (dispatch) => {
     dispatch(setIsFetchingAC(true));
-    authApi.me().then((res) => {
-        dispatch(setIsFetchingAC(false));
-        if (res.data.resultCode === 0) {
-            dispatch(loginAC(true));
-            dispatch(setAuthDataAC(res.data.data));
-        }
-    });
+    authApi.me()
+        .then((res) => {
+            if (res.data.resultCode === 0) {
+                dispatch(setAuthDataAC(res.data.data, true));
+            } else {
+                dispatch(setErrorAC(res.data.messages[0]));
+            }
+        })
+        .catch((e: AxiosError<ResponseError>) => dispatch(setErrorAC(e.message)))
+        .finally(() => dispatch(setIsFetchingAC(false)));
 };
 export const loginTC = (data: LoginData): AppThunk => (dispatch) => {
     dispatch(setIsFetchingAC(true));
-    authApi.login(data).then((res) => {
-        dispatch(setIsFetchingAC(false));
-        if (res.data.resultCode === 0) {
-            dispatch(loginAC(true));
-        }
-    });
+    authApi.login(data)
+        .then((res) => {
+            if (res.data.resultCode === 0) {
+                dispatch(authMeTC());
+            } else {
+                dispatch(setErrorAC(res.data.messages[0]));
+            }
+        })
+        .catch((e: AxiosError<ResponseError>) => dispatch(setErrorAC(e.message)))
+        .finally(() => dispatch(setIsFetchingAC(false)));
 };
-export const logoutTC = ():AppThunk => (dispatch) => {
+export const logoutTC = (): AppThunk => (dispatch) => {
     dispatch(setIsFetchingAC(true));
-    authApi.logout().then((res) => {
-        dispatch(setIsFetchingAC(false));
-        if (res.data.resultCode === 0) {
-            dispatch(loginAC(false));
-        }
-    });
+    authApi.logout()
+        .then((res) => {
+            if (res.data.resultCode === 0) {
+                dispatch(setAuthDataAC({ id: null, email: null, login: null }, false));
+            } else {
+                dispatch(setErrorAC(res.data.messages[0]));
+            }
+        })
+        .catch((e: AxiosError<ResponseError>) => dispatch(setErrorAC(e.message)))
+        .finally(() => dispatch(setIsFetchingAC(false)));
 };
 
 // Types
 export type AuthReducerAction =
     | ReturnType<typeof setAuthDataAC>
-    | SetIsFetchingAC
-    | ReturnType<typeof loginAC>;

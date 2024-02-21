@@ -1,7 +1,7 @@
 import { UserMessage, UserMessagesData } from "interfaces/types";
 import { v1 } from "uuid";
 import { AppThunk } from "store/reduxStore";
-import { setIsFetchingAC } from "store/reducers/usersReducer/usersReducer";
+import { setIsFetchingAC } from "store/reducers/appReducer/appReducer";
 
 const ADD_NEW_USER_MESSAGE = "Add-new-user-message";
 const UPDATE_MESSAGE_TITLE = "Update-message-title";
