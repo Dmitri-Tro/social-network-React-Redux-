@@ -1,8 +1,8 @@
 import { FriendsData, ResponseError, User } from "interfaces/types";
-import { Dispatch } from "redux";
 import { profileApi } from "api/profileApi/profileApi";
 import { setErrorAC } from "store/reducers/appReducer/appReducer";
 import { AxiosError } from "axios";
+import { AppThunk } from "store/reduxStore";
 
 const SET_FRIENDS = "SET_FRIENDS";
 
@@ -33,7 +33,7 @@ export const setFriendsAC = (friends: User[], friendsCount: number) => {
 };
 
 // THUNKS
-export const getFriendsTC = () => (dispatch: Dispatch) => {
+export const getFriendsTC = (): AppThunk => (dispatch) => {
     const uriParams = {
         friend: true
     };

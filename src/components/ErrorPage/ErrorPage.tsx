@@ -2,8 +2,7 @@ import React, { FC, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./errorPage.module.css";
 import { Button } from "../shared/Button/Button";
-
-export const ErrorPage: FC = () => {
+const ErrorPage: FC = () => {
     const navigate = useNavigate();
 
     const handleNavigateToHome = useCallback(() => {
@@ -18,3 +17,5 @@ export const ErrorPage: FC = () => {
         </div>
     );
 };
+
+export default ErrorPage;

@@ -4,6 +4,8 @@ import styles from "./UserCard.module.css";
 import { User } from "interfaces/types";
 import { defaultAvatar } from "images/images";
 import { useUserCard } from "./useUserCard/useUserCard";
+import { useAppSelector } from "store/reduxStore";
+import { selectIsFetching } from "store/reducers/appReducer/appSelectors";
 
 type UserCardProps = {
     user: User;
@@ -11,6 +13,7 @@ type UserCardProps = {
 
 export const UserCard: FC<UserCardProps> = memo(({ user }) => {
     const { onFollowBtnClick, onUnfollowBtnClick, onViewProfileBtnClick } = useUserCard(user);
+    const isFetching = useAppSelector(selectIsFetching);
 
     return (
         <li className={styles.container}>
@@ -26,7 +29,7 @@ export const UserCard: FC<UserCardProps> = memo(({ user }) => {
                         callback={onUnfollowBtnClick}
                         type={"secondary"}
                         style={styles.btnFollow}
-                        isDisabled={user.inProgress}
+                        isDisabled={isFetching}
                     />
                 ) : (
                     <Button
@@ -34,7 +37,7 @@ export const UserCard: FC<UserCardProps> = memo(({ user }) => {
                         callback={onFollowBtnClick}
                         type={"main"}
                         style={styles.btnFollow}
-                        isDisabled={user.inProgress}
+                        isDisabled={isFetching}
                     />
                 )}
             </div>

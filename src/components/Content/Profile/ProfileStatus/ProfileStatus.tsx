@@ -2,7 +2,7 @@ import React, { ChangeEvent, FC, memo, useCallback, useState } from "react";
 import styles from "./ProfileStatus.module.css";
 
 type EditableTitleProps = {
-    oldTitle: string;
+    oldTitle: string | undefined;
     setNewTitle: (title: string) => void;
     disabled?: boolean;
     placeholder?: string;
@@ -17,7 +17,7 @@ export const ProfileStatus: FC<EditableTitleProps> = memo(({
                                                                placeholder,
                                                                stylesClass
                                                            }) => {
-        const [updatedTitle, setUpdatedTitle] = useState<string>(oldTitle);
+        const [updatedTitle, setUpdatedTitle] = useState<string>(oldTitle ? oldTitle : '');
         const [mode, setMode] = useState<Mode>("viewMode");
 
         const titleInputChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +26,8 @@ export const ProfileStatus: FC<EditableTitleProps> = memo(({
         const inputBlurHandler = useCallback(() => {
             setNewTitle(updatedTitle);
             setMode("viewMode");
-        }, [setNewTitle, updatedTitle]);
+            setUpdatedTitle(oldTitle ? oldTitle : '')
+        }, [setNewTitle, updatedTitle, oldTitle]);
         const setModeHandler = useCallback(() => setMode("inputMode"), [setMode])
 
         return (
@@ -36,7 +37,7 @@ export const ProfileStatus: FC<EditableTitleProps> = memo(({
                         className={styles.editableTitle + " " + stylesClass}
                         onDoubleClick={setModeHandler}
                     >
-                        {oldTitle}
+                        {oldTitle ? oldTitle : 'Write your status...'}
                     </span>
                 ) : (
                     <input

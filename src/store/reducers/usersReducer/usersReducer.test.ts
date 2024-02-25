@@ -1,6 +1,6 @@
 import {
     followAC,
-    followingInProgressAC, setCurrentPageAC,
+    setCurrentPageAC,
     setPageSizeAC,
     setUsersAC,
     usersReducer
@@ -21,7 +21,6 @@ beforeEach(() => {
                },
                status: 'At home',
                followed: false,
-               inProgress: false,
            }
        ],
        totalCount: 1,
@@ -66,14 +65,6 @@ test("should set user followed", () => {
     expect(endState.users.length).toBe(1);
     expect(endState.users[0].name).toBe('Dima');
     expect(endState.users[0].followed).toBe(true);
-});
-test("should update user inProgress status", () => {
-
-    const endState = usersReducer(startState, followingInProgressAC(1, true));
-
-    expect(endState.users.length).toBe(1);
-    expect(endState.users[0].name).toBe('Dima');
-    expect(endState.users[0].inProgress).toBe(true);
 });
 test("should set page size", () => {
 

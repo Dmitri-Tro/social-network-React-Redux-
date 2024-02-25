@@ -5,7 +5,6 @@ import { Textarea } from "components/shared/Textarea/Textarea";
 import { Button } from "components/shared/Button/Button";
 import { defaultAvatar } from "images/images";
 import { useUserMessage } from "./useUserMessage/useUserMessage";
-import { Preloader } from "components/shared/Preloader/Preloader";
 
 type MessageProps = {
     message: UserMessage;
@@ -23,7 +22,7 @@ export const Message: FC<MessageProps> = memo(({ message }) => {
     } = useUserMessage(message);
 
     if (!user) {
-        return <Preloader />;
+        return <></>;
     } else {
         return (
             <div className={styles.container}>

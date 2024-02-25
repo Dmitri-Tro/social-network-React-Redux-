@@ -16,7 +16,6 @@ export type User = {
     };
     status?: string;
     followed: boolean;
-    inProgress: boolean;
 };
 
 export type ApiUser = {

@@ -1,4 +1,3 @@
-import { Dispatch } from "redux";
 import { profileApi } from "api/profileApi/profileApi";
 import { ApiUser, ResponseError } from "interfaces/types";
 import { setErrorAC, setIsFetchingAC } from "store/reducers/appReducer/appReducer";
@@ -46,11 +45,8 @@ export const setStatusAC = (status: string) => {
 const getStatusTC = (userId: number): AppThunk => (dispatch) => {
     profileApi.getStatus(userId)
         .then((res) => {
-            console.log(res.data);
             if (res.data) {
                 dispatch(setStatusAC(res.data));
-            } else {
-                dispatch(setErrorAC('Can not set user status'));
             }
         })
         .catch((e: AxiosError<ResponseError>) => dispatch(setErrorAC(e.message)));
@@ -70,7 +66,7 @@ export const getUserProfileTC = (userId: number): AppThunk => (dispatch) => {
         .finally(() => dispatch(setIsFetchingAC(false)));
 };
 
-export const updateUserStatusTC = (status: string) => async (dispatch: Dispatch) => {
+export const updateUserStatusTC = (status: string): AppThunk => async (dispatch) => {
     dispatch(setIsFetchingAC(true));
     const res = await profileApi.updateStatus(status);
     try {

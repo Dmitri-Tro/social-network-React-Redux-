@@ -7,10 +7,10 @@ import { selectFriends } from "store/reducers/friendsReducer/friendsSelectors";
 
 export const Friends: FC = () => {
     const dispatch = useAppDispatch();
+    const friends = useAppSelector(selectFriends);
     useEffect(() => {
         dispatch(getFriendsTC());
     }, [dispatch]);
-    const friends = useAppSelector(selectFriends);
 
     return (
         <div className={styles.container}>

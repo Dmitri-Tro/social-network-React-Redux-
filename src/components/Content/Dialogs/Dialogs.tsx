@@ -6,7 +6,7 @@ import { useAppSelector } from "store/reduxStore";
 import { Navigate } from "react-router-dom";
 import { selectIsLogin } from "store/reducers/authReducer/authSelectors";
 
-export const Dialogs: FC = () => {
+const Dialogs: FC = () => {
     const isLogin = useAppSelector(selectIsLogin);
 
     if (!isLogin) {
@@ -23,3 +23,5 @@ export const Dialogs: FC = () => {
         </div>
     );
 };
+
+export default Dialogs;

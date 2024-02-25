@@ -1,7 +1,7 @@
 import { ApiAuthData, ResponseError, UserAuthData } from "interfaces/types";
 import { authApi, LoginData } from "api/auth-api/authApi";
 import { AppThunk } from "store/reduxStore";
-import { setErrorAC, setIsFetchingAC } from "store/reducers/appReducer/appReducer";
+import { setErrorAC, setIsFetchingAC, setIsInitialized } from "store/reducers/appReducer/appReducer";
 import { AxiosError } from "axios";
 
 const SET_AUTH_DATA = "Set-auth-data";
@@ -44,7 +44,10 @@ export const authMeTC = (): AppThunk => (dispatch) => {
             }
         })
         .catch((e: AxiosError<ResponseError>) => dispatch(setErrorAC(e.message)))
-        .finally(() => dispatch(setIsFetchingAC(false)));
+        .finally(() => {
+            dispatch(setIsFetchingAC(false));
+            dispatch(setIsInitialized(true));
+        });
 };
 export const loginTC = (data: LoginData): AppThunk => (dispatch) => {
     dispatch(setIsFetchingAC(true));

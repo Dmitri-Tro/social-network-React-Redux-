@@ -27,9 +27,9 @@ export const authApi = {
         return instance.get<GetAuthResponse>(`/auth/me`);
     },
     login: (data: LoginData) => {
-        return instance.post<BaseResponse<{ userId: number }>>(` /auth/login`, data);
+        return instance.post<BaseResponse<{ userId: number }>>(`/auth/login`, data);
     },
     logout: () => {
-        return instance.delete<BaseResponse>(` /auth/login`);
+        return instance.delete<BaseResponse>(`/auth/login`);
     },
 };

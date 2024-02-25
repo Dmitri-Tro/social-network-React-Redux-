@@ -43,3 +43,10 @@ p {
     max-width: 500px;
     margin: 0 auto;
 }
+
+.preloader {
+    position: fixed;
+    top: 40%;
+    text-align: center;
+    width: 100%;
+}

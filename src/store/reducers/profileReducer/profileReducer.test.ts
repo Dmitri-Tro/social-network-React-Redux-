@@ -31,7 +31,6 @@ test('should set user profile', () => {
     expect(endState.profile).toBeDefined();
     expect(endState.profile!.userId).toBe(1);
 });
-
 test('should set user status', () => {
     const initialState = {
         profile: {

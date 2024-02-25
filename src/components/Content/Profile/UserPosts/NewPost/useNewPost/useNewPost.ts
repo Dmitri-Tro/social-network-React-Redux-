@@ -8,13 +8,13 @@ export const useNewPost = () => {
 
     const onTitleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
         setTitle(e.currentTarget.value);
-    }, [setTitle]);
+    }, []);
     const onAddBtnClick = useCallback(() => {
         dispatch(addPostTC(title));
         setTitle("");
-    }, [dispatch, title, setTitle]);
+    }, [dispatch, title]);
     const onCancelBtnClick = useCallback(() => {
         setTitle("");
-    }, [setTitle]);
+    }, []);
     return { title, onTitleChange, onAddBtnClick, onCancelBtnClick };
 };

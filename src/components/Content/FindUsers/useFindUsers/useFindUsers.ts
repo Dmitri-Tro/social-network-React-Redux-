@@ -2,12 +2,10 @@ import { useAppDispatch, useAppSelector } from "store/reduxStore";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { getUsersTC, setCurrentPageAC, setPageSizeAC } from "store/reducers/usersReducer/usersReducer";
 import { selectUsersData } from "store/reducers/usersReducer/usersSelectors";
-import { selectIsFetching } from "store/reducers/appReducer/appSelectors";
 
 export const useFindUsers = () => {
     const dispatch = useAppDispatch();
     const usersData = useAppSelector(selectUsersData);
-    const isFetching = useAppSelector(selectIsFetching);
 
     const [filter, setFilter] = useState("");
 
@@ -52,7 +50,6 @@ export const useFindUsers = () => {
         pagesCount,
         pagesSize,
         currentPage,
-        isFetching,
         filter,
         onFilterChange,
         onPageClick,

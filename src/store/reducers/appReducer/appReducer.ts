@@ -1,41 +1,54 @@
-
 type AppReducerState = {
-    isFetching : boolean
+    isInitialized: boolean
+    isFetching: boolean
     error: string | null
 }
 const initialState = {
-    isFetching: false,
+    isInitialized: false,
+    isFetching: true,
     error: null
-}
+};
 export const appReducer = (state: AppReducerState = initialState, action: AppReducerActions) => {
     switch (action.type) {
-        case 'SET_IS_FETCHING':
+        case "SET_IS_INITIALIZED":
+            return { ...state, isInitialized: action.payload.isInitialized };
+        case "SET_IS_FETCHING":
             return { ...state, isFetching: action.payload.isFetching };
         case "SET_ERROR":
-            return {...state, error: action.payload.error}
+            return { ...state, error: action.payload.error };
         default:
-            return state
+            return state;
     }
-}
- // Actions
+};
+// Actions
+export const setIsInitialized = (isInitialized: boolean) => {
+    return {
+        type: "SET_IS_INITIALIZED",
+        payload: {
+            isInitialized
+        }
+    } as const;
+};
 
 export const setIsFetchingAC = (isFetching: boolean) => {
     return {
-        type: 'SET_IS_FETCHING',
+        type: "SET_IS_FETCHING",
         payload: {
-            isFetching,
-        },
+            isFetching
+        }
     } as const;
 };
 export const setErrorAC = (error: string | null) => {
     return {
-        type: 'SET_ERROR',
+        type: "SET_ERROR",
         payload: {
-            error,
-        },
+            error
+        }
     } as const;
 };
 
 // Types
-
-export type AppReducerActions = ReturnType<typeof setIsFetchingAC> | ReturnType<typeof setErrorAC>
+export type AppReducerActions =
+    | ReturnType<typeof setIsInitialized>
+    | ReturnType<typeof setIsFetchingAC>
+    | ReturnType<typeof setErrorAC>

@@ -3,6 +3,7 @@ import { followingTC, unfollowingTC } from "store/reducers/usersReducer/usersRed
 import { User } from "interfaces/types";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "store/reduxStore";
+import { setStatusAC } from "store/reducers/profileReducer/profileReducer";
 
 export const useUserCard = (user: User) => {
     const dispatch = useAppDispatch();
@@ -18,9 +19,10 @@ export const useUserCard = (user: User) => {
 
     const onViewProfileBtnClick = useCallback(
         (userId: number) => {
+            dispatch(setStatusAC(''));
             navigateTo(`/profile/${userId}`);
         },
-        [navigateTo],
+        [dispatch, navigateTo],
     );
 
     return { onFollowBtnClick, onUnfollowBtnClick, onViewProfileBtnClick };

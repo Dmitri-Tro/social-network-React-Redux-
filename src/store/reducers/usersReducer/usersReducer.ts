@@ -1,5 +1,4 @@
 import { ResponseError, User, UsersData } from "interfaces/types";
-import { Dispatch } from "redux";
 import { usersApi } from "api/users-api/usersApi";
 import { setFriendsAC } from "../friendsReducer/friendsReducer";
 import { profileApi } from "api/profileApi/profileApi";
@@ -139,17 +138,16 @@ const getFriendsTC = (): AppThunk => (dispatch) => {
             dispatch(setErrorAC(res.data.error));
         }
     })
-        .catch((e: AxiosError<ResponseError>) => dispatch(setErrorAC(e.message)))
-        .finally(() => dispatch(setIsFetchingAC(false)));
+        .catch((e: AxiosError<ResponseError>) => dispatch(setErrorAC(e.message)));
 };
 
 export const followingTC = (userId: number): AppThunk => (dispatch) => {
-    dispatch(followingInProgressAC(userId, true));
+    dispatch(setIsFetchingAC(true));
     usersApi.follow(userId)
         .then((res) => {
             if (res.data.resultCode === 0) {
                 dispatch(followAC(userId));
-                dispatch(getFriendsTC);
+                dispatch(getFriendsTC());
             } else {
                 dispatch(setErrorAC(res.data.messages[0]));
             }
@@ -160,11 +158,11 @@ export const followingTC = (userId: number): AppThunk => (dispatch) => {
 };
 
 export const unfollowingTC = (userId: number): AppThunk => (dispatch) => {
-    dispatch(followingInProgressAC(userId, true));
+    dispatch(setIsFetchingAC(true));
     usersApi.unfollow(userId).then((res) => {
         if (res.data.resultCode === 0) {
             dispatch(unfollowAC(userId));
-            dispatch(getFriendsTC);
+            dispatch(getFriendsTC());
         } else {
             dispatch(setErrorAC(res.data.messages[0]));
         }

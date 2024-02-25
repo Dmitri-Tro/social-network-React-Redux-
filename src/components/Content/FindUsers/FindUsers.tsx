@@ -5,18 +5,18 @@ import { Accordion } from "../../shared/Accordion/Accordion";
 import { Pagination } from "../../shared/Pagination/Pagination";
 import { useFindUsers } from "./useFindUsers/useFindUsers";
 import { Input } from "../../shared/Input/Input";
-import { Preloader } from "../../shared/Preloader/Preloader";
+import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "store/reduxStore";
-import { Navigate } from "react-router-dom";
 import { selectIsLogin } from "store/reducers/authReducer/authSelectors";
 
 export const FindUsers: FC = () => {
+    const navigate = useNavigate();
+    const isLogin = useAppSelector(selectIsLogin);
     const {
         users,
         pagesCount,
         pagesSize,
         currentPage,
-        isFetching,
         filter,
         onFilterChange,
         onPageClick,
@@ -25,16 +25,13 @@ export const FindUsers: FC = () => {
         onPageSizeSelect,
     } = useFindUsers();
 
-    const isLogin = useAppSelector(selectIsLogin);
-
     if (!isLogin) {
-        return <Navigate to={"/login"} />;
+        navigate('/login');
     }
 
     return (
         <>
             <div className={styles.container}>
-                {isFetching && <Preloader style={styles.preloader} />}
                 <Input
                     type={"search"}
                     value={filter}

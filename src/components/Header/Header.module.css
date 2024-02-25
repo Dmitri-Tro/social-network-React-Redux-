@@ -1,5 +1,7 @@
 .container {
     grid-area: app-header;
+}
+.header {
     display: flex;
     background-color: cornflowerblue;
     border-radius: 5px;

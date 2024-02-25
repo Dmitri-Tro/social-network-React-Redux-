@@ -1,23 +1,35 @@
-import React, { useEffect } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import "./App.css";
 import { Header } from "components/Header/Header";
 import { Sidebar } from "components/Sidebar/Sidebar";
 import { Profile } from "components/Content/Profile/Profile";
-import { Dialogs } from "components/Content/Dialogs/Dialogs";
-import { LoginPage } from "components/Content/LoginPage/LoginPage";
-import { Route, Routes } from "react-router-dom";
-import { ErrorPage } from "components/ErrorPage/ErrorPage";
 import { FindUsers } from "components/Content/FindUsers/FindUsers";
-import { useAppDispatch } from "store/reduxStore";
+import { Route, Routes } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "store/reduxStore";
 import { authMeTC } from "store/reducers/authReducer/authReducer";
 import { ErrorSnackbar } from "components/ErrorSnackbar/ErrorSnackbar";
+import { CircularProgress } from "@mui/material";
+import { selectIsInitialized } from "store/reducers/appReducer/appSelectors";
+
+const Dialogs = lazy(() => import("components/Content/Dialogs/Dialogs"));
+const LoginPage = lazy(() => import("components/Content/LoginPage/LoginPage"));
+const ErrorPage = lazy(() => import("components/ErrorPage/ErrorPage"));
 
 function App() {
     const dispatch = useAppDispatch();
+    const setIsInitialized = useAppSelector(selectIsInitialized);
 
     useEffect(() => {
         dispatch(authMeTC());
     }, [dispatch]);
+
+    if (!setIsInitialized) {
+        return (
+            <div className={"preloader"}>
+                <CircularProgress />
+            </div>
+        );
+    }
 
     return (
         <div className="wrapper">
@@ -25,14 +37,16 @@ function App() {
                 <Header />
                 <Sidebar />
                 <div className="content">
-                    <Routes>
-                        <Route path={"/"} element={<Profile />} />
-                        <Route path={"*"} element={<ErrorPage />} />
-                        <Route path={"/profile/:userId?"} element={<Profile />} />
-                        <Route path={"/dialogs/*"} element={<Dialogs />} />
-                        <Route path={"/find/"} element={<FindUsers />} />
-                        <Route path={"/login/"} element={<LoginPage />} />
-                    </Routes>
+                    <Suspense fallback={<CircularProgress />}>
+                        <Routes>
+                            <Route path={"/"} element={<Profile />} />
+                            <Route path={"*"} element={<ErrorPage />} />
+                            <Route path={"/profile/:userId?"} element={<Profile />} />
+                            <Route path={"/dialogs/*"} element={<Dialogs />} />
+                            <Route path={"/find/"} element={<FindUsers />} />
+                            <Route path={"/login/"} element={<LoginPage />} />
+                        </Routes>
+                    </Suspense>
                 </div>
                 <ErrorSnackbar />
             </div>
