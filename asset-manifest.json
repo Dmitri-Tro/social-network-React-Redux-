@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/social-network-React-Redux-/static/css/main.840d374b.css",
-    "main.js": "/social-network-React-Redux-/static/js/main.26114a30.js",
+    "main.js": "/social-network-React-Redux-/static/js/main.8c6ae434.js",
     "static/css/812.238fcdf8.chunk.css": "/social-network-React-Redux-/static/css/812.238fcdf8.chunk.css",
     "static/js/812.a070a935.chunk.js": "/social-network-React-Redux-/static/js/812.a070a935.chunk.js",
     "static/css/863.1af501f9.chunk.css": "/social-network-React-Redux-/static/css/863.1af501f9.chunk.css",
@@ -11,7 +11,7 @@
     "static/js/586.a0184b5e.chunk.js": "/social-network-React-Redux-/static/js/586.a0184b5e.chunk.js",
     "index.html": "/social-network-React-Redux-/index.html",
     "main.840d374b.css.map": "/social-network-React-Redux-/static/css/main.840d374b.css.map",
-    "main.26114a30.js.map": "/social-network-React-Redux-/static/js/main.26114a30.js.map",
+    "main.8c6ae434.js.map": "/social-network-React-Redux-/static/js/main.8c6ae434.js.map",
     "812.238fcdf8.chunk.css.map": "/social-network-React-Redux-/static/css/812.238fcdf8.chunk.css.map",
     "812.a070a935.chunk.js.map": "/social-network-React-Redux-/static/js/812.a070a935.chunk.js.map",
     "863.1af501f9.chunk.css.map": "/social-network-React-Redux-/static/css/863.1af501f9.chunk.css.map",
@@ -22,6 +22,6 @@
   },
   "entrypoints": [
     "static/css/main.840d374b.css",
-    "static/js/main.26114a30.js"
+    "static/js/main.8c6ae434.js"
   ]
 }
