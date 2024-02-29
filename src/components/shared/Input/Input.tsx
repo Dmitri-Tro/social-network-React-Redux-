@@ -22,9 +22,12 @@ export const Input: FC<InputProps> = memo(({
                                                style
                                            }) => {
 
-        const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-            callback(e);
-        }, [callback]);
+        const onChangeHandler = useCallback(
+            (e: ChangeEvent<HTMLInputElement>) => {
+                callback(e);
+            },
+            [callback]
+        );
         return (
             <input
                 type={type}

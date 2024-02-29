@@ -15,10 +15,12 @@ export const Pagination: FC<PaginationProps> = memo(({
                                                          onPageClick,
                                                          onLastPageClick
                                                      }) => {
+
         let pages = [];
         for (let i = 1; i <= pagesCount; i++) {
             pages.push(i);
         }
+
         return (
             <div className={styles.pages}>
                 <span
@@ -56,5 +58,4 @@ export const Pagination: FC<PaginationProps> = memo(({
                 </span>
             </div>
         );
-    }
-);
+    });

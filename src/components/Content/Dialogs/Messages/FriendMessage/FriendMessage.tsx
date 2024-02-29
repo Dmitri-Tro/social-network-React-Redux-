@@ -20,11 +20,7 @@ export const FriendsMessage: FC<FriendMessageProps> = memo(({ message }) => {
             </div>
             <div className={styles.messageContent}>
                 <p className={styles.message}>{message.message}</p>
-                <Button title={"x"}
-                        callback={deleteFriendMessage}
-                        type={"secondary"}
-                        style={styles.delBtn}
-                />
+                <Button title={"x"} callback={deleteFriendMessage} type={"secondary"} style={styles.delBtn} />
             </div>
         </div>
     );

@@ -10,7 +10,7 @@ export const Posts: FC = () => {
     const postsData = useAppSelector(selectPostsData);
     const user = useAppSelector(selectUserProfile);
     if (!user) {
-        return <></>
+        return <></>;
     } else {
         return (
             <div className={styles.container}>

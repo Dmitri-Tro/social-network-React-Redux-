@@ -1,29 +1,32 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import styles from "./Profile.module.css";
 import { UserInfo } from "./UserInfo/UserInfo";
 import { Posts } from "./UserPosts/Posts";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { useAppSelector } from "store/reduxStore";
-import { selectIsLogin, selectUserId } from "store/reducers/authReducer/authSelectors";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "store/reduxStore";
+import { selectUserId } from "store/reducers/authReducer/authSelectors";
+import { getUserProfileTC } from "store/reducers/profileReducer/profileReducer";
 
 export const Profile: FC = () => {
     const { userId } = useParams();
-    const isLogin = useAppSelector(selectIsLogin);
     const myId = useAppSelector(selectUserId);
     const navigate = useNavigate();
-
-    if (!isLogin) {
-        return <Navigate to={"/login"} />;
-    }
+    const dispatch = useAppDispatch();
 
     let profileId: number | null = null;
-    if (userId) {
+    // define which profile to show
+    if (userId) { // if the address bar include userID - show this user profile
         profileId = Number(userId);
-    } else if (myId) {
+    } else if (myId) { // else if user authorized - show authorized user profile
         profileId = myId;
-    } else {
-        navigate('/login')
+    } else { // else - if user not authorized - redirect to login page
+        navigate("/login");
     }
+    useEffect(() => {
+        if (profileId) {
+            dispatch(getUserProfileTC(profileId)); // get user profile from server, set to state and show
+        }
+    }, [dispatch, profileId]);
 
     return (
         <div className={styles.container}>

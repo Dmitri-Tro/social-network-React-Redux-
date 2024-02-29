@@ -1,18 +1,21 @@
 import { UserMessagesData } from "interfaces/types";
 import {
-    addUserMessageAC, deleteMessageAC,
+    addUserMessageAC,
+    deleteMessageAC,
     updateMessageTitleAC,
-    userMessagesReducer
+    userMessagesReducer,
 } from "store/reducers/userMessagesReducer/userMessagesReducer";
 
 let startState: UserMessagesData;
 beforeEach(() => {
-    startState = [{
-        messageId: "02",
-        message: "Hey!",
-        time: "09:01",
-    }]
-})
+    startState = [
+        {
+            messageId: "02",
+            message: "Hey!",
+            time: "09:01",
+        },
+    ];
+});
 test("should add new message to messagesData", () => {
     const title = "Hi";
 
@@ -25,14 +28,13 @@ test("should add new message to messagesData", () => {
 test("should update message title", () => {
     const title = "Hi";
 
-    const endState = userMessagesReducer(startState, updateMessageTitleAC('02', title));
+    const endState = userMessagesReducer(startState, updateMessageTitleAC("02", title));
 
     expect(endState.length).toBe(1);
     expect(endState[0].message).toBe("Hi");
 });
 test("should delete message", () => {
-
-    const endState = userMessagesReducer(startState, deleteMessageAC('02'));
+    const endState = userMessagesReducer(startState, deleteMessageAC("02"));
 
     expect(endState.length).toBe(0);
 });

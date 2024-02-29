@@ -18,8 +18,9 @@ export const useFindUsers = () => {
     }, [dispatch, pagesSize, currentPage]);
 
     const onFilterChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        setFilter(e.currentTarget.value);
+        setFilter(e.currentTarget.value); // user filtering by name
     }, []);
+
 
     const pagesCount = Math.ceil(usersData.totalCount / pagesSize);
 

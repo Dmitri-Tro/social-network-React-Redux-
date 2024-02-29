@@ -97,26 +97,34 @@ export const updatePostTitleAC = (postId: string, newTitle: string) => {
 };
 
 // Thunks
-export const addPostTC = (title: string): AppThunk => (dispatch) => {
-    dispatch(setIsFetchingAC(true));
-    dispatch(addPostAC(title));
-    dispatch(setIsFetchingAC(false));
-}
-export const updateLikesAmountTC = (postId: string): AppThunk => (dispatch) => {
-    dispatch(setIsFetchingAC(true));
-    dispatch(updateLikesAmountAC(postId));
-    dispatch(setIsFetchingAC(false));
-}
-export const deletePostTC = (postId: string): AppThunk => (dispatch) => {
-    dispatch(setIsFetchingAC(true));
-    dispatch(deletePostAC(postId));
-    dispatch(setIsFetchingAC(false));
-}
-export const updatePostTitleTC = (postId: string, newTitle: string): AppThunk => (dispatch) => {
-    dispatch(setIsFetchingAC(true));
-    dispatch(updatePostTitleAC(postId, newTitle));
-    dispatch(setIsFetchingAC(false));
-}
+export const addPostTC =
+    (title: string): AppThunk =>
+    (dispatch) => {
+        dispatch(setIsFetchingAC(true));
+        dispatch(addPostAC(title));
+        dispatch(setIsFetchingAC(false));
+    };
+export const updateLikesAmountTC =
+    (postId: string): AppThunk =>
+    (dispatch) => {
+        dispatch(setIsFetchingAC(true));
+        dispatch(updateLikesAmountAC(postId));
+        dispatch(setIsFetchingAC(false));
+    };
+export const deletePostTC =
+    (postId: string): AppThunk =>
+    (dispatch) => {
+        dispatch(setIsFetchingAC(true));
+        dispatch(deletePostAC(postId));
+        dispatch(setIsFetchingAC(false));
+    };
+export const updatePostTitleTC =
+    (postId: string, newTitle: string): AppThunk =>
+    (dispatch) => {
+        dispatch(setIsFetchingAC(true));
+        dispatch(updatePostTitleAC(postId, newTitle));
+        dispatch(setIsFetchingAC(false));
+    };
 
 // Types
 export type PostsReducerAction =

@@ -19,7 +19,7 @@ export const useUserCard = (user: User) => {
 
     const onViewProfileBtnClick = useCallback(
         (userId: number) => {
-            dispatch(setStatusAC(''));
+            dispatch(setStatusAC(""));
             navigateTo(`/profile/${userId}`);
         },
         [dispatch, navigateTo],

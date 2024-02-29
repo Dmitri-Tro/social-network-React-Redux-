@@ -15,25 +15,13 @@ type OldPostsProps = {
 };
 
 export const OldPosts: FC<OldPostsProps> = memo(({ userAvatars, post }) => {
-    const {
-        postTitle,
-        postViewMode,
-        setPostTitle,
-        setPostViewMode,
-        updatePostTitle,
-        deletePost,
-        updateLikesAmount
-    } =
+    const { postTitle, postViewMode, setPostTitle, setPostViewMode, updatePostTitle, deletePost, updateLikesAmount } =
         useOldPosts(post);
 
     return (
         <div className={styles.container}>
             <div className={styles.post}>
-                <img
-                    className={styles.userAvatar}
-                    src={userAvatars.large || userAvatars.small || defaultAvatar}
-                    alt="user_avatar"
-                />
+                <img className={styles.userAvatar} src={userAvatars.small || defaultAvatar} alt="user_avatar" />
                 {postViewMode === "readonly" && (
                     <p onDoubleClick={() => setPostViewMode("updating")} className={styles.postText}>
                         {post.postTitle}

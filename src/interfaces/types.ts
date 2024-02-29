@@ -20,22 +20,27 @@ export type User = {
 
 export type ApiUser = {
     userId: number;
-    lookingForAJob: boolean;
-    lookingForAJobDescription: string;
-    fullName: string;
-    contacts: {
-        github: string;
-        vk: string;
-        facebook: string;
-        instagram: string;
-        twitter: string;
-        website: string;
-        youtube: string;
-        mainLink: string;
-    };
     photos: {
         small: string | null;
         large: string | null;
+    };
+} & UserProfileData;
+
+export type UserProfileData = {
+    aboutMe: string | null;
+    lookingForAJob: boolean;
+    lookingForAJobDescription: string | null;
+    fullName: string | null;
+    contacts: {
+        github: string | null;
+        vk: string | null;
+        facebook: string | null;
+        instagram: string | null;
+        twitter: string | null;
+        website: string | null;
+        youtube: string | null;
+        mainLink: string | null;
+        [key: string]: string | null;
     };
 };
 
@@ -44,6 +49,7 @@ export type UserAuthData = {
     email: string | null;
     login: string | null;
     isLogin: boolean;
+    captcha: string | null;
 };
 
 export type ApiAuthData = {
@@ -81,7 +87,7 @@ export type Post = {
 };
 
 export type ResponseError = {
-    resultCode: number
-    messages: string[],
-    data: {}
-}
+    resultCode: number;
+    messages: string[];
+    data: {};
+};

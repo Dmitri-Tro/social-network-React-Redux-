@@ -18,7 +18,7 @@ export const Message: FC<MessageProps> = memo(({ message }) => {
         setMessageTitle,
         setMessageViewMode,
         updateMessageTitle,
-        deleteMessage
+        deleteMessage,
     } = useUserMessage(message);
 
     if (!user) {
@@ -49,11 +49,7 @@ export const Message: FC<MessageProps> = memo(({ message }) => {
                             style={styles.message}
                         />
                     )}
-                    <Button title={"x"}
-                            callback={deleteMessage}
-                            type={"secondary"}
-                            style={styles.delBtn}
-                    />
+                    <Button title={"x"} callback={deleteMessage} type={"secondary"} style={styles.delBtn} />
                 </div>
             </div>
         );

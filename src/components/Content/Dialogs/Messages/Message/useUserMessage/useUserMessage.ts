@@ -1,10 +1,7 @@
 import { useCallback, useState } from "react";
 import { useAppDispatch, useAppSelector } from "store/reduxStore";
 import { UserMessage } from "interfaces/types";
-import {
-    deleteMessageTC,
-    updateMessageTitleTC
-} from "store/reducers/userMessagesReducer/userMessagesReducer";
+import { deleteMessageTC, updateMessageTitleTC } from "store/reducers/userMessagesReducer/userMessagesReducer";
 import { selectUserProfile } from "store/reducers/profileReducer/profileSelectors";
 
 export const useUserMessage = (message: UserMessage) => {

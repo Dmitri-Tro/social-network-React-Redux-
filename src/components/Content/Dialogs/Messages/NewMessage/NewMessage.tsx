@@ -5,12 +5,7 @@ import { Button } from "components/shared/Button/Button";
 import { useNewMessage } from "./useNewMessage/useNewMessage";
 
 export const NewMessage: FC = () => {
-    const {
-        title,
-        onTitleInputChange,
-        onSendBtnClick,
-        onCancelBtnClick
-    } = useNewMessage();
+    const { title, onTitleInputChange, onSendBtnClick, onCancelBtnClick } = useNewMessage();
 
     return (
         <div className={styles.container}>
@@ -21,16 +16,8 @@ export const NewMessage: FC = () => {
                 style={styles.textarea}
             />
             <div className={styles.buttons}>
-                <Button title={"Send"}
-                        callback={onSendBtnClick}
-                        type={"main"}
-                        isDisabled={!title.trim()}
-                />
-                <Button title={"Cancel"}
-                        callback={onCancelBtnClick}
-                        type={"secondary"}
-                        isDisabled={!title.trim()}
-                />
+                <Button title={"Send"} callback={onSendBtnClick} type={"main"} isDisabled={!title.trim()} />
+                <Button title={"Cancel"} callback={onCancelBtnClick} type={"secondary"} isDisabled={!title.trim()} />
             </div>
         </div>
     );

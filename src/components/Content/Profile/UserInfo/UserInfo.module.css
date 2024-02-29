@@ -5,6 +5,11 @@
     margin-bottom: 50px;
 }
 
+.avatar {
+    position: relative;
+    margin-right: 30px;
+}
+
 .image {
     width: 200px;
     height: 200px;
@@ -13,34 +18,73 @@
     margin-right: 50px;
 }
 
-.description {
-    display: flex;
-    flex-direction: column;
-}
-
-.name {
-    margin: 0;
-}
-
-.lastname {
-    margin: 0;
-    margin-bottom: 20px;
-}
-
-.infoBlock {
-    flex-direction: row;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-weight: 500;
-}
-
-.default {
+.avatarInput {
+    background: inherit;
     color: cornflowerblue;
-}
-
-.item {
-    display: inline-block;
+    font-size: 1.125rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 10px;
 }
 
 .profileStatus {
+    font-size: 18px;
+}
+
+.description {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.infoBlock {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0 10px;
+    font-weight: 500;
+}
+
+.contacts {
+    display: inline;
+    font-weight: 500;
+    color: cornflowerblue;
+    margin-right: 10px;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    width: 30%;
+    color: cornflowerblue;
+    margin-right: 10px;
+}
+
+.name {
+    font-size: 24px;
+}
+
+.contact {
+    padding-left: 20px;
+}
+
+.itemValue {
+    color: cornflowerblue;
+}
+
+.itemInput {
+    display: flex;
+    width: 100%;
+    height: 25px;
+    color: blue;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid cornflowerblue;
+    border-radius: 5px;
+}
+
+.profileDataBtn {
+    margin-top: 20px;
 }

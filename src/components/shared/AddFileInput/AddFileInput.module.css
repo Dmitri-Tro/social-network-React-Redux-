@@ -1,0 +1,17 @@
+.wrapper {
+    width: 100%;
+    position: relative;
+    margin: 15px 0;
+    text-align: center;
+}
+
+.input {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+}
+
+.btn {
+    width: 100%;
+    cursor: pointer;
+}

@@ -5,12 +5,11 @@ import { Accordion } from "../../shared/Accordion/Accordion";
 import { Pagination } from "../../shared/Pagination/Pagination";
 import { useFindUsers } from "./useFindUsers/useFindUsers";
 import { Input } from "../../shared/Input/Input";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAppSelector } from "store/reduxStore";
 import { selectIsLogin } from "store/reducers/authReducer/authSelectors";
 
 export const FindUsers: FC = () => {
-    const navigate = useNavigate();
     const isLogin = useAppSelector(selectIsLogin);
     const {
         users,
@@ -26,17 +25,13 @@ export const FindUsers: FC = () => {
     } = useFindUsers();
 
     if (!isLogin) {
-        navigate('/login');
+        return <Navigate to={"/login"} />;
     }
 
     return (
         <>
             <div className={styles.container}>
-                <Input
-                    type={"search"}
-                    value={filter}
-                    callback={onFilterChange}
-                />
+                <Input type={"search"} value={filter} callback={onFilterChange} />
                 <Pagination
                     pagesCount={pagesCount}
                     currentPage={currentPage}

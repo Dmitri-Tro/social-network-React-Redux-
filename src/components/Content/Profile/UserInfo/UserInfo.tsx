@@ -1,12 +1,14 @@
-import React, { FC, memo, useCallback, useEffect } from "react";
+import React, { FC, memo, useCallback } from "react";
 import styles from "./UserInfo.module.css";
 import { useAppDispatch, useAppSelector } from "store/reduxStore";
-import { defaultAvatar } from "images/images";
-import { getUserProfileTC, updateUserStatusTC } from "store/reducers/profileReducer/profileReducer";
-import { ProfileStatus } from "../ProfileStatus/ProfileStatus";
+import { updateUserStatusTC } from "store/reducers/profileReducer/profileReducer";
+import { EditableTitle } from "components/Content/Profile/ProfileStatus/EditableTitle";
 import { selectUserProfile, selectUserStatus } from "store/reducers/profileReducer/profileSelectors";
-import { selectIsFetching } from "store/reducers/appReducer/appSelectors";
+import { selectEditMode, selectIsFetching } from "store/reducers/appReducer/appSelectors";
 import { selectUserId } from "store/reducers/authReducer/authSelectors";
+import { Avatar } from "components/Content/Profile/UserInfo/Avatar/Avatar";
+import { ProfileData } from "components/Content/Profile/UserInfo/ProfileData/ProfileData";
+import { ProfileDataForm } from "components/Content/Profile/UserInfo/ProfileDataForm/ProfileDataForm";
 
 type UserInfoProps = {
     userId: number | null;
@@ -15,55 +17,36 @@ export const UserInfo: FC<UserInfoProps> = memo(({ userId }) => {
     const user = useAppSelector(selectUserProfile);
     const isFetching = useAppSelector(selectIsFetching);
     const userStatus = useAppSelector(selectUserStatus);
-    const authUserId = useAppSelector(selectUserId)
+    const authUserId = useAppSelector(selectUserId);
+    const editMode = useAppSelector(selectEditMode);
     const dispatch = useAppDispatch();
-    useEffect(() => {
-        if (userId) {
-            dispatch(getUserProfileTC(userId));
-        }
-    }, [dispatch, userId]);
 
-    const setNewStatus = useCallback((status: string) => {
-        if (user?.userId === authUserId) {
-            dispatch(updateUserStatusTC(status));
-        } else {
-
-        }
-    }, [dispatch, authUserId, user?.userId])
+    const setNewStatus = useCallback(
+        (status: string) => {
+            if (userId === authUserId) {
+                dispatch(updateUserStatusTC(status));
+            }
+        },
+        [dispatch, authUserId, userId],
+    );
 
     if (!user) {
-        return (
-            <></>
-        );
+        return <></>;
     } else {
         return (
             <div className={styles.info}>
-                <img
-                    className={styles.image}
-                    alt="user_image"
-                    src={user.photos.large || user.photos.small || defaultAvatar}
-                />
+                <div className={styles.avatar}>
+                    <Avatar photo={user.photos.large} showFileInput={userId === authUserId} />
+                </div>
                 <div className={styles.description}>
-                    <h2 className={styles.name}>{user.fullName}</h2>
-                    <ProfileStatus
+                    <EditableTitle
                         oldTitle={userStatus || undefined}
                         setNewTitle={setNewStatus}
                         disabled={isFetching}
                         placeholder={"Write your status..."}
                         stylesClass={styles.profileStatus}
                     />
-                    <div className={styles.infoBlock}>
-                        <span className={`${styles.default} ${styles.item}`}>Main contact:&nbsp;</span>
-                        <span className={styles.item}>{user.contacts.mainLink}</span>
-                    </div>
-                    <div className={styles.infoBlock}>
-                        <span className={`${styles.default} ${styles.item}`}>GitHub:&nbsp;</span>
-                        <span className={styles.item}>{user.contacts.github}</span>
-                    </div>
-                    <div className={styles.infoBlock}>
-                        <span className={`${styles.default} ${styles.item}`}>Looking for a job:&nbsp;</span>
-                        <span className={styles.item}>{user.lookingForAJobDescription}</span>
-                    </div>
+                    {editMode ? <ProfileDataForm user={user} /> : <ProfileData user={user} />}
                 </div>
             </div>
         );

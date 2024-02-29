@@ -1,9 +1,5 @@
 import { useCallback, useState } from "react";
-import {
-    deletePostTC,
-    updateLikesAmountTC,
-    updatePostTitleTC,
-} from "store/reducers/postsReducer/postsReducer";
+import { deletePostTC, updateLikesAmountTC, updatePostTitleTC } from "store/reducers/postsReducer/postsReducer";
 import { Post } from "interfaces/types";
 import { useAppDispatch } from "store/reduxStore";
 
@@ -32,6 +28,6 @@ export const useOldPosts = (post: Post) => {
         setPostViewMode,
         updatePostTitle,
         deletePost,
-        updateLikesAmount
+        updateLikesAmount,
     };
 };

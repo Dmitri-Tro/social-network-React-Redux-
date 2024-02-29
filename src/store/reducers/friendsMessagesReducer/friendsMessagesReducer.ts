@@ -27,11 +27,13 @@ export const deleteFriendMessageAC = (messageId: string) => {
 };
 
 // Thunks
-export const deleteFriendMessageTC = (messageId: string): AppThunk => (dispatch) => {
-    dispatch(setIsFetchingAC(true));
-    dispatch(deleteFriendMessageAC(messageId));
-    dispatch(setIsFetchingAC(false));
-}
+export const deleteFriendMessageTC =
+    (messageId: string): AppThunk =>
+    (dispatch) => {
+        dispatch(setIsFetchingAC(true));
+        dispatch(deleteFriendMessageAC(messageId));
+        dispatch(setIsFetchingAC(false));
+    };
 
 // Types
 export type FriendsMessagesReducerAction = ReturnType<typeof deleteFriendMessageAC>;

@@ -108,70 +108,74 @@ export const setCurrentPageAC = (page: number) => {
 };
 
 // THUNKS
-export const getUsersTC = (pagesSize: number, currentPage: number): AppThunk => (dispatch) => {
+export const getUsersTC = (pagesSize: number, currentPage: number): AppThunk => async (dispatch) => {
+    dispatch(setIsFetchingAC(true)); // show preloader
     const uriParams = {
         count: pagesSize,
         page: currentPage,
         term: ""
     };
-    dispatch(setIsFetchingAC(true));
-    usersApi.getUsers(uriParams)
-        .then((res) => {
-            if (res.data.items) {
-                dispatch(setUsersAC(res.data.items, res.data.totalCount));
-            } else {
-                dispatch(setErrorAC(res.data.error));
-            }
-        })
-        .catch((e: AxiosError<ResponseError>) => dispatch(setErrorAC(e.message)))
-        .finally(() => dispatch(setIsFetchingAC(false)));
-};
-
-const getFriendsTC = (): AppThunk => (dispatch) => {
-    const uriParams = {
-        friend: true
-    };
-    profileApi.getFriends(uriParams).then((res) => {
-        if (!res.data.error) {
-            dispatch(setFriendsAC(res.data.items, res.data.totalCount));
-        } else {
+    try {
+        const res = await usersApi.getUsers(uriParams); // get users
+        if (res.data.items) { // if data include items
+            dispatch(setUsersAC(res.data.items, res.data.totalCount)); // set items (users) to state
+        } else { // if response include errors - set errors to state and show
             dispatch(setErrorAC(res.data.error));
         }
-    })
-        .catch((e: AxiosError<ResponseError>) => dispatch(setErrorAC(e.message)));
+    } catch (e) {
+        dispatch(setErrorAC((e as AxiosError<ResponseError>).message));
+    } finally {
+        dispatch(setIsFetchingAC(false)); // stop showing preloader
+    }
 };
 
-export const followingTC = (userId: number): AppThunk => (dispatch) => {
-    dispatch(setIsFetchingAC(true));
-    usersApi.follow(userId)
-        .then((res) => {
-            if (res.data.resultCode === 0) {
-                dispatch(followAC(userId));
-                dispatch(getFriendsTC());
-            } else {
-                dispatch(setErrorAC(res.data.messages[0]));
-            }
-        })
-        .catch((e: AxiosError<ResponseError>) => dispatch(setErrorAC(e.message)))
-        .finally(() => dispatch(setIsFetchingAC(false)));
-
+const getFriendsTC = (): AppThunk => async (dispatch) => {
+    try {
+        const uriParams = { friend: true };
+        const res = await profileApi.getFriends(uriParams); // get user friends
+        if (!res.data.error) { // if response without errors
+            dispatch(setFriendsAC(res.data.items, res.data.totalCount)); // set friends to state
+        } else { // if some errors - set errors to state and show
+            dispatch(setErrorAC(res.data.error));
+        }
+    } catch (e) {
+        dispatch(setErrorAC((e as AxiosError<ResponseError>).message));
+    }
 };
 
-export const unfollowingTC = (userId: number): AppThunk => (dispatch) => {
-    dispatch(setIsFetchingAC(true));
-    usersApi.unfollow(userId).then((res) => {
-        if (res.data.resultCode === 0) {
-            dispatch(unfollowAC(userId));
-            dispatch(getFriendsTC());
-        } else {
+export const followingTC = (userId: number): AppThunk => async (dispatch) => {
+    dispatch(setIsFetchingAC(true)); // show preloader
+    try {
+        const res = await usersApi.follow(userId); // set user as friend
+        if (res.data.resultCode === 0) { // if response result code = 0
+            dispatch(followAC(userId)); // set user as friend to state
+            dispatch(getFriendsTC()); // get new friends list
+        } else { // if have some errors - set errors to state and show
             dispatch(setErrorAC(res.data.messages[0]));
         }
-    })
-        .catch((e: AxiosError<ResponseError>) => dispatch(setErrorAC(e.message)))
-        .finally(() => dispatch(setIsFetchingAC(false)));
-
+    } catch (e) {
+        dispatch(setErrorAC((e as AxiosError<ResponseError>).message));
+    } finally {
+        dispatch(setIsFetchingAC(false)); // stop showing preloader
+    }
 };
 
+export const unfollowingTC = (userId: number): AppThunk => async (dispatch) => {
+    dispatch(setIsFetchingAC(true)); // show preloader
+    try {
+        const res = await usersApi.unfollow(userId); // remove user from friends
+        if (res.data.resultCode === 0) { // if response result code = 0
+            dispatch(unfollowAC(userId)); // remove user from friends list
+            dispatch(getFriendsTC()); // get new friends list
+        } else { // if have some errors - set errors to state and show
+            dispatch(setErrorAC(res.data.messages[0]));
+        }
+    } catch (e) {
+        dispatch(setErrorAC((e as AxiosError<ResponseError>).message));
+    } finally {
+        dispatch(setIsFetchingAC(false)); // stop showing preloader
+    }
+};
 
 // TYPES
 export type UsersReducerAction =
@@ -181,6 +185,6 @@ export type UsersReducerAction =
     | ReturnType<typeof followingInProgressAC>
     | ReturnType<typeof setPageSizeAC>
     | ReturnType<typeof setCurrentPageAC>
-    | SetIsFetchingAC
+    | SetIsFetchingAC;
 
 export type SetIsFetchingAC = ReturnType<typeof setIsFetchingAC>;

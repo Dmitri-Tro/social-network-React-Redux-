@@ -20,20 +20,22 @@ export const Textarea: FC<InputProps> = memo(({
                                                   style
                                               }) => {
 
-        const onChangeHandler = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
+    const onChangeHandler = useCallback(
+        (e: ChangeEvent<HTMLTextAreaElement>) => {
             callback(e);
-        }, [callback]);
+        },
+        [callback]
+    );
 
-        return (
-            <textarea
-                value={value}
-                onChange={onChangeHandler}
-                autoFocus={autoFocus}
-                autoComplete={autoComplete}
-                onBlur={onBlurCallback}
-                placeholder={placeholder}
-                className={styles.textarea + " " + style}
-            />
-        );
-    }
-);
+    return (
+        <textarea
+            value={value}
+            onChange={onChangeHandler}
+            autoFocus={autoFocus}
+            autoComplete={autoComplete}
+            onBlur={onBlurCallback}
+            placeholder={placeholder}
+            className={styles.textarea + " " + style}
+        />
+    );
+});

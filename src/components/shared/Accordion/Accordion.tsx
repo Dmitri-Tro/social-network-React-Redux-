@@ -8,22 +8,22 @@ type AccordionProps = {
     style?: string;
 };
 
-export const Accordion: FC<AccordionProps> = memo(({
-                                                       title,
-                                                       type,
-                                                       onItemSelect,
-                                                       style
-                                                   }) => {
+export const Accordion: FC<AccordionProps> = memo(({ title, type, onItemSelect, style }) => {
     const [collapse, setCollapse] = useState(true);
     const [accordionTitle, setAccordionTitle] = useState(title);
+
     const onClickTitleHandler = useCallback(() => {
         setCollapse(!collapse);
-    }, [setCollapse, collapse]);
-    const onClickItemHandler = useCallback((item: string) => {
-        onItemSelect(item);
-        setAccordionTitle(item);
-        setCollapse(!collapse);
-    }, [onItemSelect, setCollapse, setAccordionTitle, collapse]);
+    }, [collapse]);
+
+    const onClickItemHandler = useCallback(
+        (item: string) => {
+            onItemSelect(item);
+            setAccordionTitle(item);
+            setCollapse(!collapse);
+        },
+        [onItemSelect, collapse],
+    );
 
     // Styles
     const fullAccordionStyle =

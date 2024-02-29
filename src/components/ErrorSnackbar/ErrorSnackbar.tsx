@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useCallback } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useAppDispatch, useAppSelector } from "store/reduxStore";
@@ -8,12 +8,12 @@ import { selectError } from "store/reducers/appReducer/appSelectors";
 export const ErrorSnackbar: FC = () => {
     const error = useAppSelector(selectError);
     const dispatch = useAppDispatch();
-    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    const handleClose = useCallback((event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === "clickaway") {
             return;
         }
         dispatch(setErrorAC(null));
-    };
+    }, [dispatch]);
 
     return (
         <div>

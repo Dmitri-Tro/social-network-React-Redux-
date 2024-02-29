@@ -15,9 +15,11 @@ export const Button: FC<ButtonProps> = memo(({
                                                  style,
                                                  isDisabled
                                              }) => {
+
     const onClickHandler = useCallback(() => {
         callback();
-    }, [callback])
+    }, [callback]);
+
     const buttonTypesStyle = useMemo((): string => {
         switch (type) {
             case "main":
@@ -28,6 +30,7 @@ export const Button: FC<ButtonProps> = memo(({
                 return "";
         }
     }, [type]);
+
     return (
         <button
             onClick={onClickHandler}

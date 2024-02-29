@@ -17,9 +17,6 @@ export type LoginData = {
 const instance = axios.create({
     baseURL: "https://social-network.samuraijs.com/api/1.0",
     withCredentials: true,
-    headers: {
-        "API-key": 'a19bb5a7-336b-4ae7-b475-a0ca6f07ecf9'
-    },
 });
 
 export const authApi = {
@@ -31,5 +28,8 @@ export const authApi = {
     },
     logout: () => {
         return instance.delete<BaseResponse>(`/auth/login`);
+    },
+    getCaptcha: () => {
+        return instance.get<{ url: string }>(`/security/get-captcha-url`);
     },
 };

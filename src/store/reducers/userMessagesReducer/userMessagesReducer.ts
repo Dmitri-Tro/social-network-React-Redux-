@@ -60,23 +60,29 @@ export const deleteMessageAC = (messageId: string) => {
 };
 
 // Thunks
-export const addUserMessageTC = (title: string): AppThunk => (dispatch) => {
-    dispatch(setIsFetchingAC(true));
-    dispatch(addUserMessageAC(title));
-    dispatch(setIsFetchingAC(false));
-}
+export const addUserMessageTC =
+    (title: string): AppThunk =>
+    (dispatch) => {
+        dispatch(setIsFetchingAC(true));
+        dispatch(addUserMessageAC(title));
+        dispatch(setIsFetchingAC(false));
+    };
 
-export const updateMessageTitleTC = (messageId: string, newTitle: string): AppThunk => (dispatch) => {
-    dispatch(setIsFetchingAC(true));
-    dispatch(updateMessageTitleAC(messageId, newTitle));
-    dispatch(setIsFetchingAC(false));
-}
+export const updateMessageTitleTC =
+    (messageId: string, newTitle: string): AppThunk =>
+    (dispatch) => {
+        dispatch(setIsFetchingAC(true));
+        dispatch(updateMessageTitleAC(messageId, newTitle));
+        dispatch(setIsFetchingAC(false));
+    };
 
-export const deleteMessageTC = (messageId: string): AppThunk => (dispatch) => {
-    dispatch(setIsFetchingAC(true));
-    dispatch(deleteMessageAC(messageId));
-    dispatch(setIsFetchingAC(false));
-}
+export const deleteMessageTC =
+    (messageId: string): AppThunk =>
+    (dispatch) => {
+        dispatch(setIsFetchingAC(true));
+        dispatch(deleteMessageAC(messageId));
+        dispatch(setIsFetchingAC(false));
+    };
 
 // Types
 export type UserMessagesReducerAction =

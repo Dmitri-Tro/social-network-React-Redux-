@@ -49,9 +49,6 @@ type AppActions =
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AppActions>;
 export type AppDispatch = ThunkDispatch<RootState, unknown, AppActions>;
 
-
-
-
 // For debugging
 // @ts-ignore
 window.store = reduxStore;

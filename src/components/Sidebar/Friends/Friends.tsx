@@ -9,7 +9,7 @@ export const Friends: FC = () => {
     const dispatch = useAppDispatch();
     const friends = useAppSelector(selectFriends);
     useEffect(() => {
-        dispatch(getFriendsTC());
+        dispatch(getFriendsTC()); // get user friends, set to state and show on sidebar
     }, [dispatch]);
 
     return (

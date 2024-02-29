@@ -21,6 +21,6 @@ export const useNewMessage = () => {
         title,
         onTitleInputChange,
         onSendBtnClick,
-        onCancelBtnClick
+        onCancelBtnClick,
     };
 };
